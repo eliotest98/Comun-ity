@@ -1,2 +1,2 @@
 # Comun-ity
-Progetto coordinato GPS/IS Universitù degli Studi di Salerno anno 2022/2023
+Progetto coordinato GPS/IS Università degli Studi di Salerno anno 2022/2023
