@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="styles/index.css"
+	title="style" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Home</title>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+	function onSubmit(token) {
+		document.getElementById("modal_form").submit();
+	}
+</script>
+</head>
+
+<body onLoad="">
+
+	<div id="id01" class="modal">
+		<span onclick="document.getElementById('id01').style.display='none'"
+			class="close" title="Close Modal">&times;</span>
+		<form id="modal_form" class="modal-content" action="/action_page.php">
+			<div class="container">
+				<div class="clearfix">
+					<table id="form">
+						<tr>
+							<td rowspan="6"><img src="images/form_letter.png"
+								alt="Lavora con noi"></td>
+							<td><h1 style="color: #EEEEEE">Iscriviti al Webinar</h1></td>
+						</tr>
+						<tr>
+							<td><p style="color: #A7A7AD">Ti verrà inviata una
+									e-mail con gli accessi per il webinar</p></td>
+						</tr>
+						<tr>
+							<td><input id="email" type="email" required
+								placeholder="e-mail" name="email"></td>
+						</tr>
+						<tr>
+							<td><input id="telefono" type="text"
+								placeholder="numero (facoltativo)" name="telefono"></td>
+						</tr>
+						<tr>
+							<td><button onclick="sendEmail();" type="button"
+									class="cancelbtn" class="g-recaptcha"
+									data-sitekey="6LcOj5kfAAAAAL01ZRiKhRt1trbY2ewyguYIlxC5" data-callback='onSubmit'></button></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div id="body">
+
+		<div id="header">
+			<section id="menubar">
+				<ul id="menu">
+					<li style="color: #EEEEEE; font: Muli, Bold">Philiepho</li>
+					<li class="selected"><a href="index.html">Home</a></li>
+					<li class="not_selected"><a href="servizi.html">Servizio</a></li>
+					<li class="not_selected"><a href="team.html">Team</a></li>
+					<li class="submit">
+						<button class="submit"
+							onclick="document.getElementById('id01').style.display='block'">Webinar
+							Gratuito</button>
+					</li>
+				</ul>
+			</section>
+		</div>
+		<div id="writecenter">
+			<h1>Sii la persona che ammireresti</h1>
+		</div>
+		<div id="descriptions">
+			<div id="descrs">
+				<ul id="menu">
+					<li class="description">
+						<h1 style="color: #EEEEEE">Lavora con noi</h1>
+						<p style="color: #A7A7AD">
+							Se vuoi averci come partner attivi all'interno del tuo Business <br>
+							e di conseguenza scalare e farlo crescere velocemente clicca qui
+						</p> <input class="vai" type="submit" name="contact_submitted"
+						value="Vai" formaction="servizi.html"
+						onclick="window.location.href='servizi.html'" />
+					</li>
+					<li class="description"><img src="images/lavora_con_noi.jpg"
+						alt="Lavora con noi" width="400" height="400"></li>
+				</ul>
+				<ul id="menu" style="margin-top: 60px;">
+					<li><img style="margin-left: 0;" src="images/team.jpg"
+						alt="Lavora con noi" width="600" height="400"></li>
+					<li class="description">
+						<h1 style="color: #EEEEEE;">Il nostro Team</h1>
+						<p style="color: #A7A7AD">Qui scoprirai come è organizzato il
+							nostro team</p> <input class="vai" type="submit"
+						name="contact_submitted" value="Vai"
+						onclick="window.location.href='team.html'" />
+					</li>
+				</ul>
+				<ul id="menu" style="margin-top: 60px;">
+					<li class="description">
+						<h1 style="color: #EEEEEE">La nostra missione</h1>
+						<p style="color: #A7A7AD">
+							Fare in modo che gli imprenditori non abbiano più paura di non <br>
+							arrivare a fine mese, avendo quindi una preoccupazione in meno e
+							<br> svolgere meglio quello che fanno
+						</p>
+					</li>
+					<li class="description"><img
+						src="images/la_nostra_missione.jpg" alt="Lavora con noi"
+						width="500" height="400"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div id="newslater">
+			<div id="textnewslater">
+				<ul id="menu">
+					<li class="footer"><H1>Iscriviti alla newslater</H1></li>
+					<li class="footer">
+						<button class="submit"
+							onclick="document.getElementById('id01').style.display='block'">Iscriviti</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="info_footer">
+			<div id="information_footer">
+				<ul id="menu">
+					<li class="footer"><h1 style="color: #22222D">Philiepho
+							S.r.l.s.</h1></li>
+					<li class="footer">
+						<table id="footer_table">
+							<tr>
+								<th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspServizi&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+								<th class="destra">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspRisorse&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+							</tr>
+							<tr>
+								<td><a href="servizi.html"
+									style="text-decoration: none; color: #22222D;">Done for you</a></td>
+								<td class="destra"><a
+									onclick="document.getElementById('id01').style.display='block'">News</a></td>
+							</tr>
+							<tr>
+								<td><a href="servizi.html"
+									style="text-decoration: none; color: #22222D;">Consulenza</a></td>
+								<td class="destra"><a
+									onclick="document.getElementById('id01').style.display='block'">Webinar
+										Gratuito</a></td>
+							</tr>
+						</table>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="diritti">
+			<div id="dirits">
+				<ul id="menu">
+					<li class="diritti"><h1>© 2022 Philliepho.
+							&nbsp&nbsp®Tutti i diritti riservati</h1></li>
+					<li class="diritti"><h1 class="diritti">Privacy Policy</h1></li>
+					<li class="diritti"><h1>Termini e condizioni d'uso</h1></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+</script>
+</html>
