@@ -11,6 +11,7 @@ public class Utente {
 	private String ruolo;
 	private String nome;
 	private String cognome;
+	private Integer eta;
 	private String mail;
 	private String password;
 	private String sesso;
@@ -33,6 +34,7 @@ public class Utente {
 	 * @param ruolo represents User role {cittadino, professionista, admin}
 	 * @param nome represents User first name
 	 * @param cognome represents User last name
+	 * @param eta represents User age
 	 * @param mail represents User email address
 	 * @param password represents User account password
 	 * @param sesso represents User BIOLOGICAL sex 
@@ -40,13 +42,14 @@ public class Utente {
 	 * @param indirizzo represents User home address
 	 * @param dataNascita represents User birth date
 	 */
-	public Utente(long id, String ruolo, String nome, String cognome, String mail, String password, String sesso,
+	public Utente(long id, String ruolo, String nome, String cognome, Integer eta, String mail, String password, String sesso,
 			String numeroTelefono, String indirizzo, LocalDate dataNascita) {
 		super();
 		this.id = id;
 		this.ruolo = ruolo;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.eta = eta;
 		this.mail = mail;
 		this.password = password;
 		this.sesso = sesso;
@@ -119,6 +122,19 @@ public class Utente {
 		this.cognome = cognome;
 	}
 
+	/**
+	 * @return User age
+	 */
+	public Integer getEta() {
+		return eta;
+	}
+
+	/**
+	 * @param eta is the User age to set
+	 */
+	public void setEta(Integer eta) {
+		this.eta = eta;
+	}
 
 	/**
 	 * @return User email
