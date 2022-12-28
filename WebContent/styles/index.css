@@ -2,6 +2,8 @@ body{
 	background-color: whitesmoke;
 }
 
+/*Navbar*/
+
 .nav-link{
 	color: #000;
 	font-weight: 600;
@@ -11,16 +13,14 @@ body{
 	color: dimgray;
 }
 
+/*Carousel*/
+
 .carousel-item {
 	background: black;
 }
 
 .carousel-item > img {
 	opacity: 0.4;
-}
-
-section {
-	margin-bottom: 20px;
 }
 
 #landingCarousel .carousel-item img {  
@@ -47,9 +47,64 @@ section {
 	padding-right: 10%;
   }
 
+/*Progetto*/
+
 #progetto {
 	padding: 50px;
 }
+
+.col-xxl-4 > img {
+	height: 150px;
+	background-size: contain;
+	white-space:pre-line;
+}
+
+.col-xxl-4 > p{
+	padding-left: 10%;
+	padding-right: 10%;
+	margin-top: 5%;
+	font-weight: 200;
+}
+
+/*Team*/
+
+#team{
+	padding: 50px;
+}
+
+.col-lg-6 > img {
+	height: 200px;
+	margin-bottom: 25px;
+	border-radius: 50px;
+	white-space:pre-line;
+}
+
+.col-lg-6 {
+	margin-top: 40px;
+}
+
+.col-lg-4{
+	margin-top: 40px;
+}
+
+.col-lg-4 > img {
+	height: 200px;
+	margin-bottom: 25px;
+	border-radius: 50px;
+	white-space:pre-line;
+}
+
+/*Contatti*/
+
+#contatti{
+	padding: 50px;
+}
+
+#contattiBody{
+	padding: 2% 10% 5% 10%;
+}
+
+/*General*/
 
 #card{
 	width: 100%;
@@ -57,20 +112,6 @@ section {
 	margin-top: 50px;
 }
 
-.col-4 > img {
-	height: 150px;
-	background-size: contain;
-	white-space:pre-line;
-    border-radius: 50px;
-}
-
-.col-4 > p{
-	padding-left: 5%;
-	padding-right: 5%;
-	margin-top: 5%;
-	font-weight: 200;
-}
-
-#team{
-	padding: 50px;
+section {
+	margin-bottom: 20px;
 }
