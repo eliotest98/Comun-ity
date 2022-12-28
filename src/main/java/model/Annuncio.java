@@ -1,16 +1,23 @@
 package model;
 
+import java.time.LocalDate;
+
+import org.bson.types.ObjectId;
+
 public class Annuncio {
 	
 	/**
 	 * Attributes.
 	 */
-	private long id;
+	private ObjectId id;
 	private String abilitazioneRichiesta;
 	private Utente autore;
 	private String titolo;
 	private String descrizione;
 	private String indirizzo;
+	private LocalDate dataPubblicazione;
+	private Utente incaricato;
+	private LocalDate dataFine;
 	
 	/**
 	 * Empty constructor.
@@ -21,35 +28,36 @@ public class Annuncio {
 	
 	/**
 	 * Constructor.
-	 * @param id represents Annuncio identifier
+	 *
 	 * @param abilitazioneRichiesta represents the qualification needed to accept the job {"Nessuna" = Commissione}
 	 * @param autore represents Annuncio author
 	 * @param titolo represents Annuncio title
 	 * @param descrizione represents Annuncio description
 	 * @param indirizzo represents Annuncio useful place address
 	 */
-	public Annuncio(long id, String abilitazioneRichiesta, Utente autore, String titolo, String descrizione,
+	public Annuncio(String abilitazioneRichiesta, Utente autore, String titolo, String descrizione,
 			String indirizzo) {
 		super();
-		this.id = id;
 		this.abilitazioneRichiesta = abilitazioneRichiesta;
 		this.autore = autore;
 		this.titolo = titolo;
 		this.descrizione = descrizione;
 		this.indirizzo = indirizzo;
+		this.dataPubblicazione = LocalDate.now();
+		this.dataFine = dataPubblicazione.plusDays(30); //default expire date
 	}
 
 	/**
 	 * @return Annuncio identifier
 	 */
-	public long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
 	/**
 	 * @param id is the Annuncio identifier to set
 	 */
-	public void setId(long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -123,11 +131,47 @@ public class Annuncio {
 		this.indirizzo = indirizzo;
 	}
 
+	/**
+	 * @return the publication date
+	 */
+	public LocalDate getDataPubblicazione() {
+		return dataPubblicazione;
+	}
+
+	/**
+	 * @return the User who accepted the job
+	 */
+	public Utente getIncaricato() {
+		return incaricato;
+	}
+
+	/**
+	 * @param incaricato is the appointee User to set
+	 */
+	public void setIncaricato(Utente incaricato) {
+		this.incaricato = incaricato;
+	}
+
+	/**
+	 * @return the date on which the ad expire OR has been accepted
+	 */
+	public LocalDate getDataFine() {
+		return dataFine;
+	}
+
+	/**
+	 * @param dataFine is the date of removal from the available job list to set
+	 */
+	public void setDataFine(LocalDate dataFine) {
+		this.dataFine = dataFine;
+	}
+
 	@Override
 	public String toString() {
 		return "Annuncio [id=" + id + ", abilitazioneRichiesta=" + abilitazioneRichiesta + ", autore=" + autore
-				+ ", titolo=" + titolo + ", descrizione=" + descrizione + ", indirizzo=" + indirizzo + "]";
+				+ ", titolo=" + titolo + ", descrizione=" + descrizione + ", indirizzo=" + indirizzo
+				+ ", dataPubblicazione=" + dataPubblicazione + ", incaricato=" + incaricato + ", dataFine=" + dataFine
+				+ "]";
 	}
-
 	
 }
