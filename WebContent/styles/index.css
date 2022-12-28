@@ -1,16 +1,17 @@
+/*Custom carousel animation*/
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -20%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
 body{
 	background-color: whitesmoke;
-}
-
-/*Navbar*/
-
-.nav-link{
-	color: #000;
-	font-weight: 600;
-}
-
-.nav-link:hover{
-	color: dimgray;
 }
 
 /*Carousel*/
@@ -45,6 +46,19 @@ body{
 	top: 50%;
 	padding-left: 10%;
 	padding-right: 10%;
+	
+  }
+
+  .carousel-caption > p{
+	animation: fadeIn 1s ease-in both;
+  }
+
+  .carousel-caption > h5 {
+	animation: fadeIn 0.9s ease-in both;
+  }
+
+  .carousel-caption > a{
+	animation: fadeIn 1.1s ease-in both;
   }
 
 /*Progetto*/
@@ -115,3 +129,4 @@ body{
 section {
 	margin-bottom: 20px;
 }
+
