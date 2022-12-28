@@ -10,31 +10,16 @@
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
+<!-- AOS-->
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
 <link href="./styles/index.css" rel="stylesheet"/>
+
 <title>Landing - Comun-ity</title>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="./images/logo2.png" alt="Logo" width="75" height="75" class="d-inline-block align-text-top">
-        </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Sign Up</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-    </nav>
+    <!-- Navbar -->
+    <div id="nav-placeholder"></div>
     <!-- Caeousel -->
     <section id="carousel">
         <div id="landingCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -47,29 +32,32 @@
               <div class="carousel-item active">
                 <img src="./images/slide1.jpg" class="d-block w-100" alt="Image Description">
                 <div class="carousel-caption d-none d-md-block">
-                  <h5>Slide 01</h5>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni magnam perferendis, similique saepe quas pariatur deleniti ratione dolorum, consequatur ea incidunt, quo corporis suscipit culpa atque ipsum possimus exercitationem commodi!</p>
+                  <h5>Una comunità smart</h5>
+                  <p>Comun-ity è la prima comunità smart, nata allo scopo di collegare tutti i cittadini nel modo più facile e veloce possibile.</p>
+                  <a class="btn btn-primary">Registrati</a>
                 </div>      
               </div>
               <div class="carousel-item">
                 <img src="./images/slide2.jpg" class="d-block w-100" alt="POW Logo">
                 <div class="carousel-caption d-none d-md-block">
-                  <h5>Slide 02</h5>
-                  <p>Alias, repudiandae illum maiores vitae dolores, soluta quasi commodi quas, ex dolorum impedit enim reprehenderit doloremque quos earum at saepe temporibus vero voluptatibus hic accusamus eos. Quis odio ex voluptate!</p>
+                  <h5 data-aos="fade-down">Richiedi commissioni o lavori</h5>
+                  <p data-aos="fade-down" data-aos-duration="1000">Tramite la nostra piattaforma puoi richiedere aiuto per svolgere commissioni o lavori! Sei impossibilitato nel fare qualcosa? Non temere, registrati e cerca qualcuno che lo faccia per te!</p>
+                  <a class="btn btn-primary" data-aos-anchor="#back" data-aos="fade-down" data-aos-duration="1200">Registrati</a>
                 </div>      
                </div>
                <div class="carousel-item">
                 <img src="./images/slide3.jpg" class="d-block w-100" alt="Image Description">
                 <div class="carousel-caption d-none d-md-block">
-                  <h5>Slide 03</h5>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni magnam perferendis, similique saepe quas pariatur deleniti ratione dolorum, consequatur ea incidunt, quo corporis suscipit culpa atque ipsum possimus exercitationem commodi!</p>
+                  <h5  data-aos="fade-down">Comun-ity per Professionisti</h5>
+                  <p data-aos="fade-down" data-aos-duration="1000">Registrati come professionista presso la nostra piattaforma. In questo modo potrai accettare lavori della tua area di competenza richiesti da altri cittadini!</p>
+                  <a class="btn btn-primary" data-aos="fade-down" data-aos-duration="1200">Registrati</a>
                 </div>      
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#landingCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="carousel-control-prev-icon" id="back" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#landingCarousel" data-bs-slide="next">
+              <button class="carousel-control-next" id="forw" type="button" data-bs-target="#landingCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
@@ -86,22 +74,22 @@
           <div class="card-body">
              <div class="row">
                  <div class="col-xxl-4 text-center">
-                     <h2 class="card-title text-center">Migliorare la quotidianità</h2>
+                     <h2 class="card-title text-center" data-aos="fade-down">Migliorare la quotidianità</h2>
                      <hr>
-                     <img src="./images/quotidianita.png">
-                     <p>Costruire un sistema di facile utilizzo che permetta ai cittadini di potersi aiutare a vicenda nello svolgere attività quotidiane.</p>
+                     <img src="./images/quotidianita.png" data-aos="fade-down">
+                     <p data-aos="fade-down">Costruire un sistema di facile utilizzo che permetta ai cittadini di potersi aiutare a vicenda nello svolgere attività quotidiane.</p>
                  </div>
                  <div class="col-xxl-4 text-center">
-                     <h2 class="card-title text-center">Smart communities</h2>
+                     <h2 class="card-title text-center" data-aos="fade-down">Smart communities</h2>
                      <hr>
-                     <img src="./images/comunities.png">
-                     <p>Favorire la collaborazione tra cittadini e la creazione di comunità smart.</p>
+                     <img src="./images/comunities.png" data-aos="fade-down">
+                     <p data-aos="fade-down">Favorire la collaborazione tra cittadini e la creazione di comunità smart.</p>
                  </div>
                  <div class="col-xxl-4 text-center">
-                     <h2 class="card-title text-center">Semplicità</h2>
+                     <h2 class="card-title text-center" data-aos="fade-down">Semplicità</h2>
                      <hr>
-                     <img src="./images/semplicita.png">
-                     <p>Semplificazione della ricerca di professionisti qualificati e di cittadini.</p>
+                     <img src="./images/semplicita.png" data-aos="fade-down">
+                     <p data-aos="fade-down">Semplificazione della ricerca di professionisti qualificati e di cittadini.</p>
                  </div>
              </div>
           </div>
@@ -114,41 +102,41 @@
         <h2 class="card-title text-center">Il nostro team</h2>
         <div id="card" class="shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
-              <h3 class="card-title text-center">Project Managers</h3>
+              <h3 class="card-title text-center" data-aos="fade-down">Project Managers</h3>
               <div class="row">
                 <div class="col-lg-6 text-center">
-                  <img src="./images/semplicita.png">
-                  <h4 class="card-title text-center">Michele Iannucci</h4>
+                  <img src="./images/semplicita.png" data-aos="fade-right">
+                  <h4 class="card-title text-center" data-aos="fade-top">Michele Iannucci</h4>
                 </div>
-                <div class="col-lg-6 text-center">
-                  <img src="./images/semplicita.png">
-                  <h4 class="card-title text-center">Elio Testa</h4>
+                <div class="col-lg-6 text-center" data-aos="fade-down">
+                  <img src="./images/semplicita.png" data-aos="fade-left">
+                  <h4 class="card-title text-center" data-aos="fade-top">Elio Testa</h4>
                 </div>
               </div>
               <hr>
-              <h3 class="card-title text-center">Team Members</h3>
+              <h3 class="card-title text-center" data-aos="fade-down">Team Members</h3>
               <div class="row">
                 <div class="col-lg-4 text-center">
-                  <img src="./images/semplicita.png">
-                  <h4 class="card-title text-center">Andrea Aceto</h4>
+                  <img src="./images/semplicita.png" data-aos="fade-right">
+                  <h4 class="card-title text-center" data-aos="fade-top">Andrea Aceto</h4>
                 </div>
                 <div class="col-lg-4 text-center">
-                  <img src="./images/semplicita.png">
-                  <h4 class="card-title text-center">Biagio Andreucci</h4>
+                  <img src="./images/semplicita.png" data-aos="fade-top">
+                  <h4 class="card-title text-center" data-aos="fade-top">Biagio Andreucci</h4>
                 </div>
                 <div class="col-lg-4 text-center">
-                  <img src="./images/semplicita.png">
-                  <h4 class="card-title text-center">Alessandro Falcone</h4>
+                  <img src="./images/semplicita.png" data-aos="fade-left">
+                  <h4 class="card-title text-center" data-aos="fade-top">Alessandro Falcone</h4>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 text-center">
-                  <img src="./images/semplicita.png">
-                  <h4 class="card-title text-center">Michele Rabesco</h4>
+                  <img src="./images/semplicita.png" data-aos="fade-left">
+                  <h4 class="card-title text-center" data-aos="fade-top">Michele Rabesco</h4>
                 </div>
                 <div class="col-lg-6 text-center">
-                  <img src="./images/semplicita.png">
-                  <h4 class="card-title text-center">Gabriele Santoro</h4>
+                  <img src="./images/semplicita.png" data-aos="fade-right">
+                  <h4 class="card-title text-center" data-aos="fade-top">Gabriele Santoro</h4>
                 </div>
               </div>
             </div>
@@ -192,21 +180,36 @@
         </div>
     </section>
     <!-- Footer-->
-    <section>
-        <div class="container">
-            <footer class="py-3 my-4">
-              <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Login</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Sign Up</a></li>
-                <li class="nav-item"><a href="#progetto" class="nav-link px-2 text-muted">Progetto</a></li>
-                <li class="nav-item"><a href="#team" class="nav-link px-2 text-muted">Team</a></li>
-                <li class="nav-item"><a href="#contatti" class="nav-link px-2 text-muted">Contatti</a></li>
-              </ul>
-              <p class="text-center text-muted">&copy; 2023 Comun-ity</p>
-            </footer>
-          </div>
-          
-    </section>
+    <div id="footer-placeholder"></div>  
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      $(function(){
+
+        AOS.init({// Global settings:
+        disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+        startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+        initClassName: 'aos-init', // class applied after initialization
+        animatedClassName: 'aos-animate', // class applied on animation
+        useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+        disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+        debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+        throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+        
+
+        // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+        offset: 120, // offset (in px) from the original trigger point
+        delay: 0, // values from 0 to 3000, with step 50ms
+        duration: 400, // values from 0 to 3000, with step 50ms
+        easing: 'ease', // default easing for AOS animations
+        once: true, // whether animation should happen only once - while scrolling down
+        mirror: false, // whether elements should animate out while scrolling past them
+        anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+      });
+
+        $("#nav-placeholder").load("./navbar/navbar.html")
+        $("#footer-placeholder").load("./footer/footer.html")
+      });
+    </script>
 </body>
 </html>
