@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 public class Utente {
 	
+	/**
+	 * Attributes.
+	 */
 	private long id;
 	private String ruolo;
 	private String nome;
