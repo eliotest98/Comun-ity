@@ -2,6 +2,9 @@ package model;
 
 public class Annuncio {
 	
+	/**
+	 * Attributes.
+	 */
 	private long id;
 	private String abilitazioneRichiesta;
 	private Utente autore;
