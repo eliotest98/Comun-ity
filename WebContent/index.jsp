@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <div id="nav-placeholder"></div>
+    <%@ include file="./navbar/navbar.html" %>
     <!-- Caeousel -->
     <section id="carousel">
         <div id="landingCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -117,7 +119,7 @@
               <h3 class="card-title text-center" data-aos="fade-down">Team Members</h3>
               <div class="row">
                 <div class="col-lg-4 text-center">
-                  <img src="./images/semplicita.png" data-aos="fade-right">
+                  <img src="./images/andrea_aceto.jpg" data-aos="fade-right">
                   <h4 class="card-title text-center" data-aos="fade-top">Andrea Aceto</h4>
                 </div>
                 <div class="col-lg-4 text-center">
@@ -131,11 +133,11 @@
               </div>
               <div class="row">
                 <div class="col-lg-6 text-center">
-                  <img src="./images/semplicita.png" data-aos="fade-left">
+                  <img src="./images/michele-rabesco.jpg" data-aos="fade-left">
                   <h4 class="card-title text-center" data-aos="fade-top">Michele Rabesco</h4>
                 </div>
                 <div class="col-lg-6 text-center">
-                  <img src="./images/semplicita.png" data-aos="fade-right">
+                  <img src="./images/gabriele_santoro.jpg" data-aos="fade-right">
                   <h4 class="card-title text-center" data-aos="fade-top">Gabriele Santoro</h4>
                 </div>
               </div>
@@ -180,7 +182,7 @@
         </div>
     </section>
     <!-- Footer-->
-    <div id="footer-placeholder"></div>  
+    <%@ include file="./footer/footer.html" %>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
@@ -206,9 +208,6 @@
         mirror: false, // whether elements should animate out while scrolling past them
         anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
       });
-
-        $("#nav-placeholder").load("./navbar/navbar.html")
-        $("#footer-placeholder").load("./footer/footer.html")
       });
     </script>
 </body>

@@ -1,0 +1,10 @@
+/*Navbar*/
+
+.nav-link{
+	color: #000;
+	font-weight: 600;
+}
+
+.nav-link:hover{
+	color: dimgray;
+}
