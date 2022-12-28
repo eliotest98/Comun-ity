@@ -1,22 +1,27 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import org.bson.types.ObjectId;
 
 public class Utente {
 	
 	/**
 	 * Attributes.
 	 */
-	private long id;
+	private ObjectId id;
 	private String ruolo;
 	private String nome;
 	private String cognome;
+	private Integer eta;
 	private String mail;
 	private String password;
 	private String sesso;
 	private String numeroTelefono;
 	private String indirizzo;
 	private LocalDate dataNascita;
+	private ArrayList<Double> recensioni;
 	
 	
 	/**
@@ -29,10 +34,10 @@ public class Utente {
 	/**
 	 * Constructor.
 	 * 
-	 * @param id represents User identifier
 	 * @param ruolo represents User role {cittadino, professionista, admin}
 	 * @param nome represents User first name
 	 * @param cognome represents User last name
+	 * @param eta represents User age
 	 * @param mail represents User email address
 	 * @param password represents User account password
 	 * @param sesso represents User BIOLOGICAL sex 
@@ -40,26 +45,27 @@ public class Utente {
 	 * @param indirizzo represents User home address
 	 * @param dataNascita represents User birth date
 	 */
-	public Utente(long id, String ruolo, String nome, String cognome, String mail, String password, String sesso,
+	public Utente(String ruolo, String nome, String cognome, Integer eta, String mail, String password, String sesso,
 			String numeroTelefono, String indirizzo, LocalDate dataNascita) {
 		super();
-		this.id = id;
 		this.ruolo = ruolo;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.eta = eta;
 		this.mail = mail;
 		this.password = password;
 		this.sesso = sesso;
 		this.numeroTelefono = numeroTelefono;
 		this.indirizzo = indirizzo;
 		this.dataNascita = dataNascita;
+		this.recensioni = new ArrayList<Double>(); 
 	}
 
 
 	/**
 	 * @return User identfier
 	 */
-	public long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
@@ -67,7 +73,7 @@ public class Utente {
 	/**
 	 * @param id is the User identifier to set
 	 */
-	public void setId(long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -119,6 +125,19 @@ public class Utente {
 		this.cognome = cognome;
 	}
 
+	/**
+	 * @return User age
+	 */
+	public Integer getEta() {
+		return eta;
+	}
+
+	/**
+	 * @param eta is the User age to set
+	 */
+	public void setEta(Integer eta) {
+		this.eta = eta;
+	}
 
 	/**
 	 * @return User email
@@ -215,13 +234,49 @@ public class Utente {
 		this.dataNascita = dataNascita;
 	}
 
+	/**
+	 * @return list of reviews
+	 */
+	public ArrayList<Double> getRecensioni() {
+		return recensioni;
+	}
+
+	/**
+	 * @param recensioni is the review list to set
+	 */
+	public void setRecensioni(ArrayList<Double> recensioni) {
+		this.recensioni = recensioni;
+	}
+	
+	/**
+	 * @param recensione is the review to add to the list of reviews
+	 */
+	public void addRecensione(double recensione) {
+		recensioni.add(recensione);
+	}
+
+	/**
+	 * @return reputation
+	 */
+	public double getReputazione() {
+		
+		if (recensioni.isEmpty()) {
+			return 0.0;
+		}
+
+		double sum = 0.0;
+		for (double recensione : recensioni) {
+			sum += recensione;
+		}
+
+		return sum / recensioni.size();
+	}
 
 	@Override
 	public String toString() {
-		return "Utente [id=" + id + ", ruolo=" + ruolo + ", nome=" + nome + ", cognome=" + cognome + ", mail=" + mail
-				+ ", password=" + password + ", sesso=" + sesso + ", numeroTelefono=" + numeroTelefono + ", indirizzo="
-				+ indirizzo + ", dataNascita=" + dataNascita + "]";
+		return "Utente [id=" + id + ", ruolo=" + ruolo + ", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta
+				+ ", mail=" + mail + ", password=" + password + ", sesso=" + sesso + ", numeroTelefono="
+				+ numeroTelefono + ", indirizzo=" + indirizzo + ", dataNascita=" + dataNascita + ", reputazione=" + getReputazione() + "]";
 	}
-	
 
 }

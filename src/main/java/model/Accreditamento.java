@@ -1,16 +1,24 @@
 package model;
 
+import java.time.LocalDate;
+
 import javax.swing.text.Document;
+
+import org.bson.types.ObjectId;
 
 public class Accreditamento {
 	
 	/**
 	 * Attributes.
 	 */
+	private ObjectId id;
 	private Utente cittadino;
 	private String abilitazione;
 	private Document allegato;
-	private boolean accettata;
+	private LocalDate dataSottomissione;
+	private LocalDate dataVisione;
+	private String stato;
+	
 	
 	/**
 	 * Empty constructor.
@@ -25,14 +33,30 @@ public class Accreditamento {
 	 * @param cittadino is the reference to the User who submitted the request
 	 * @param abilitazione is the qualification the User wants to demonstrate he has
 	 * @param allegato is the documentation issued
-	 * @param accettata represents the state of the request {false = not accepted, true = accepted}
+	 * @param stato represents the state of the request {SOTTOMESSA, RIFIUTATA, ACCETTATA}
 	 */
-	public Accreditamento(Utente cittadino, String abilitazione, Document allegato, boolean accettata) {
+	public Accreditamento(Utente cittadino, String abilitazione, Document allegato,
+			LocalDate dataVisione, String stato) {
 		super();
 		this.cittadino = cittadino;
 		this.abilitazione = abilitazione;
 		this.allegato = allegato;
-		this.accettata = accettata;
+		this.dataSottomissione = LocalDate.now();
+		this.stato = stato;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
+
+	/**
+	 * @param id is the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 
 	/**
@@ -78,19 +102,53 @@ public class Accreditamento {
 	}
 
 	/**
-	 * @return request state
+	 * @return application date
 	 */
-	public boolean isAccettata() {
-		return accettata;
+	public LocalDate getDataSottomissione() {
+		return dataSottomissione;
 	}
 
 	/**
-	 * @param accettata is the request state to set
+	 * @param dataSottomissione is the application date to set
 	 */
-	public void setAccettata(boolean accettata) {
-		this.accettata = accettata;
+	public void setDataSottomissione(LocalDate dataSottomissione) {
+		this.dataSottomissione = dataSottomissione;
 	}
-	
+
+	/**
+	 * @return the examination date
+	 */
+	public LocalDate getDataVisione() {
+		return dataVisione;
+	}
+
+	/**
+	 * @param dataVisione is the examination date to set
+	 */
+	public void setDataVisione(LocalDate dataVisione) {
+		this.dataVisione = dataVisione;
+	}
+
+	/**
+	 * @return the request state
+	 */
+	public String getStato() {
+		return stato;
+	}
+
+	/**
+	 * @param stato is the state of the request to set
+	 */
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	@Override
+	public String toString() {
+		return "Accreditamento [cittadino=" + cittadino + ", abilitazione=" + abilitazione + ", allegato=" + allegato
+				+ ", dataSottomissione=" + dataSottomissione + ", dataVisione=" + dataVisione + ", stato=" + stato
+				+ "]";
+	}
 	
 	
 }
