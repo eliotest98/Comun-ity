@@ -1,804 +1,117 @@
-@charset "ISO-8859-1";
-
-/*
-	Inizio Pop Up
-*/
-* {
-	box-sizing: border-box
+body{
+	background-color: whitesmoke;
 }
 
-/* Set a style for all buttons */
-button.cancelbtn {
-	color: white;
-	padding: 40px 40px;
-	margin: 8px 0;
-	border: none;
-	cursor: pointer;
-	width: 100%;
-	opacity: 0.9;
+/*Navbar*/
+
+.nav-link{
+	color: #000;
+	font-weight: 600;
 }
 
-button:hover {
-	opacity: 1;
+.nav-link:hover{
+	color: dimgray;
 }
 
-div.modal form.modal-content div.container input#email, div.modal form.modal-content div.container input#telefono
-	{
-	background-color: #2F2F2F;
-	border: 0;
-	width: 250px;
-	height: 40px;
-	font-size: 20px;
-	padding: 10px;
-	border-radius: 20px;
-	color: #F2F3F7
+/*Carousel*/
+
+.carousel-item {
+	background: black;
 }
 
-/* Float cancel and delete buttons and add an equal width */
-.cancelbtn {
-	float: right;
+.carousel-item > img {
+	opacity: 0.4;
 }
 
-/* Add a color to the cancel button */
-.cancelbtn {
-	color: black;
-	background: url(../images/invio.png) no-repeat;
-	background-color: none;
-	background-position: center;
-	background-size: 80px;
-}
-
-/* Add padding and center-align text to the container */
-.container {
-	padding: 16px;
-	text-align: center;
-}
-
-/* The Modal (background) */
-.modal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: none; /* Enable scroll if needed */
-	background-color: #121212;
-	padding-top: 50px;
-}
-
-/* Modal Content/Box */
-.modal-content {
-	background-color: #373737;
-	margin: 5% auto 15% auto;
-	height: 80%;
-	width: 70%;
-	/* Could be more or less, depending on screen size */
-	border-radius: 20px;
-}
-
-/* Style the horizontal ruler */
-hr {
-	border: 1px solid #f1f1f1;
-	margin-bottom: 25px;
-}
-
-/* The Modal Close Button (x) */
-.close {
-	position: absolute;
-	right: 35px;
-	top: 15px;
-	font-size: 40px;
-	font-weight: bold;
-	color: #f1f1f1;
-}
-
-.close:hover, .close:focus {
-	color: #f44336;
-	cursor: pointer;
-}
-
-table#form {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-table#form tr td {
-	padding: 10px;
-}
-
-table#form tr td img {
-	width: 60%;
-}
-
-/* Clear floats */
-.clearfix::after {
+#landingCarousel .carousel-item img {  
+	object-fit: cover;
+	object-position: center;
+	overflow: hidden;
+	height:90vh;
+  }
+  
+#landingCarousel .carousel-item:before {
 	content: "";
-	clear: both;
-	display: table;
-}
-
-/* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-	.cancelbtn {
-		width: 100%;
-	}
-}
-/*fine pop up*/
-body {
-	font-family: Arial, Helvetica, sans-serif;
-	background: black url(../images/sfondo_index.jpg) no-repeat;
-	background-size: cover;
-}
-
-li.clicked {
-	color: #34FFC8;
-}
-
-ul#menu, ul#menu li {
-	float: left;
-	margin: 0;
-	padding: 20;
-}
-
-ul#menu li {
-	list-style: none;
-	margin-left: 30px;
-}
-
-ul#menu li.selected a {
-	text-decoration-color: #34FFC8;
-	color: #F2F3F7;
-	text-decoration-thickness: 2px;
-	margin-left: 380px;
-}
-
-ul#menu li.footer button {
-	margin-top: 20px;
-	background-color: #2F2F2F;
-	width: 180px;
-	height: 50px;
-	margin-left: 400px;
-	color: #FFFFFF;
-	font-weight: 600;
-	border-radius: 20px;
-	border: 0px;
-}
-
-ul#menu li.submit button {
-	margin-top: -10px;
-	background-color: #FFFFFF;
-	width: 180px;
-	height: 50px;
-	margin-left: 400px;
-	color: #212121;
-	font-weight: 600;
-	border-radius: 20px;
-	border: 0px;
-}
-
-ul#menu li.not_selected a {
-	color: #97979C;
-	text-decoration: none;
-}
-
-section#menubar {
-	margin: 50px 0px 0px 80px;
-	height: 72px;
-	padding: 0;
-	width: 1400px;
-}
-
-div#header {
-	width: 100%;
-}
-
-div#writecenter {
-	/* or absolute */
-	top: 50%;
-	left: 50%;
-	/* bring your own prefixes */
-	transform: translate(-50%, -50%);
-	color: #FFFFFF;
-	font-size: 30px;
+	display: block;
 	position: absolute;
-	margin-top: 70px;
-	text-align: center;
-}
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+  }
 
-div#descriptions {
-	width: 100%;
-	height: 1460px;
-	position: absolute;
-	margin-top: 1375px;
-	background-color: #212121;
-	margin-left: -10px;
+  .carousel-caption {
+	transform: translateY(-20%);
+	bottom: 0;
 	top: 50%;
-	left: 50%;
-	/* bring your own prefixes */
-	transform: translate(-50%, -50%);
+	padding-left: 10%;
+	padding-right: 10%;
+  }
+
+/*Progetto*/
+
+#progetto {
+	padding: 50px;
 }
 
-div#ilnostroteam {
-	width: 1080px;
-	height: 250px;
-	color: #EEEEEE;
-	text-align: right;
+.col-xxl-4 > img {
+	height: 150px;
+	background-size: contain;
+	white-space:pre-line;
 }
 
-div#lanostramissione {
-	width: 1080px;
-	height: 400px;
-	color: #EEEEEE;
-	margin-left: 150px;
+.col-xxl-4 > p{
+	padding-left: 10%;
+	padding-right: 10%;
+	margin-top: 5%;
+	font-weight: 200;
 }
 
-div#newslater {
-	width: 100%;
+/*Team*/
+
+#team{
+	padding: 50px;
+}
+
+.col-lg-6 > img {
 	height: 200px;
-	position: absolute;
-	margin-top: 2200px;
-	background-color: #121212;
-	margin-left: -10px;
-	top: 50%;
-	left: 50%;
-	/* bring your own prefixes */
-	transform: translate(-50%, -50%);
+	margin-bottom: 25px;
+	border-radius: 50px;
+	white-space:pre-line;
 }
 
-div#textnewslater {
-	margin-top: 60px;
-	margin-left: 80px;
+.col-lg-6 {
+	margin-top: 40px;
 }
 
-ul#menu li.footer {
-	text-decoration-color: #CCCCCC;
-	color: #CCCCCC;
-	text-decoration-thickness: 2px;
+.col-lg-4{
+	margin-top: 40px;
 }
 
-ul#menu li.footer input {
-	margin-top: 20px;
-	background-color: #2F2F2F;
-	width: 140px;
-	height: 40px;
-	margin-left: 400px;
-	color: #FFFFFF;
-	font-weight: 600;
-	border-radius: 20px;
-	border: 0px;
+.col-lg-4 > img {
+	height: 200px;
+	margin-bottom: 25px;
+	border-radius: 50px;
+	white-space:pre-line;
 }
 
-div#info_footer {
+/*Contatti*/
+
+#contatti{
+	padding: 50px;
+}
+
+#contattiBody{
+	padding: 2% 10% 5% 10%;
+}
+
+/*General*/
+
+#card{
 	width: 100%;
-	height: 300px;
-	position: absolute;
-	margin-top: 2420px;
-	background-color: #34FFC8;
-	margin-left: -10px;
-	top: 50%;
-	left: 50%;
-	/* bring your own prefixes */
-	transform: translate(-50%, -50%);
+	height: auto;
+	margin-top: 50px;
 }
 
-div#information_footer {
-	margin-top: 60px;
-	margin-left: 80px;
-}
-
-ul#menu li.footer table {
-	margin-top: 20px;
-	background-color: #2F2F2F;
-	width: 140px;
-	height: 40px;
-	margin-left: 300px;
-	color: #FFFFFF;
-	border: 0px;
-}
-
-ul#menu li.footer table#footer_table {
-	background-color: #34FFC8;
-	color: #22222D;
-	text-decoration-thickness: 2px;
-	font-size: 20px;
-}
-
-ul#menu li.footer table#footer_table th {
-	padding-bottom: 20px;
-	width: 200px;
-	text-align: center;
-	font-weight: 800;
-}
-
-ul#menu li.footer table#footer_table th.destra {
-	padding-bottom: 20px;
-	width: 200px;
-	padding-left: 60px;
-	text-align: center;
-	font-weight: 800;
-}
-
-ul#menu li.footer table#footer_table td {
-	text-align: center;
-}
-
-ul#menu li.footer table#footer_table td.destra {
-	padding-bottom: 20px;
-	padding-top: 20px;
-	padding-left: 60px;
-	text-align: center;
-}
-
-ul#menu li.description {
-	float: left;
-}
-
-ul#menu li.description input.vai, div#ilnostroteam input.vai {
-	background-color: #34FFC8;
-	width: 140px;
-	height: 40px;
-	border-radius: 20px;
-	border: 0px;
-	margin-top: 60px;
-	font-weight: 600;
-}
-
-div#descrs {
-	margin-top: 60px;
-	position: fixed;
-	width: 80%;
-	left: 40%;
-	margin-left: -25%;
-}
-
-div#diritti {
-	width: 100%;
-	height: 80px;
-	position: absolute;
-	margin-top: 2600px;
-	background-color: #121212;
-	margin-left: -10px;
-	top: 50%;
-	left: 50%;
-	/* bring your own prefixes */
-	transform: translate(-50%, -50%);
-}
-
-div#dirits {
-	margin-top: 15px;
-}
-
-ul#menu li.diritti h1 {
-	color: #CCCCCC;
-	font-size: 15px;
-}
-
-ul#menu li.diritti h1.diritti {
-	margin-left: 400px;
-}
-
-@media screen and (max-width: 1400px) {
-	body {
-		font-family: Arial, Helvetica, sans-serif;
-		background: black url(../images/sfondo_index.jpg) no-repeat;
-		background-size: cover;
-	}
-	li.clicked {
-		color: #34FFC8;
-	}
-	ul#menu, ul#menu li {
-		float: left;
-		margin: 0;
-		padding: 20;
-	}
-	ul#menu li {
-		list-style: none;
-		margin-left: 30px;
-	}
-	ul#menu li.selected a {
-		text-decoration-color: #34FFC8;
-		color: #F2F3F7;
-		text-decoration-thickness: 2px;
-		margin-left: 280px;
-	}
-	ul#menu li.submit button {
-		margin-top: -10px;
-		background-color: #FFFFFF;
-		width: 180px;
-		height: 50px;
-		margin-left: 300px;
-		color: #212121;
-		font-weight: 600;
-		border-radius: 20px;
-		border: 0px;
-	}
-	ul#menu li.not_selected a {
-		color: #97979C;
-		text-decoration: none;
-	}
-	section#menubar {
-		margin: 50px 0px 0px 80px;
-		height: 72px;
-		padding: 0;
-		width: 1400px;
-	}
-	div#header {
-		width: 100%;
-	}
-	div#writecenter {
-		/* or absolute */
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-		color: #FFFFFF;
-		font-size: 30px;
-		position: absolute;
-		margin-top: 70px;
-		text-align: center;
-	}
-	div#descriptions {
-		width: 100%;
-		height: 1460px;
-		position: absolute;
-		margin-top: 1320px;
-		background-color: #212121;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#ilnostroteam {
-		width: 1080px;
-		height: 250px;
-		color: #EEEEEE;
-		text-align: right;
-	}
-	div#lanostramissione {
-		width: 1080px;
-		height: 400px;
-		color: #EEEEEE;
-		margin-left: 150px;
-	}
-	div#newslater {
-		width: 100%;
-		height: 200px;
-		position: absolute;
-		margin-top: 2150px;
-		background-color: #121212;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#textnewslater {
-		margin-top: 60px;
-		margin-left: 80px;
-	}
-	ul#menu li.footer {
-		text-decoration-color: #CCCCCC;
-		color: #CCCCCC;
-		text-decoration-thickness: 2px;
-	}
-	ul#menu li.footer input {
-		margin-top: 20px;
-		background-color: #2F2F2F;
-		width: 140px;
-		height: 40px;
-		margin-left: 400px;
-		color: #FFFFFF;
-		font-weight: 600;
-		border-radius: 20px;
-		border: 0px;
-	}
-	div#info_footer {
-		width: 100%;
-		height: 300px;
-		position: absolute;
-		margin-top: 2400px;
-		background-color: #34FFC8;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#information_footer {
-		margin-top: 60px;
-		margin-left: 80px;
-	}
-	ul#menu li.footer table {
-		margin-top: 20px;
-		background-color: #2F2F2F;
-		width: 140px;
-		height: 40px;
-		margin-left: 300px;
-		color: #FFFFFF;
-		border: 0px;
-	}
-	ul#menu li.footer table#footer_table {
-		background-color: #34FFC8;
-		color: #22222D;
-		text-decoration-thickness: 2px;
-		font-size: 20px;
-	}
-	ul#menu li.footer table#footer_table th {
-		padding-bottom: 20px;
-		width: 200px;
-		text-align: center;
-		font-weight: 800;
-	}
-	ul#menu li.footer table#footer_table th.destra {
-		padding-bottom: 20px;
-		width: 200px;
-		padding-left: 60px;
-		text-align: center;
-		font-weight: 800;
-	}
-	ul#menu li.footer table#footer_table td {
-		text-align: center;
-	}
-	ul#menu li.footer table#footer_table td.destra {
-		padding-bottom: 20px;
-		padding-top: 20px;
-		padding-left: 60px;
-		text-align: center;
-	}
-	ul#menu li.description {
-		float: left;
-	}
-	ul#menu li.description input.vai, div#ilnostroteam input.vai {
-		background-color: #34FFC8;
-		width: 140px;
-		height: 40px;
-		border-radius: 20px;
-		border: 0px;
-		margin-top: 60px;
-		font-weight: 600;
-	}
-	div#descrs {
-		margin-top: 60px;
-		position: fixed;
-		width: 90%;
-		left: 30%;
-		margin-left: -25%;
-	}
-	div#diritti {
-		width: 100%;
-		height: 80px;
-		position: absolute;
-		margin-top: 2590px;
-		background-color: #121212;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#dirits {
-		margin-top: 15px;
-	}
-	ul#menu li.diritti h1 {
-		color: #CCCCCC;
-		font-size: 15px;
-	}
-	ul#menu li.diritti h1.diritti {
-		margin-left: 280px;
-	}
-}
-
-@media screen and (max-width: 1210px) {
-	body {
-		font-family: Arial, Helvetica, sans-serif;
-		background: black url(../images/sfondo_index.jpg) no-repeat;
-		background-size: cover;
-	}
-	li.clicked {
-		color: #34FFC8;
-	}
-	ul#menu, ul#menu li {
-		float: left;
-		margin: 0;
-		padding: 20;
-	}
-	ul#menu li {
-		list-style: none;
-		margin-left: 30px;
-	}
-	ul#menu li.selected a {
-		text-decoration-color: #34FFC8;
-		color: #F2F3F7;
-		text-decoration-thickness: 2px;
-		margin-left: 180px;
-	}
-	ul#menu li.submit button {
-		margin-top: -10px;
-		background-color: #FFFFFF;
-		width: 180px;
-		height: 50px;
-		margin-left: 120px;
-		color: #212121;
-		font-weight: 600;
-		border-radius: 20px;
-		border: 0px;
-	}
-	ul#menu li.not_selected a {
-		color: #97979C;
-		text-decoration: none;
-	}
-	section#menubar {
-		margin: 50px 0px 0px 80px;
-		height: 72px;
-		padding: 0;
-		width: 1400px;
-	}
-	div#header {
-		width: 100%;
-	}
-	div#writecenter {
-		/* or absolute */
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-		color: #FFFFFF;
-		font-size: 30px;
-		position: absolute;
-		margin-top: 70px;
-		text-align: center;
-	}
-	div#descriptions {
-		width: 100%;
-		height: 1700px;
-		position: absolute;
-		margin-top: 1280px;
-		background-color: #212121;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#ilnostroteam {
-		width: 1080px;
-		height: 250px;
-		color: #EEEEEE;
-		text-align: right;
-	}
-	div#lanostramissione {
-		width: 1080px;
-		height: 400px;
-		color: #EEEEEE;
-		margin-left: 150px;
-	}
-	div#newslater {
-		width: 100%;
-		height: 200px;
-		position: absolute;
-		margin-top: 2140px;
-		background-color: #121212;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#textnewslater {
-		margin-top: 60px;
-		margin-left: 60px;
-	}
-	ul#menu li.footer {
-		text-decoration-color: #CCCCCC;
-		color: #CCCCCC;
-		text-decoration-thickness: 2px;
-	}
-	ul#menu li.footer input {
-		margin-top: 20px;
-		background-color: #2F2F2F;
-		width: 140px;
-		height: 40px;
-		margin-left: 300px;
-		color: #FFFFFF;
-		font-weight: 600;
-		border-radius: 20px;
-		border: 0px;
-	}
-	div#info_footer {
-		width: 100%;
-		height: 300px;
-		position: absolute;
-		margin-top: 2390px;
-		background-color: #34FFC8;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#information_footer {
-		margin-top: 60px;
-		margin-left: 60px;
-	}
-	ul#menu li.footer table {
-		margin-top: 20px;
-		background-color: #2F2F2F;
-		width: 140px;
-		height: 40px;
-		margin-left: 200px;
-		color: #FFFFFF;
-		border: 0px;
-	}
-	ul#menu li.footer table#footer_table {
-		background-color: #34FFC8;
-		color: #22222D;
-		text-decoration-thickness: 2px;
-		font-size: 20px;
-	}
-	ul#menu li.footer table#footer_table th {
-		padding-bottom: 20px;
-		width: 200px;
-		text-align: center;
-		font-weight: 800;
-	}
-	ul#menu li.footer table#footer_table th.destra {
-		padding-bottom: 20px;
-		width: 200px;
-		padding-left: 60px;
-		text-align: center;
-		font-weight: 800;
-	}
-	ul#menu li.footer table#footer_table td {
-		text-align: center;
-	}
-	ul#menu li.footer table#footer_table td.destra {
-		padding-bottom: 20px;
-		padding-top: 20px;
-		padding-left: 60px;
-		text-align: center;
-	}
-	ul#menu li.description {
-		float: left;
-	}
-	ul#menu li.description input.vai, div#ilnostroteam input.vai {
-		background-color: #34FFC8;
-		width: 140px;
-		height: 40px;
-		border-radius: 20px;
-		border: 0px;
-		margin-top: 60px;
-		font-weight: 600;
-	}
-	div#descrs {
-		margin-top: 60px;
-		position: fixed;
-		width: 90%;
-		left: 30%;
-		margin-left: -25%;
-	}
-	div#diritti {
-		width: 100%;
-		height: 80px;
-		position: absolute;
-		margin-top: 2570px;
-		background-color: #121212;
-		margin-left: -10px;
-		top: 50%;
-		left: 50%;
-		/* bring your own prefixes */
-		transform: translate(-50%, -50%);
-	}
-	div#dirits {
-		margin-top: 15px;
-	}
-	ul#menu li.diritti h1 {
-		color: #CCCCCC;
-		font-size: 15px;
-	}
-	ul#menu li.diritti h1.diritti {
-		margin-left: 100px;
-	}
+section {
+	margin-bottom: 20px;
 }
