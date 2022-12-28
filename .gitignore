@@ -28,4 +28,3 @@ hs_err_pid*
 *.settings
 src/main/java/controller/utility/DbConnection.java
 /target/
-
