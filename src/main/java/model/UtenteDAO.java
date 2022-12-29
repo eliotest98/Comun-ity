@@ -18,7 +18,7 @@ public class UtenteDAO {
 		
 		try {
 		database.getCollection("utente").insertOne(docForDb(utente));
-		System.out.println("Utente agiunto al database con successo");
+		System.out.println("Utente aggiunto al database con successo");
 		
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'inserimento dell'utente" + e.getMessage());
