@@ -10,8 +10,9 @@ public class Annuncio {
 	 * Attributes.
 	 */
 	private ObjectId id;
+	private Integer annuncioId;
 	private String abilitazioneRichiesta;
-	private Utente autore;
+	private Integer autore;
 	private String titolo;
 	private String descrizione;
 	private String indirizzo;
@@ -35,9 +36,10 @@ public class Annuncio {
 	 * @param descrizione represents Annuncio description
 	 * @param indirizzo represents Annuncio useful place address
 	 */
-	public Annuncio(String abilitazioneRichiesta, Utente autore, String titolo, String descrizione,
+	public Annuncio(Integer annuncioId, String abilitazioneRichiesta, Integer autore, String titolo, String descrizione,
 			String indirizzo) {
 		super();
+		this.annuncioId= annuncioId;
 		this.abilitazioneRichiesta = abilitazioneRichiesta;
 		this.autore = autore;
 		this.titolo = titolo;
@@ -45,6 +47,29 @@ public class Annuncio {
 		this.indirizzo = indirizzo;
 		this.dataPubblicazione = LocalDate.now();
 		this.dataFine = dataPubblicazione.plusDays(30); //default expire date
+	}
+	
+	
+
+	/**
+	 * @return the annuncioId
+	 */
+	public Integer getAnnuncioId() {
+		return annuncioId;
+	}
+
+	/**
+	 * @param annuncioId the annuncioId to set
+	 */
+	public void setAnnuncioId(Integer annuncioId) {
+		this.annuncioId = annuncioId;
+	}
+
+	/**
+	 * @param dataPubblicazione the dataPubblicazione to set
+	 */
+	public void setDataPubblicazione(LocalDate dataPubblicazione) {
+		this.dataPubblicazione = dataPubblicazione;
 	}
 
 	/**
@@ -78,14 +103,14 @@ public class Annuncio {
 	/**
 	 * @return Annuncio author
 	 */
-	public Utente getAutore() {
+	public Integer getAutore() {
 		return autore;
 	}
 
 	/**
 	 * @param autore is the author to set
 	 */
-	public void setAutore(Utente autore) {
+	public void setAutore(Integer autore) {
 		this.autore = autore;
 	}
 

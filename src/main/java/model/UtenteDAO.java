@@ -1,7 +1,5 @@
 package model;
 
-import javax.management.Query;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
@@ -58,13 +56,13 @@ public class UtenteDAO {
 	*/
 	
 	//Trova un utente specifico nel database
-	public Document findUtente(Integer id) {
+	public Document findUtente(Utente utente) {
 		
 		Document doc=null;
 		
 		try {
 			
-			doc= database.getCollection("utente").find(Filters.eq("utenteId" , id)).first();
+			doc= database.getCollection("utente").find(Filters.eq("utenteId" , utente.getUtenteId())).first();
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
