@@ -23,7 +23,7 @@
           <div class="card-body">
             <form>
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <label for="exampleInputEmail1" class="form-label">Email</label>
                 <input type="email" placeholder="name@example.com" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
               </div>
               <div class="mb-3">
@@ -36,7 +36,7 @@
                 <button type="submit" class="btn btn-primary">Login</button>
               </div>
               <div class="col-xxl-4 text-end">
-                <a href="#">Non hai un account?</a>
+                <a href="/Comun-ity/RegistrazioneServlet">Non hai un account?</a>
               </div>
             </div>
             </form>

@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		Utente user = (Utente) session.getAttribute("user");
 		
 		if(user == null) {
-			response.sendRedirect("/Comun-ity/login/login.jsp"); //l'utente non è loggato
+			response.sendRedirect("/Comun-ity/guest/login.jsp"); //l'utente non è loggato
 		}else if((Boolean) session.getAttribute("admin") != null) {
 			if((Boolean) session.getAttribute("admin")) {
 				//TODO l'utente è già loggato ed è admin
