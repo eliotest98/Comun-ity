@@ -1,8 +1,7 @@
 package model;
 
-import java.time.LocalDate;
 
-import javax.swing.text.Document;
+import java.time.LocalDate;
 
 import org.bson.types.ObjectId;
 
@@ -12,9 +11,10 @@ public class Accreditamento {
 	 * Attributes.
 	 */
 	private ObjectId id;
-	private Utente richiedente;
+	private Integer accreditamentoId;
+	private String richiedente;
 	private String abilitazione;
-	private Document allegato;
+	private String allegato;
 	private LocalDate dataSottomissione;
 	private LocalDate dataVisione;
 	private String stato;
@@ -35,7 +35,7 @@ public class Accreditamento {
 	 * @param allegato is the documentation issued
 	 * 
 	 */
-	public Accreditamento(Utente utente, String abilitazione, Document allegato) {
+	public Accreditamento(String utente, String abilitazione, String allegato) {
 		super();
 		this.richiedente = utente;
 		this.abilitazione = abilitazione;
@@ -54,9 +54,10 @@ public class Accreditamento {
 	 * @param dataVisione represents the date of examination 
 	 * @param stato represents the state of the request {SOTTOMESSA, RIFIUTATA, ACCETTATA}
 	 */
-	public Accreditamento(Utente utente, String abilitazione, Document allegato,
+	public Accreditamento(Integer accreditamentoId, String utente, String abilitazione, String allegato,
 			LocalDate dataSottomissione, LocalDate dataVisione, String stato) {
 		super();
+		this.accreditamentoId = accreditamentoId;
 		this.richiedente = utente;
 		this.abilitazione = abilitazione;
 		this.allegato = allegato;
@@ -80,16 +81,30 @@ public class Accreditamento {
 	}
 
 	/**
+	 * @return the accreditamentoId
+	 */
+	public Integer getAccreditamentoId() {
+		return accreditamentoId;
+	}
+
+	/**
+	 * @param accreditamentoId the accreditamentoId to set
+	 */
+	public void setAccreditamentoId(Integer accreditamentoId) {
+		this.accreditamentoId = accreditamentoId;
+	}
+
+	/**
 	 * @return applicant reference
 	 */
-	public Utente getRichiedente() {
+	public String getRichiedente() {
 		return richiedente;
 	}
 
 	/**
 	 * @param cittadino is the applicant reference to set
 	 */
-	public void setRichiedente(Utente utente) {
+	public void setRichiedente(String utente) {
 		this.richiedente = utente;
 	}
 
@@ -110,14 +125,14 @@ public class Accreditamento {
 	/**
 	 * @return applicant documentation
 	 */
-	public Document getAllegato() {
+	public String getAllegato() {
 		return allegato;
 	}
 
 	/**
 	 * @param allegato is the document to set
 	 */
-	public void setAllegato(Document allegato) {
+	public void setAllegato(String allegato) {
 		this.allegato = allegato;
 	}
 
