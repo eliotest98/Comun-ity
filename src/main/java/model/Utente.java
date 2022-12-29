@@ -45,7 +45,9 @@ public class Utente {
 	 * @param indirizzo represents User home address
 	 * @param dataNascita represents User birth date
 	 */
+
 	public Utente(String ruolo, String nome, String cognome, Integer eta, String mail, String password, String sesso,
+
 			String numeroTelefono, String indirizzo, LocalDate dataNascita) {
 		super();
 		this.ruolo = ruolo;
