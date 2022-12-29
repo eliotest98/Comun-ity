@@ -16,7 +16,7 @@
 <title>Login - Comun-ity</title>
 </head>
 <body>
-    <%@ include file="../navbar/navbar.html" %>
+    <%@ include file="./navbar/navbar.html" %>
       <div class="main-wrapper">
         <div id="card" class="shadow p-3 mb-5 bg-white rounded cardcontact">
           <h2 class="card-title text-center">Login</h2>
@@ -43,6 +43,6 @@
           </div>
         </div>
       </div>
-    <%@ include file="../footer/footer.html" %>
+    <%@ include file="./footer/footer.html" %>
 </body>
 </html>

@@ -21,7 +21,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <%@ include file="./navbar/navbar.html" %>
+    <%@ include file="./guest/navbar/navbar.html" %>
     <!-- Caeousel -->
     <section id="carousel">
         <div id="landingCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -182,7 +182,7 @@
         </div>
     </section>
     <!-- Footer-->
-    <%@ include file="./footer/footer.html" %>
+    <%@ include file="./guest/footer/footer.html" %>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="./js/index.js"></script>
