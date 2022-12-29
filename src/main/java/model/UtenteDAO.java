@@ -1,5 +1,7 @@
 package model;
 
+import javax.management.Query;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
@@ -10,41 +12,59 @@ import controller.utility.*;
 public class UtenteDAO {
 	
 	//Connessione al database
-	MongoDatabase connection=  DbConnection.connectToDb();
+	MongoDatabase database=  DbConnection.connectToDb();
 	
 	
 	//Inserisce un utente nel database
 	public void createUtente(Utente utente) {
 		
 		try {
-		connection.getCollection("utente").insertOne(docForDb(utente));
+		database.getCollection("utente").insertOne(docForDb(utente));
 		System.out.println("Utente agiunto al database con successo");
 		
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'inserimento dell'utente" + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
 	
 	//Esegue l'eliminazione di un utente nel database
 	public void deleteUtente(Utente utente) {
-		connection.getCollection("utente").deleteOne(Filters.eq("_id", utente.getId()));
+		try {
+			
+		database.getCollection("utente").deleteOne(Filters.eq("utenteId", utente.getUtenteId()));
+		System.out.println("Utente eliminato!");
+		}catch(MongoException e) {
+			System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
+		}
 	}
+	
+	/*
 	
 	//Esegue l'aggionramento di un utente nel database
-	public void updateUtente(Utente utente) {
-		connection.getCollection("utente").updateOne(Filters.eq("_id", utente.getId()), docForDb(utente));
+	public void updateUtente(Utente utenteNuovo , Utente utenteVecchio) {
+		try {
+		
+			Document documento= findUtente(utenteVecchio.getUtenteId());
+			
+			Update update
+			
+		}catch(MongoException e) {
+			System.out.println("Errore durante l'aggiornamento dell'utente");
+		}
 	}
 	
+	*/
 	
 	//Trova un utente specifico nel database
-	public Document findUtente(ObjectId id) {
+	public Document findUtente(Integer id) {
 		
 		Document doc=null;
 		
 		try {
 			
-			doc= connection.getCollection("utente").find(Filters.eq("_id" , id)).first();
+			doc= database.getCollection("utente").find(Filters.eq("utenteId" , id)).first();
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
@@ -56,7 +76,8 @@ public class UtenteDAO {
 	//Crea un documento per mongoDB
 	public static Document docForDb(Utente utente) {
 		
-		Document doc= new Document("id" , utente.getId())
+		Document doc= new Document("_id", new ObjectId())
+									.append("utenteId", utente.getUtenteId())
 									.append("ruolo", utente.getRuolo())
 									.append("nome", utente.getNome())
 									.append("cognome", utente.getCognome())

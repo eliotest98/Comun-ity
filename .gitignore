@@ -27,5 +27,7 @@ hs_err_pid*
 *.project
 *.settings
 src/main/java/controller/utility/DbConnection.java
+src/main/java/mio/Main.java
+src/main/java/mio
 /target/
 src/main/webapp/META-INF/MANIFEST.MF
