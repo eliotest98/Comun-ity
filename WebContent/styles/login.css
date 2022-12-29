@@ -1,0 +1,28 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#footer-placeholder{
+     margin-top: auto;
+}
+
+
+#card{
+    width: 70%;
+    min-width: 400px;
+    margin: 5% auto;
+}
+
+.container{
+	margin-top: auto;
+}
+
+@media screen and (max-width: 992px){
+	
+	#card{
+	 margin: 25% auto 5%;
+	}
+	
+}
