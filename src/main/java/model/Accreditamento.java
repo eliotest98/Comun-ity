@@ -12,7 +12,7 @@ public class Accreditamento {
 	 * Attributes.
 	 */
 	private ObjectId id;
-	private Utente cittadino;
+	private Utente richiedente;
 	private String abilitazione;
 	private Document allegato;
 	private LocalDate dataSottomissione;
@@ -28,20 +28,40 @@ public class Accreditamento {
 	}
 
 	/**
-	 * Constructor.
+	 * Constructor for new issue.
 	 * 
-	 * @param cittadino is the reference to the User who submitted the request
+	 * @param utente is the reference to the User who submitted the request
 	 * @param abilitazione is the qualification the User wants to demonstrate he has
 	 * @param allegato is the documentation issued
-	 * @param stato represents the state of the request {SOTTOMESSA, RIFIUTATA, ACCETTATA}
+	 * 
 	 */
-	public Accreditamento(Utente cittadino, String abilitazione, Document allegato,
-			LocalDate dataVisione, String stato) {
+	public Accreditamento(Utente utente, String abilitazione, Document allegato) {
 		super();
-		this.cittadino = cittadino;
+		this.richiedente = utente;
 		this.abilitazione = abilitazione;
 		this.allegato = allegato;
 		this.dataSottomissione = LocalDate.now();
+		this.stato = "sottomessa";
+	}	
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param utente is the reference to the User who submitted the request
+	 * @param abilitazione is the qualification the User wants to demonstrate he has
+	 * @param allegato is the documentation issued
+	 * @param dataSottomissione represents the date of submission
+	 * @param dataVisione represents the date of examination 
+	 * @param stato represents the state of the request {SOTTOMESSA, RIFIUTATA, ACCETTATA}
+	 */
+	public Accreditamento(Utente utente, String abilitazione, Document allegato,
+			LocalDate dataSottomissione, LocalDate dataVisione, String stato) {
+		super();
+		this.richiedente = utente;
+		this.abilitazione = abilitazione;
+		this.allegato = allegato;
+		this.dataSottomissione = dataSottomissione;
+		this.dataVisione = dataVisione;
 		this.stato = stato;
 	}
 
@@ -62,15 +82,15 @@ public class Accreditamento {
 	/**
 	 * @return applicant reference
 	 */
-	public Utente getCittadino() {
-		return cittadino;
+	public Utente getRichiedente() {
+		return richiedente;
 	}
 
 	/**
 	 * @param cittadino is the applicant reference to set
 	 */
-	public void setCittadino(Utente cittadino) {
-		this.cittadino = cittadino;
+	public void setRichiedente(Utente utente) {
+		this.richiedente = utente;
 	}
 
 	/**
@@ -145,7 +165,7 @@ public class Accreditamento {
 
 	@Override
 	public String toString() {
-		return "Accreditamento [cittadino=" + cittadino + ", abilitazione=" + abilitazione + ", allegato=" + allegato
+		return "Accreditamento [richiedente=" + richiedente + ", abilitazione=" + abilitazione + ", allegato=" + allegato
 				+ ", dataSottomissione=" + dataSottomissione + ", dataVisione=" + dataVisione + ", stato=" + stato
 				+ "]";
 	}
