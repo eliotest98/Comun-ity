@@ -76,11 +76,11 @@ public class LoginServlet extends HttpServlet {
 			//TODO
 			//Verifica credenziali
 			
-			//Errate -> ritorno
+			//Errate -> ritorno con errore
 			
 			//Corrette
-			//Corrette e cittadino/professionista
-			//Corrette e admin -> Dashboard admin
+			//Corrette e cittadino/professionista -> main.jsp
+			//Corrette e admin -> main.jsp e parametro admin
 			
 		}
 		

@@ -12,6 +12,7 @@ public class Utente {
 	 */
 	private ObjectId id;
 	private String ruolo;
+	private String abilitazione;
 	private String nome;
 	private String cognome;
 	private Integer eta;
@@ -35,6 +36,7 @@ public class Utente {
 	 * Constructor.
 	 * 
 	 * @param ruolo represents User role {cittadino, professionista, admin}
+	 * @param abilitazione represents User qualification {"nessuna" = cittadino}
 	 * @param nome represents User first name
 	 * @param cognome represents User last name
 	 * @param eta represents User age
@@ -46,11 +48,11 @@ public class Utente {
 	 * @param dataNascita represents User birth date
 	 */
 
-	public Utente(String ruolo, String nome, String cognome, Integer eta, String mail, String password, String sesso,
-
+	public Utente(String ruolo, String abilitazione, String nome, String cognome, Integer eta, String mail, String password, String sesso,
 			String numeroTelefono, String indirizzo, LocalDate dataNascita) {
 		super();
 		this.ruolo = ruolo;
+		this.abilitazione = abilitazione;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.eta = eta;
@@ -96,6 +98,19 @@ public class Utente {
 		this.ruolo = ruolo;
 	}
 
+	/**
+	 * @return the User qualification
+	 */
+	public String getAbilitazione() {
+		return abilitazione;
+	}
+
+	/**
+	 * @param abilitazione ise the User qualification to set
+	 */
+	public void setAbilitazione(String abilitazione) {
+		this.abilitazione = abilitazione;
+	}
 
 	/**
 	 * @return User first name
@@ -277,7 +292,7 @@ public class Utente {
 
 	@Override
 	public String toString() {
-		return "Utente [ruolo=" + ruolo + ", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta
+		return "Utente [ruolo=" + ruolo + ", abilitazione=" + abilitazione +", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta
 				+ ", mail=" + mail + ", password=" + password + ", sesso=" + sesso + ", numeroTelefono="
 				+ numeroTelefono + ", indirizzo=" + indirizzo + ", dataNascita=" + dataNascita + ", reputazione=" + getReputazione() + "]";
 	}

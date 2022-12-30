@@ -67,6 +67,7 @@ public class UtenteDAO {
 		
 		Document doc= new Document("_id", new ObjectId())
 									.append("ruolo", utente.getRuolo())
+									.append("abilitazione", utente.getAbilitazione())
 									.append("nome", utente.getNome())
 									.append("cognome", utente.getCognome())
 									.append("eta", utente.getEta())
@@ -86,6 +87,7 @@ public class UtenteDAO {
 		
 		Utente utente = new Utente(
 				doc.getString("ruolo"),
+				doc.getString("abilitazione"),
 				doc.getString("nome"),
 				doc.getString("cognome"),
 				doc.getInteger("eta"),
