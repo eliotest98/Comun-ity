@@ -1,26 +1,26 @@
 package controller.gestioneUtenza;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.mongodb.client.MongoDatabase;
-
-import controller.utility.DbConnection;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class HomeServlet
  */
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/HomeServlet")
+public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IndexServlet() {
+    public HomeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,7 +29,24 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("/Comun-ity/index.jsp");
+		
+		HttpSession session = request.getSession(true);
+		
+		if(session.getAttribute("user") != null) {
+			
+			
+			Boolean admin = (Boolean) session.getAttribute("admin");
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");
+			request.setAttribute("admin", admin);
+			
+			requestDispatcher.forward(request, response);
+			
+		}else {
+			response.sendRedirect("/Comun-ity/guest/login.jsp");
+		}
+		
+		
 	}
 
 	/**
@@ -38,13 +55,6 @@ public class IndexServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
-		String from = request.getParameter("email");
-	    String nome = request.getParameter("nome");
-		String messaggio = request.getParameter("messaggio");
-		
-		
-		
 	}
 
 }

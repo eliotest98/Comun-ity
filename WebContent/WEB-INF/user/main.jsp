@@ -13,8 +13,8 @@
 <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet"/>
 <title>Benvenuto - Comun-ity</title>
 
-<script src="../js/main.js"></script>
-<link rel="stylesheet" href="../styles/main.css"/>
+<script src="/Comun-ity/js/main.js"></script>
+<link rel="stylesheet" href="/Comun-ity/styles/main.css"/>
 </head>
 <body id="body-pd">
 	<header class="header" id="header">
@@ -35,8 +35,8 @@
 	<div class="l-navbar" id="nav-bar">
 	  <nav class="nav">
 	  	<div>
-	  	<a href="#" class="nav_logo">
-            <img src="../images/logo2.png" class="bx bx-layer nav_logo-icon"/>
+	  	<a href="/Comun-ity/IndexServlet" class="nav_logo">
+            <img src="/Comun-ity/images/logo2.png" width="45" height="45" class="bx bx-layer nav_logo-icon"/>
             <span class="nav_logo-name">Comun-ity</span>
           </a>
 	      <div class="nav_list">
@@ -71,7 +71,7 @@
 	        </a>
 	      </div>
 	      </div>
-	    <a href="#" class="nav_link">
+	    <a href="/Comun-ity/LogoutServlet" class="nav_link">
 	      <i class="bx bx-log-out nav_icon"></i>
 	      <span class="nav_name">Log out</span>
 	    </a>

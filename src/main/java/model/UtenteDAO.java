@@ -52,13 +52,18 @@ public class UtenteDAO {
 		Document doc = null;
 		
 		try {
-			doc= database.getCollection("utente").find(Filters.eq("mail", mail)).first();
+			
+			doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();			
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
 		
-		Utente utente = docToUtente(doc);
-		return utente;
+		if(doc == null)
+			return null;
+		else {
+			Utente utente = docToUtente(doc);
+			return utente;
+		}
 	}
 			
 	

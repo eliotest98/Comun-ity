@@ -148,8 +148,7 @@ a {
 }
 
 .nav_logo > img{
-	width: 70px;
-	height: 70px;
+	margin-left:10px;	
 }
 
 section{

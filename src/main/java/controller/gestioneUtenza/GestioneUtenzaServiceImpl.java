@@ -43,7 +43,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 				utenteDao.saveUtente(utente);
 				return true;
 			}else {
-				throw new IllegalArgumentException("email già presente"
+				throw new IllegalArgumentException("email giï¿½ presente"
 			            + " nel DB, utilizza una nuova email");
 			}
 		} catch (InterruptedException | ExecutionException | IOException e) {
@@ -68,6 +68,9 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 
 		Utente utente = getAccountByEmail(email);
 		
+		if(utente == null)
+			return false;
+		
 		return utente.getPassword().equals(password);
 
 	}
@@ -83,6 +86,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 
         Utente utente = new Utente();
         utente = utenteDao.findUtenteByMail(email);
+        
 
         return !utente.getMail().isEmpty();
     }
@@ -96,9 +100,10 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	public Utente getAccountByEmail(String email) throws InterruptedException, ExecutionException, IOException {
 		
 		Utente utente = new Utente();
+		
         utente = utenteDao.findUtenteByMail(email);
-        
-        return utente.getMail().isEmpty() ? null : utente;
+                
+        return utente == null ? null : utente;
 	}
 
 	@Override
