@@ -28,29 +28,29 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
     }
 
     /**
-    * Check the credential before login.
-    * @param email
-    * @param password
-    * @return true or false
-    * @throws IOException
-    * @throws ExecutionException
-    * @throws InterruptedException
-    */
-
+     * this function register a new user account.
+     * @param utente user into the db.
+     * @return true if the operation ends in success.
+     * @throws IOException
+     * @throws IllegalArgumentException
+     */
     @Override
-    public boolean loginAccount(String email, String password)
-          throws IOException, ExecutionException, InterruptedException {
-      
-    	//TODO
-    	return false;
-    }
+    public boolean registerAccount(Utente utente)
+            throws IllegalArgumentException {
 
-	@Override
-	public boolean registerAccount(Utente utente)
-			throws IOException, IllegalArgumentException, ExecutionException, InterruptedException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        try {
+			if(!searchAccountByEmail(utente.getMail())) {
+				utenteDao.saveUtente(utente);
+				return true;
+			}else {
+				throw new IllegalArgumentException("email già presente"
+			            + " nel DB, utilizza una nuova email");
+			}
+		} catch (InterruptedException | ExecutionException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 	
 	 /**
      * check if the credential entered are correct.

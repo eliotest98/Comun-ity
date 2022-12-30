@@ -15,11 +15,11 @@ public class UtenteDAO {
 	
 
 	//Connessione al database
-	MongoDatabase database=  DbConnection.connectToDb();
+	MongoDatabase database = DbConnection.connectToDb();
 	
 	
 	//Inserisce un utente nel database
-	public void createUtente(Utente utente) {
+	public void saveUtente(Utente utente) {
 		
 		try {
 		database.getCollection("utente").insertOne(docForDb(utente));
@@ -33,11 +33,11 @@ public class UtenteDAO {
 	
 	
 	//Esegue l'eliminazione di un utente nel database
-	public void deleteUtente(String mail) {
+	public void deleteUtente(Utente utente) {
 		try {
 			
 
-		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
+		database.getCollection("utente").deleteOne(Filters.eq("mail", utente.getMail()));
 
 		System.out.println("Utente eliminato!");
 		}catch(MongoException e) {
@@ -47,7 +47,7 @@ public class UtenteDAO {
 	
 	
 	//Trova un utente specifico nel database per id
-	public Document findUtenteByMail(String mail) {
+	public Utente findUtenteByMail(String mail) {
 		
 		Document doc = null;
 		
@@ -57,12 +57,13 @@ public class UtenteDAO {
 			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
 		
-		return doc;
+		Utente utente = docToUtente(doc);
+		return utente;
 	}
 			
 	
 	//Crea un documento per mongoDB
-	public static Document docForDb(Utente utente) {
+	private static Document docForDb(Utente utente) {
 		
 		Document doc= new Document("_id", new ObjectId())
 									.append("ruolo", utente.getRuolo())
@@ -81,7 +82,7 @@ public class UtenteDAO {
 		
 	}
   
-	public static Utente docToUtente(Document doc) {
+	private static Utente docToUtente(Document doc) {
 		
 		Utente utente = new Utente(
 				doc.getString("ruolo"),

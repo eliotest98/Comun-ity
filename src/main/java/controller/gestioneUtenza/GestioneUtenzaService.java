@@ -6,20 +6,6 @@ import java.util.concurrent.ExecutionException;
 import model.Utente;
 
 public interface GestioneUtenzaService {
-	/**
-	 * This function allow to verify the credentials
-	 * typed in login form.
-	 * @param email
-	 * @param password
-	 * @return true if credentials are in the Database,
-	 * false if the credentials aren't linked to an account
-	 * stored in the Database
-	 * @throws IOException
-	 * @throws ExecutionException
-	 * @throws InterruptedException
-	 */
-	boolean loginAccount(String email, String password)
-			throws IOException, ExecutionException, InterruptedException;
 
 	/**
 	 * This function give the possibility to register a
