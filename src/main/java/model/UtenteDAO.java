@@ -1,5 +1,8 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
@@ -31,7 +34,7 @@ public class UtenteDAO {
 	public void deleteUtente(Utente utente) {
 		try {
 			
-		database.getCollection("utente").deleteOne(Filters.eq("utenteId", utente.getUtenteId()));
+		database.getCollection("utente").deleteOne(Filters.eq("mail", utente.getMail()));
 		System.out.println("Utente eliminato!");
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
@@ -62,7 +65,7 @@ public class UtenteDAO {
 		
 		try {
 			
-			doc= database.getCollection("utente").find(Filters.eq("utenteId" , utente.getUtenteId())).first();
+			doc= database.getCollection("utente").find(Filters.eq("mail", utente.getMail())).first();
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
@@ -75,7 +78,6 @@ public class UtenteDAO {
 	public static Document docForDb(Utente utente) {
 		
 		Document doc= new Document("_id", new ObjectId())
-									.append("utenteId", utente.getUtenteId())
 									.append("ruolo", utente.getRuolo())
 									.append("nome", utente.getNome())
 									.append("cognome", utente.getCognome())
@@ -90,6 +92,23 @@ public class UtenteDAO {
 		
 		return doc;
 		
+	}
+	
+	public static Utente docToUtente(Document doc) {
+		
+		Utente utente = new Utente(
+				doc.getString("ruolo"),
+				doc.getString("nome"),
+				doc.getString("cognome"),
+				doc.getInteger("eta"),
+				doc.getString("mail"),
+				doc.getString("password"),
+				doc.getString("sesso"),
+				doc.getString("numeroTelefono"),
+				doc.getString("indirizzo"),
+				(LocalDate)doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		
+		return utente;
 	}
 
 }
