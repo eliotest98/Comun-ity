@@ -2,9 +2,6 @@ package model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-
-import javax.management.Query;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
