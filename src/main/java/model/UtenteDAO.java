@@ -36,7 +36,7 @@ public class UtenteDAO {
 		try {
 			
 
-		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
+		database.getCollection("utente").deleteOne(Filters.eq("mail", utente.getMail()));
 
 		System.out.println("Utente eliminato!");
 		}catch(MongoException e) {
@@ -84,7 +84,6 @@ public class UtenteDAO {
   
 
 	//Crea un oggetto utente a partire da un documento MongoDB
-	public static Utente docToUtente(Document doc) {
 	private static Utente docToUtente(Document doc) {
 		
 		Utente utente = new Utente(
