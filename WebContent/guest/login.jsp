@@ -16,19 +16,19 @@
 <title>Login - Comun-ity</title>
 </head>
 <body>
-    <%@ include file="./navbar/navbar.html" %>
+    <%@ include file="./navbar/navbar.html" %> 
       <div class="main-wrapper">
         <div id="card" class="shadow p-3 mb-5 bg-white rounded cardcontact">
           <h2 class="card-title text-center">Login</h2>
           <div class="card-body">
-            <form>
+            <form action="loginServlet" method="post">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email</label>
-                <input type="email" placeholder="name@example.com" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                <input type="email" placeholder="name@example.com" class="form-control" name="mailUser" id="exampleInputEmail1" aria-describedby="emailHelp" required>
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" placeholder="********" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp">
+                <input type="password" placeholder="********" class="form-control" name="passwordUser" id="exampleInputPassword1" aria-describedby="passwordHelp">
                 <a id="passwordHelp" class="form-text" href="#">Password dimenticata?</a>
               </div>
               <div class="row">
@@ -40,9 +40,10 @@
               </div>
             </div>
             </form>
+            <input type="hidden" name="action" id="actionId" value="login">
           </div>
         </div>
       </div>
-    <%@ include file="./footer/footer.html" %>
+    <%@ include file="./footer/footer.html" %> 
 </body>
 </html>
