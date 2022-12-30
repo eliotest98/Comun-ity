@@ -19,7 +19,7 @@ public class AccreditamentoDAO {
 	
 	
 	//Inserisce un utente nel database
-	public void createAccreditamento(Accreditamento accreditamento) {
+	public void saveAccreditamento(Accreditamento accreditamento) {
 		
 		try {
 		database.getCollection("accreditamento").insertOne(docForDb(accreditamento));
@@ -41,43 +41,45 @@ public class AccreditamentoDAO {
 		}
 	}
 	
-	public Document findAccreditamento(Accreditamento accreditamento) {
+	public Accreditamento findAccreditamentoBySubmitter(String email) {
 		
 		Document doc=null;
 		
 		try {
 			
-			doc= database.getCollection("accreditamento").find(Filters.eq("richiedente" , accreditamento.getRichiedente())).first();
+			doc= database.getCollection("accreditamento").find(Filters.eq("richiedente" , email)).first();
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
 		
-		return doc;
+		Accreditamento accreditamento = docToAccreditamento(doc);
+		return accreditamento;
 		
 	}
 	
 	//Crea un documento per mongoDB
-		public static Document docForDb(Accreditamento accreditamento) {
-			
-			Document doc= new Document("_id", new ObjectId())
-					.append("richiedente", accreditamento.getRichiedente())
-					.append("abilitazione", accreditamento.getAbilitazione())
-					.append("allegato", accreditamento.getAllegato())
-					.append("dataSottomissione", accreditamento.getDataSottomissione())
-					.append("dataVisione", accreditamento.getDataVisione())
-					.append("stato", accreditamento.getStato());
-			
-			return doc;
-			
-		}
+	private static Document docForDb(Accreditamento accreditamento) {
+
+		Document doc= new Document("_id", new ObjectId())
+				.append("richiedente", accreditamento.getRichiedente())
+				.append("abilitazione", accreditamento.getAbilitazione())
+				.append("allegato", accreditamento.getAllegato())
+				.append("dataSottomissione", accreditamento.getDataSottomissione())
+				.append("dataVisione", accreditamento.getDataVisione())
+				.append("stato", accreditamento.getStato());
+
+		return doc;
+
+	}
+
+	private static Accreditamento docToAccreditamento(Document doc) {
 		
-		public static Accreditamento docToAccreditamento(Document doc) {
-			Accreditamento accreditamento = new Accreditamento(
-					doc.getString("richiedente"),
-					doc.getString("abilitazione"),
-					doc.getString("allegato"),
-					(LocalDate)doc.getDate("dataSottomissione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), 
-				    (LocalDate)doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), doc.getString("stato"));
-			return accreditamento;
-		}
+		Accreditamento accreditamento = new Accreditamento(
+				doc.getString("richiedente"),
+				doc.getString("abilitazione"),
+				doc.getString("allegato"),
+				(LocalDate)doc.getDate("dataSottomissione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), 
+				(LocalDate)doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), doc.getString("stato"));
+		return accreditamento;
+	}
 }

@@ -15,7 +15,7 @@ public class AnnuncioDAO {
 		
 		
 		//Inserisce un annuncio nel database
-		public void createAnnuncio(Annuncio annuncio) {
+		public void saveAnnuncio(Annuncio annuncio) {
 			
 			try {
 			database.getCollection("annuncio").insertOne(docForDb(annuncio));
@@ -32,7 +32,7 @@ public class AnnuncioDAO {
 		public void deleteAnnuncio(Annuncio annuncio) {
 			try {
 				
-			database.getCollection("annuncio").deleteOne(Filters.eq("annuncioId", annuncio.getAnnuncioId()));
+			database.getCollection("annuncio").deleteOne(Filters.eq("id", annuncio.getId()));
 			System.out.println("Annuncio eliminato!");
 			}catch(MongoException e) {
 				System.out.println("Errore durante l'eliminazione dell'annuncio" + e.getMessage());
@@ -40,13 +40,13 @@ public class AnnuncioDAO {
 		}
 		
 		//Trova un annuncio specifico nel database
-		public Document findAnnuncio(Annuncio annuncio) {
+		public Document findAnnuncioById(Long id) {
 			
 			Document doc=null;
 			
 			try {
 				
-				doc= database.getCollection("utente").find(Filters.eq("annuncioId" , annuncio.getAnnuncioId())).first();
+				doc= database.getCollection("utente").find(Filters.eq("id", id)).first();
 			}catch(MongoException e) {
 				System.out.println("Errore durante la ricerca dell'annuncio" + e.getMessage());
 			}
@@ -59,13 +59,14 @@ public class AnnuncioDAO {
 		public static Document docForDb(Annuncio annuncio) {
 			
 			Document doc= new Document("_id", new ObjectId())
-										.append("annuncioId", annuncio.getAnnuncioId())
+										.append("id", annuncio.getId())
 										.append("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta())
 										.append("autore" , annuncio.getAutore())
 										.append("titolo", annuncio.getTitolo())
 										.append("descrizione" , annuncio.getDescrizione())
 										.append("indirizzo", annuncio.getIndirizzo())
 										.append("dataPubblicazione", annuncio.getDataPubblicazione())
+										.append("incaricato", annuncio.getIncaricato())
 										.append("dataFine", annuncio.getDataFine());
 										
 			return doc;
