@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.*;
+import model.Utente;
+import model.UtenteDAO;
 
 /**
  * Servlet implementation class LoginServlet
@@ -41,14 +42,16 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		
 		Utente user = (Utente) session.getAttribute("user");
+		UtenteDAO utenteDao = new UtenteDAO();
+		GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
 		
 		if(user == null) {
-			response.sendRedirect("./login.jsp"); //l'utente non è loggato
-		}else if((Boolean) session.getAttribute("admin") != null) {
-			if((Boolean) session.getAttribute("admin")) {
-				//TODO l'utente è già loggato ed è admin
+			response.sendRedirect("/Comun-ity/guest/login.jsp"); //l'utente non � loggato
+		}else {
+			if(service.IsAdmin(user)) {
+				//TODO l'utente � gi� loggato ed � admin
 			}else {
-				//TODO l'utente è già loggato e non è admin
+				//TODO l'utente � gi� loggato e non � admin
 			}
 		}
 		
