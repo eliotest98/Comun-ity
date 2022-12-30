@@ -28,43 +28,49 @@
 			</div>
 		  </div>
 		  <div class="col-9 align-self-center">
-		  	<span class="nav_name align-middle">Area Personale</span>
+		  	<span class="nav_name align-middle text-dark">Area Personale</span>
 		  </div>
   	  </a>	
 	</header>
 	<div class="l-navbar" id="nav-bar">
 	  <nav class="nav">
-	    <div class="row">
+	  	<div>
+	  	<a href="#" class="nav_logo">
+            <img src="../images/logo2.png" class="bx bx-layer nav_logo-icon"/>
+            <span class="nav_logo-name">Comun-ity</span>
+          </a>
 	      <div class="nav_list">
-		      <a href="#" class="nav_link">
-		        <img src="../images/logo2.png" />
-		      </a>
-	        <a href="#" class="nav_link active">
+	        <a href="#" class="nav_link active" id="dashboard">
 	          <i class="bx bxs-dashboard nav_icon"></i>
 	          <span class="nav_name">Dashboard</span>
 	        </a>
-	        <a href="#" class="nav_link">
+	        <a href="#" class="nav_link" id="bacheca">
 	          <i class="bx bx-clipboard nav_icon"></i>
 	          <span class="nav_name">Bacheca Annunci</span>
 	        </a>
-	        <a href="#" class="nav_link">
+	        <a href="#" class="nav_link" id="archivio">
 	          <i class="bx bx-box nav_icon"></i>
 	          <span class="nav_name">Archivio Annunci</span>
 	        </a>
-	        <a href="#" class="nav_link">
+	        <a href="#" class="nav_link" id="impostazioni">
 	          <i class="bx bx-cog nav_icon"></i>
 	          <span class="nav_name">Impostazioni</span>
 	        </a>
-	        <a href="#" class="nav_link">
+	        <!-- TODO mostra solo se admin -->
+	        <a href="#" class="nav_link" id="utenti">
 	          <i class="bx bx-user nav_icon"></i>
 	          <span class="nav_name">Lista Utenti</span>
 	        </a>
-	        <a href="#" class="nav_link">
-	          <i class="bx bxs-edit nav_icon"></i>
-	          <span class="nav_name">Accreditamenti<span class="badge badge-light">0</span></span>
+	        <!-- TODO mostra solo se admin -->
+	        <a href="#" class="nav_link" id="accreditamenti">
+	        	<div class="icon-badge-container nav_icon">
+	        		<span class="badge badge-light icon-badge text-center">9</span>
+			       	<i class="bx bxs-edit nav_icon"></i>
+			    </div>
+			    <span class="nav_name">Accreditamenti</span>
 	        </a>
 	      </div>
-	    </div>
+	      </div>
 	    <a href="#" class="nav_link">
 	      <i class="bx bx-log-out nav_icon"></i>
 	      <span class="nav_name">Log out</span>
@@ -72,7 +78,26 @@
 	  </nav>
 	</div>
 	<div class="height-100">
-	  <h4>Main Components</h4>
+	  <section id="dashboardSection">
+	  	<h1>Dash</h1>
+	  </section>
+	  <section id="bachecaSection">
+	  	<h1>Bacheca</h1>
+	  </section>
+	  <section id="archivioSection">
+	  	<h1>Archivio</h1>
+	  </section>
+	  <section id="impostazioniSection">
+	  	<h1>Impostazioni</h1>
+	  </section>
+	  <!-- TODO mostra solo se admin -->
+	  <section id="utentiSection">
+	  	<h1>Utenti</h1>
+	  </section>
+	  <!-- TODO mostra solo se admin -->
+	  <section id="accreditamentiSection">
+	  	<h1>Accreditamenti</h1>
+	  </section>
 	</div>
 </body>
 

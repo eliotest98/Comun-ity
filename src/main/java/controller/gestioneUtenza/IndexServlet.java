@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.mongodb.client.MongoDatabase;
+
 import controller.utility.DbConnection;
 
 /**
@@ -28,11 +29,13 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("/Comun-ity/index.jsp");
 		
 		MongoDatabase db = DbConnection.connectToDb();
 		
 		System.out.println("Connesso");
+		
+		response.sendRedirect("/Comun-ity/index.jsp");
+		
 		
 	}
 
