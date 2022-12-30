@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Utente;
+import model.UtenteDAO;
 
 /**
  * Servlet implementation class LoginServlet
@@ -40,14 +41,16 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		
 		Utente user = (Utente) session.getAttribute("user");
+		UtenteDAO utenteDao = new UtenteDAO();
+		GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
 		
 		if(user == null) {
-			response.sendRedirect("/Comun-ity/guest/login.jsp"); //l'utente non √® loggato
-		}else if((Boolean) session.getAttribute("admin") != null) {
-			if((Boolean) session.getAttribute("admin")) {
-				//TODO l'utente √® gi√† loggato ed √® admin
+			response.sendRedirect("/Comun-ity/guest/login.jsp"); //l'utente non Ë loggato
+		}else {
+			if(service.IsAdmin(user)) {
+				//TODO l'utente Ë gi‡ loggato ed Ë admin
 			}else {
-				//TODO l'utente √® gi√† loggato e non √® admin
+				//TODO l'utente Ë gi‡ loggato e non Ë admin
 			}
 		}
 		
