@@ -64,9 +64,6 @@ public class Utente {
 	}
 	
 	
-	
-
-	
 
 	/**
 	 * @return User identfier
@@ -280,7 +277,7 @@ public class Utente {
 
 	@Override
 	public String toString() {
-		return "Utente [id=" + id + ", ruolo=" + ruolo + ", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta
+		return "Utente [ruolo=" + ruolo + ", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta
 				+ ", mail=" + mail + ", password=" + password + ", sesso=" + sesso + ", numeroTelefono="
 				+ numeroTelefono + ", indirizzo=" + indirizzo + ", dataNascita=" + dataNascita + ", reputazione=" + getReputazione() + "]";
 	}

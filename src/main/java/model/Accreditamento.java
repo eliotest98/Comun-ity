@@ -11,7 +11,6 @@ public class Accreditamento {
 	 * Attributes.
 	 */
 	private ObjectId id;
-	private Integer accreditamentoId;
 	private String richiedente;
 	private String abilitazione;
 	private String allegato;
@@ -54,10 +53,9 @@ public class Accreditamento {
 	 * @param dataVisione represents the date of examination 
 	 * @param stato represents the state of the request {SOTTOMESSA, RIFIUTATA, ACCETTATA}
 	 */
-	public Accreditamento(Integer accreditamentoId, String utente, String abilitazione, String allegato,
+	public Accreditamento(String utente, String abilitazione, String allegato,
 			LocalDate dataSottomissione, LocalDate dataVisione, String stato) {
 		super();
-		this.accreditamentoId = accreditamentoId;
 		this.richiedente = utente;
 		this.abilitazione = abilitazione;
 		this.allegato = allegato;
@@ -78,20 +76,6 @@ public class Accreditamento {
 	 */
 	public void setId(ObjectId id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the accreditamentoId
-	 */
-	public Integer getAccreditamentoId() {
-		return accreditamentoId;
-	}
-
-	/**
-	 * @param accreditamentoId the accreditamentoId to set
-	 */
-	public void setAccreditamentoId(Integer accreditamentoId) {
-		this.accreditamentoId = accreditamentoId;
 	}
 
 	/**
