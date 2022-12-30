@@ -2,22 +2,21 @@ package model;
 
 import java.time.LocalDate;
 
-import org.bson.types.ObjectId;
 
 public class Annuncio {
 	
 	/**
 	 * Attributes.
 	 */
-	private ObjectId id;
-	private Integer annuncioId;
+	private static Long idTracker = 0L;
+	private Long id;
 	private String abilitazioneRichiesta;
-	private Integer autore;
+	private String autore;
 	private String titolo;
 	private String descrizione;
 	private String indirizzo;
 	private LocalDate dataPubblicazione;
-	private Utente incaricato;
+	private String incaricato;
 	private LocalDate dataFine;
 	
 	/**
@@ -31,15 +30,14 @@ public class Annuncio {
 	 * Constructor.
 	 *
 	 * @param abilitazioneRichiesta represents the qualification needed to accept the job {"Nessuna" = Commissione}
-	 * @param autore represents Annuncio author
+	 * @param autore represents Annuncio author email
 	 * @param titolo represents Annuncio title
 	 * @param descrizione represents Annuncio description
 	 * @param indirizzo represents Annuncio useful place address
 	 */
-	public Annuncio(Integer annuncioId, String abilitazioneRichiesta, Integer autore, String titolo, String descrizione,
-			String indirizzo) {
+	public Annuncio(String abilitazioneRichiesta, String autore, String titolo, String descrizione, String indirizzo) {
 		super();
-		this.annuncioId= annuncioId;
+		this.id = idTracker++;
 		this.abilitazioneRichiesta = abilitazioneRichiesta;
 		this.autore = autore;
 		this.titolo = titolo;
@@ -48,42 +46,36 @@ public class Annuncio {
 		this.dataPubblicazione = LocalDate.now();
 		this.dataFine = dataPubblicazione.plusDays(30); //default expire date
 	}
-	
-	
+
+	/**
+	 * Full Constructor for Db operations.
+	 */
+	public Annuncio(Long id, String abilitazioneRichiesta, String autore, String titolo, String descrizione,
+			String indirizzo, LocalDate dataPubblicazione, String incaricato, LocalDate dataFine) {
+		super();
+		this.id = id;
+		this.abilitazioneRichiesta = abilitazioneRichiesta;
+		this.autore = autore;
+		this.titolo = titolo;
+		this.descrizione = descrizione;
+		this.indirizzo = indirizzo;
+		this.dataPubblicazione = dataPubblicazione;
+		this.incaricato = incaricato;
+		this.dataFine = dataFine;
+	}
 
 	/**
 	 * @return the annuncioId
 	 */
-	public Integer getAnnuncioId() {
-		return annuncioId;
+	public Long getId() {
+		return id;
 	}
-
-	/**
-	 * @param annuncioId the annuncioId to set
-	 */
-	public void setAnnuncioId(Integer annuncioId) {
-		this.annuncioId = annuncioId;
-	}
-
+	
 	/**
 	 * @param dataPubblicazione the dataPubblicazione to set
 	 */
 	public void setDataPubblicazione(LocalDate dataPubblicazione) {
 		this.dataPubblicazione = dataPubblicazione;
-	}
-
-	/**
-	 * @return Annuncio identifier
-	 */
-	public ObjectId getId() {
-		return id;
-	}
-
-	/**
-	 * @param id is the Annuncio identifier to set
-	 */
-	public void setId(ObjectId id) {
-		this.id = id;
 	}
 
 	/**
@@ -101,17 +93,17 @@ public class Annuncio {
 	}
 
 	/**
-	 * @return Annuncio author
+	 * @return author's email
 	 */
-	public Integer getAutore() {
+	public String getAutore() {
 		return autore;
 	}
 
 	/**
-	 * @param autore is the author to set
+	 * @param email is the author email to set
 	 */
-	public void setAutore(Integer autore) {
-		this.autore = autore;
+	public void setAutore(String email) {
+		this.autore = email;
 	}
 
 	/**
@@ -164,17 +156,17 @@ public class Annuncio {
 	}
 
 	/**
-	 * @return the User who accepted the job
+	 * @return the email of the User who accepted the job
 	 */
-	public Utente getIncaricato() {
+	public String getIncaricato() {
 		return incaricato;
 	}
 
 	/**
-	 * @param incaricato is the appointee User to set
+	 * @param email is the appointee User email to set
 	 */
-	public void setIncaricato(Utente incaricato) {
-		this.incaricato = incaricato;
+	public void setIncaricato(String email) {
+		this.incaricato = email;
 	}
 
 	/**

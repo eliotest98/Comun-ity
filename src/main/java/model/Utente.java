@@ -3,14 +3,11 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import org.bson.types.ObjectId;
-
 public class Utente {
 	
 	/**
 	 * Attributes.
 	 */
-	private ObjectId id;
 	private String ruolo;
 	private String abilitazione;
 	private String nome;
@@ -65,24 +62,6 @@ public class Utente {
 		this.recensioni = new ArrayList<Double>(); 
 	}
 	
-	
-
-	/**
-	 * @return User identfier
-	 */
-	public ObjectId getId() {
-		return id;
-	}
-
-
-	/**
-	 * @param id is the User identifier to set
-	 */
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
-
-
 	/**
 	 * @return User role
 	 */

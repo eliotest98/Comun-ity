@@ -3,14 +3,12 @@ package model;
 
 import java.time.LocalDate;
 
-import org.bson.types.ObjectId;
 
 public class Accreditamento {
 	
 	/**
 	 * Attributes.
 	 */
-	private ObjectId id;
 	private String richiedente;
 	private String abilitazione;
 	private String allegato;
@@ -29,7 +27,7 @@ public class Accreditamento {
 	/**
 	 * Constructor for new issue.
 	 * 
-	 * @param utente is the reference to the User who submitted the request
+	 * @param utente is the email of the User who submitted the request
 	 * @param abilitazione is the qualification the User wants to demonstrate he has
 	 * @param allegato is the documentation issued
 	 * 
@@ -46,7 +44,7 @@ public class Accreditamento {
 	/**
 	 * Constructor.
 	 * 
-	 * @param utente is the reference to the User who submitted the request
+	 * @param utente is the email of the User who submitted the request
 	 * @param abilitazione is the qualification the User wants to demonstrate he has
 	 * @param allegato is the documentation issued
 	 * @param dataSottomissione represents the date of submission
@@ -65,31 +63,17 @@ public class Accreditamento {
 	}
 
 	/**
-	 * @return the id
-	 */
-	public ObjectId getId() {
-		return id;
-	}
-
-	/**
-	 * @param id is the id to set
-	 */
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return applicant reference
+	 * @return applicant email
 	 */
 	public String getRichiedente() {
 		return richiedente;
 	}
 
 	/**
-	 * @param cittadino is the applicant reference to set
+	 * @param email is the applicant email to set
 	 */
-	public void setRichiedente(String utente) {
-		this.richiedente = utente;
+	public void setRichiedente(String email) {
+		this.richiedente = email;
 	}
 
 	/**
