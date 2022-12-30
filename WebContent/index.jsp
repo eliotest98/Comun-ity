@@ -36,7 +36,7 @@
                 <div class="carousel-caption d-none d-md-block">
                   <h5>Una comunità smart</h5>
                   <p>Comun-ity è la prima comunità smart, nata allo scopo di collegare tutti i cittadini nel modo più facile e veloce possibile.</p>
-                  <a class="btn btn-primary">Registrati</a>
+                  <a class="btn btn-primary" href="/Comun-ity/RegistrazioneServlet">Registrati</a>
                 </div>      
               </div>
               <div class="carousel-item">
@@ -44,7 +44,7 @@
                 <div class="carousel-caption d-none d-md-block">
                   <h5 data-aos="fade-down">Richiedi commissioni o lavori</h5>
                   <p data-aos="fade-down" data-aos-duration="1000">Tramite la nostra piattaforma puoi richiedere aiuto per svolgere commissioni o lavori! Sei impossibilitato nel fare qualcosa? Non temere, registrati e cerca qualcuno che lo faccia per te!</p>
-                  <a class="btn btn-primary" data-aos-anchor="#back" data-aos="fade-down" data-aos-duration="1200">Registrati</a>
+                  <a class="btn btn-primary" data-aos-anchor="#back" data-aos="fade-down" data-aos-duration="1200" href="/Comun-ity/RegistrazioneServlet">Registrati</a>
                 </div>      
                </div>
                <div class="carousel-item">
@@ -52,7 +52,7 @@
                 <div class="carousel-caption d-none d-md-block">
                   <h5  data-aos="fade-down">Comun-ity per Professionisti</h5>
                   <p data-aos="fade-down" data-aos-duration="1000">Registrati come professionista presso la nostra piattaforma. In questo modo potrai accettare lavori della tua area di competenza richiesti da altri cittadini!</p>
-                  <a class="btn btn-primary" data-aos="fade-down" data-aos-duration="1200">Registrati</a>
+                  <a class="btn btn-primary" data-aos="fade-down" data-aos-duration="1200" href="/Comun-ity/RegistrazioneServlet">Registrati</a>
                 </div>      
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#landingCarousel" data-bs-slide="prev">
