@@ -1,6 +1,7 @@
 package controller.gestioneUtenza;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import model.Utente;
@@ -81,4 +82,6 @@ public interface GestioneUtenzaService {
 	   void sendEmail(String account, String pw)
 	          throws EmailException;
 	 */
+	
+	List<String> getAllAdminsEmails();
 }

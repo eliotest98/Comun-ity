@@ -18,6 +18,7 @@
 <link href="./styles/index.css" rel="stylesheet"/>
 
 <title>Landing - Comun-ity</title>
+
 </head>
 <body>
     <!-- Navbar -->
@@ -142,43 +143,6 @@
                 </div>
               </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Contatti-->
-    <section id="contatti">
-        <div id="card" class="shadow p-3 mb-5 bg-white rounded cardcontact">
-          <h2 class="h1-responsive font-weight-bold text-center my-4">Contattaci</h2>
-          <p class="text-center w-responsive mx-auto mb-5">Hai domande? Non esitare a contattarci. Il nostro team ti risponderà il prima possibile!</p>
-          <div id="contattiBody" class="card-body">
-            <div class="row">
-              <div class="col-xl-6">
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="name@example.com" required>
-                  <div id="emailHelp" class="form-text">La tua mail non sarà condivisa con nessuno.</div>
-                </div>
-              </div>
-              <div class="col-xl-6">
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Nome</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
-                  <div id="emailHelp" class="form-text">Inserisci il tuo nome</div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="mb-3">
-                  <label for="exampleFormControlTextarea1" class="form-label">Inserisci il tuo messaggio</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" required></textarea>
-                </div>
-              </div>
-              <div class="d-grid gap-2 col-6 mx-auto">
-                <a class="btn btn-primary lead">Invia</a> <!-- TODO chiama il server per l'invio di mail con ajax -->
-              </div>
-            </div>
-          </div>
         </div>
     </section>
     <!-- Footer-->

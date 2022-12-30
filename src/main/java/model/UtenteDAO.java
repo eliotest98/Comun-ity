@@ -2,11 +2,17 @@ package model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
+import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import controller.utility.*;
 
@@ -102,6 +108,29 @@ public class UtenteDAO {
 				(LocalDate)doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 		
 		return utente;
+	}
+	
+	public List<Utente> allAdmins(){
+				
+		Document doc = null;
+		
+		List<Utente> lista = new ArrayList<>();
+		
+		try {
+			MongoCollection<Document> collection = database.getCollection("utente");
+
+			MongoCursor<Document> cursor = collection.find(Filters.eq("ruolo", "admin")).iterator();
+	        while (cursor.hasNext()) {
+	        	lista.add(UtenteDAO.docToUtente(cursor.next()));
+	        }
+			
+		} catch (MongoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lista;
+				
 	}
 
 }

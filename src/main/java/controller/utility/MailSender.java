@@ -30,7 +30,9 @@ public class MailSender {
 		message.setSubject(subject);
 		message.setFrom(new InternetAddress(from));
 		message.setText(text);
-		
-		Transport.send(message);
+	}
+	
+	public void sendMail() throws MessagingException {
+		Transport.send(this.message);
 	}
 }

@@ -21,16 +21,6 @@
 	  <div class="header_toggle">
 	    <i class="bx bx-menu" id="header-toggle"></i>
 	  </div>
-	  <a class="row" href="#">
-		  <div class="col-3 align-self-center">
-		  	<div class="header_img">
-			  <img id="profile" src="https://i.imgur.com/hczKIze.jpg" alt="" />
-			</div>
-		  </div>
-		  <div class="col-9 align-self-center">
-		  	<span class="nav_name align-middle text-dark">Area Personale</span>
-		  </div>
-  	  </a>	
 	</header>
 	<div class="l-navbar" id="nav-bar">
 	  <nav class="nav">
@@ -56,6 +46,7 @@
 	          <i class="bx bx-cog nav_icon"></i>
 	          <span class="nav_name">Impostazioni</span>
 	        </a>
+	        <% if((Boolean) request.getAttribute("admin")){ %>
 	        <!-- TODO mostra solo se admin -->
 	        <a href="#" class="nav_link" id="utenti">
 	          <i class="bx bx-user nav_icon"></i>
@@ -69,12 +60,19 @@
 			    </div>
 			    <span class="nav_name">Accreditamenti</span>
 	        </a>
+	        <%} %>
 	      </div>
 	      </div>
-	    <a href="/Comun-ity/LogoutServlet" class="nav_link">
-	      <i class="bx bx-log-out nav_icon"></i>
-	      <span class="nav_name">Log out</span>
-	    </a>
+	    <div>
+		    <a href="#" class="nav_link" id="areaPersonale">
+		      <i class="bx bx-user-circle nav_icon"></i>
+		      <span class="nav_name">Area Personale</span>
+		    </a>
+		    <a href="/Comun-ity/LogoutServlet" class="nav_link">
+		      <i class="bx bx-log-out nav_icon"></i>
+		      <span class="nav_name">Log out</span>
+		    </a>
+	    </div>
 	  </nav>
 	</div>
 	<div class="height-100">
@@ -97,6 +95,9 @@
 	  <!-- TODO mostra solo se admin -->
 	  <section id="accreditamentiSection">
 	  	<h1>Accreditamenti</h1>
+	  </section>
+	  <section id="areaPersonaleSection">
+	  	<h1>Area Personale</h1>
 	  </section>
 	</div>
 </body>
