@@ -1,14 +1,19 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
 import com.mongodb.MongoException;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import controller.utility.*;
 
 public class UtenteDAO {
 	
+
 	//Connessione al database
 	MongoDatabase database=  DbConnection.connectToDb();
 	
@@ -28,54 +33,38 @@ public class UtenteDAO {
 	
 	
 	//Esegue l'eliminazione di un utente nel database
-	public void deleteUtente(Utente utente) {
+	public void deleteUtente(String mail) {
 		try {
 			
-		database.getCollection("utente").deleteOne(Filters.eq("utenteId", utente.getUtenteId()));
+
+		database.getCollection("utente").deleteOne(Filters.eq("mail", utente.getMail()));
+
 		System.out.println("Utente eliminato!");
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
 		}
 	}
 	
-	/*
 	
-	//Esegue l'aggionramento di un utente nel database
-	public void updateUtente(Utente utenteNuovo , Utente utenteVecchio) {
-		try {
-		
-			Document documento= findUtente(utenteVecchio.getUtenteId());
+	//Trova un utente specifico nel database per id
+		public Document findUtenteByMail(String mail) {
 			
-			Update update
+			Document doc=null;
 			
-		}catch(MongoException e) {
-			System.out.println("Errore durante l'aggiornamento dell'utente");
-		}
-	}
-	
-	*/
-	
-	//Trova un utente specifico nel database
-	public Document findUtente(Utente utente) {
-		
-		Document doc=null;
-		
-		try {
+			try {
+				
+				doc= database.getCollection("utente").find(Filters.eq("mail", utente.getMail())).first();
+			}catch(MongoException e) {
+				System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
+			}
 			
-			doc= database.getCollection("utente").find(Filters.eq("utenteId" , utente.getUtenteId())).first();
-		}catch(MongoException e) {
-			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
-		}
-		
-		return doc;
-		
-	}
+			return doc;
+			
 	
 	//Crea un documento per mongoDB
 	public static Document docForDb(Utente utente) {
 		
 		Document doc= new Document("_id", new ObjectId())
-									.append("utenteId", utente.getUtenteId())
 									.append("ruolo", utente.getRuolo())
 									.append("nome", utente.getNome())
 									.append("cognome", utente.getCognome())
@@ -90,6 +79,23 @@ public class UtenteDAO {
 		
 		return doc;
 		
+	}
+  
+	public static Utente docToUtente(Document doc) {
+		
+		Utente utente = new Utente(
+				doc.getString("ruolo"),
+				doc.getString("nome"),
+				doc.getString("cognome"),
+				doc.getInteger("eta"),
+				doc.getString("mail"),
+				doc.getString("password"),
+				doc.getString("sesso"),
+				doc.getString("numeroTelefono"),
+				doc.getString("indirizzo"),
+				(LocalDate)doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		
+		return utente;
 	}
 
 }

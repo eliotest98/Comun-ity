@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Utente;
+import model.UtenteDAO;
 
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
+@WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,9 +32,10 @@ public class LoginServlet extends HttpServlet {
     
     private static final String PASS_FORGOT = "pass_forgot";
     private static final String LOGIN = "login";
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    UtenteDAO utenteDao = new UtenteDAO();
+	GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
 		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
 				
@@ -41,13 +43,14 @@ public class LoginServlet extends HttpServlet {
 		
 		Utente user = (Utente) session.getAttribute("user");
 		
+		
 		if(user == null) {
-			response.sendRedirect("/Comun-ity/guest/login.jsp"); //l'utente non è loggato
-		}else if((Boolean) session.getAttribute("admin") != null) {
-			if((Boolean) session.getAttribute("admin")) {
-				//TODO l'utente è già loggato ed è admin
+			response.sendRedirect("/Comun-ity/guest/login.jsp"); //l'utente non � loggato
+		}else {
+			if(service.IsAdmin(user)) {
+				//TODO l'utente � gi� loggato ed � admin
 			}else {
-				//TODO l'utente è già loggato e non è admin
+				//TODO l'utente � gi� loggato e non � admin
 			}
 		}
 		
@@ -61,13 +64,30 @@ public class LoginServlet extends HttpServlet {
 		doGet(request, response);
 		
 		String action = request.getParameter("action");
+		System.out.println("action: " + action);
+		
+		String email = request.getParameter("mailUser");
+		String password = request.getParameter("passwordUser");
 		
 		if(PASS_FORGOT.equals(action)) {
 			//TODO reimpostare la password
 		}else if(LOGIN.equals(action)){
-			//TODO login
+			
+			//TODO
+			//Verifica credenziali
+			
+			//Errate -> ritorno
+			
+			//Corrette
+			//Corrette e cittadino/professionista
+			//Corrette e admin -> Dashboard admin
+			
 		}
+		
+			
+			
+	}
 			
 	}
 
-}
+

@@ -1,5 +1,8 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import javax.management.Query;
 
 import org.bson.Document;
@@ -31,7 +34,7 @@ public class AccreditamentoDAO {
 	public void deleteAccreditamento(Accreditamento accreditamento) {
 		try {
 			
-		database.getCollection("accreditamento").deleteOne(Filters.eq("accreditamentoId", accreditamento.getAccreditamentoId()));
+		database.getCollection("accreditamento").deleteOne(Filters.eq("richiedente" , accreditamento.getRichiedente()));
 		System.out.println("Accreditamento eliminato!");
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
@@ -44,7 +47,7 @@ public class AccreditamentoDAO {
 		
 		try {
 			
-			doc= database.getCollection("accreditamento").find(Filters.eq("accreditamentoId" , accreditamento.getAccreditamentoId())).first();
+			doc= database.getCollection("accreditamento").find(Filters.eq("richiedente" , accreditamento.getRichiedente())).first();
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
@@ -57,7 +60,6 @@ public class AccreditamentoDAO {
 		public static Document docForDb(Accreditamento accreditamento) {
 			
 			Document doc= new Document("_id", new ObjectId())
-					.append("accreditamentoId", accreditamento.getAccreditamentoId())
 					.append("richiedente", accreditamento.getRichiedente())
 					.append("abilitazione", accreditamento.getAbilitazione())
 					.append("allegato", accreditamento.getAllegato())
@@ -67,5 +69,15 @@ public class AccreditamentoDAO {
 			
 			return doc;
 			
+		}
+		
+		public static Accreditamento docToAccreditamento(Document doc) {
+			Accreditamento accreditamento = new Accreditamento(
+					doc.getString("richiedente"),
+					doc.getString("abilitazione"),
+					doc.getString("allegato"),
+					(LocalDate)doc.getDate("dataSottomissione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), 
+				    (LocalDate)doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), doc.getString("stato"));
+			return accreditamento;
 		}
 }
