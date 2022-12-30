@@ -2,12 +2,12 @@ package model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-
+import static com.mongodb.client.model.Filters.eq;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
 import com.mongodb.MongoException;
-import com.mongodb.client.MongoCursor;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoDatabase;
 import controller.utility.*;
 
@@ -24,9 +24,8 @@ public class UtenteDAO {
 		try {
 		database.getCollection("utente").insertOne(docForDb(utente));
 		System.out.println("Utente aggiunto al database con successo");
-		
-		}catch(MongoException e) {
-			System.out.println("Errore durante l'inserimento dell'utente" + e.getMessage());
+		}catch(MongoWriteException e) {
+			System.out.println("Errore durante l'inserimento dell'utente\n" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -37,7 +36,7 @@ public class UtenteDAO {
 		try {
 			
 
-		database.getCollection("utente").deleteOne(Filters.eq("mail", utente.getMail()));
+		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
 
 		System.out.println("Utente eliminato!");
 		}catch(MongoException e) {
@@ -47,19 +46,21 @@ public class UtenteDAO {
 	
 	
 	//Trova un utente specifico nel database per id
-		public Document findUtenteByMail(String mail) {
+		public Utente findUtenteByMail(String mail) {
 			
 			Document doc=null;
 			
 			try {
 				
-				doc= database.getCollection("utente").find(Filters.eq("mail", utente.getMail())).first();
+				doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
 			}catch(MongoException e) {
 				System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 			}
+			Utente utente = new Utente();
+			utente = docToUtente(doc);
+			return utente;
 			
-			return doc;
-			
+		}
 	
 	//Crea un documento per mongoDB
 	public static Document docForDb(Utente utente) {
@@ -81,6 +82,7 @@ public class UtenteDAO {
 		
 	}
   
+	//Crea un oggetto utente a partire da un documento MongoDB
 	public static Utente docToUtente(Document doc) {
 		
 		Utente utente = new Utente(
