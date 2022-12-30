@@ -64,8 +64,6 @@ public class Utente {
 	}
 	
 	
-	
-	
 
 	/**
 	 * @return User identfier
