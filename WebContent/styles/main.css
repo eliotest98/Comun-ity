@@ -81,7 +81,6 @@ a {
   overflow: hidden;
 }
 
-.nav_logo,
 .nav_link {
   display: grid;
   grid-template-columns: max-content max-content;
@@ -92,6 +91,10 @@ a {
 
 .nav_logo {
   margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  column-gap: 1rem;
 }
 
 .nav_logo-icon {
@@ -144,9 +147,36 @@ a {
   height: 100vh;
 }
 
-.nav_link > img{
-	width: 100px;
-	height: 100px;
+.nav_logo > img{
+	width: 70px;
+	height: 70px;
+}
+
+section{
+	display:none;
+}
+
+
+.icon-badge-container {
+    position:relative;
+}
+
+.icon-badge-icon {
+    font-size: 30px;
+    position: relative;
+}
+
+.icon-badge {
+    background-color: red;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    width:20px;
+    height:20px;
+    border-radius: 35%;
+    position: absolute; /* changed */
+    top: -5px; /* changed */
+    right: 10px; /* changed */
 }
 
 @media screen and (min-width: 768px) {

@@ -15,11 +15,11 @@ public class UtenteDAO {
 	
 
 	//Connessione al database
-	MongoDatabase database=  DbConnection.connectToDb();
+	MongoDatabase database = DbConnection.connectToDb();
 	
 	
 	//Inserisce un utente nel database
-	public void createUtente(Utente utente) {
+	public void saveUtente(Utente utente) {
 		
 		try {
 		database.getCollection("utente").insertOne(docForDb(utente));
@@ -32,7 +32,7 @@ public class UtenteDAO {
 	
 	
 	//Esegue l'eliminazione di un utente nel database
-	public void deleteUtente(String mail) {
+	public void deleteUtente(Utente utente) {
 		try {
 			
 
@@ -46,27 +46,27 @@ public class UtenteDAO {
 	
 	
 	//Trova un utente specifico nel database per id
-		public Utente findUtenteByMail(String mail) {
-			
-			Document doc=null;
-			
-			try {
-				
-				doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
-			}catch(MongoException e) {
-				System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
-			}
-			Utente utente = new Utente();
-			utente = docToUtente(doc);
-			return utente;
-			
+
+	public Utente findUtenteByMail(String mail) {
+		
+		Document doc = null;
+		
+		try {
+			doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
+		}catch(MongoException e) {
+			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
 		}
+		
+		Utente utente = docToUtente(doc);
+		return utente;
+	}
 	
 	//Crea un documento per mongoDB
-	public static Document docForDb(Utente utente) {
+	private static Document docForDb(Utente utente) {
 		
 		Document doc= new Document("_id", new ObjectId())
 									.append("ruolo", utente.getRuolo())
+									.append("abilitazione", utente.getAbilitazione())
 									.append("nome", utente.getNome())
 									.append("cognome", utente.getCognome())
 									.append("eta", utente.getEta())
@@ -82,11 +82,14 @@ public class UtenteDAO {
 		
 	}
   
+
 	//Crea un oggetto utente a partire da un documento MongoDB
 	public static Utente docToUtente(Document doc) {
+	private static Utente docToUtente(Document doc) {
 		
 		Utente utente = new Utente(
 				doc.getString("ruolo"),
+				doc.getString("abilitazione"),
 				doc.getString("nome"),
 				doc.getString("cognome"),
 				doc.getInteger("eta"),
