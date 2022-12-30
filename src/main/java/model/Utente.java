@@ -11,7 +11,6 @@ public class Utente {
 	 * Attributes.
 	 */
 	private ObjectId id;
-	private Integer utenteId;
 	private String ruolo;
 	private String nome;
 	private String cognome;
@@ -47,11 +46,10 @@ public class Utente {
 	 * @param dataNascita represents User birth date
 	 */
 
-	public Utente(Integer utenteId, String ruolo, String nome, String cognome, Integer eta, String mail, String password, String sesso,
+	public Utente(String ruolo, String nome, String cognome, Integer eta, String mail, String password, String sesso,
 
 			String numeroTelefono, String indirizzo, LocalDate dataNascita) {
 		super();
-		this.utenteId= utenteId;
 		this.ruolo = ruolo;
 		this.nome = nome;
 		this.cognome = cognome;
@@ -68,19 +66,7 @@ public class Utente {
 	
 	
 
-	/**
-	 * @return the utenteId
-	 */
-	public Integer getUtenteId() {
-		return utenteId;
-	}
-
-	/**
-	 * @param utenteId the utenteId to set
-	 */
-	public void setUtenteId(Integer utenteId) {
-		this.utenteId = utenteId;
-	}
+	
 
 	/**
 	 * @return User identfier
