@@ -32,18 +32,17 @@ public class LoginServlet extends HttpServlet {
     
     private static final String PASS_FORGOT = "pass_forgot";
     private static final String LOGIN = "login";
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    UtenteDAO utenteDao = new UtenteDAO();
+	GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
 		
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
 				
 		HttpSession session = request.getSession(true);
 		
 		Utente user = (Utente) session.getAttribute("user");
-		UtenteDAO utenteDao = new UtenteDAO();
-		GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
+		
 		
 		if(user == null) {
 			response.sendRedirect("/Comun-ity/guest/login.jsp"); //l'utente non � loggato
@@ -64,32 +63,24 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		System.out.println("siamo nel doPost");
-		
 		String action = request.getParameter("action");
-		
 		System.out.println("action: " + action);
+		
+		String email = request.getParameter("mailUser");
+		String password = request.getParameter("passwordUser");
 		
 		if(PASS_FORGOT.equals(action)) {
 			//TODO reimpostare la password
 		}else if(LOGIN.equals(action)){
 			
-			/*
-			 * 
-			 * String mail= request.getParameter("mailUser");
-			String password= request.getParameter("passwordUser");
+			//TODO
+			//Verifica credenziali
 			
-			boolean logged;
-			UtenteDAO dao= new UtenteDAO();
+			//Errate -> ritorno
 			
-			logged= dao.isLogged(mail, password);
-			
-			if(logged=true) {
-				HttpSession httpSession = request.getSession();
-				httpSession.setAttribute("mailUser", mail);
-				request.getRequestDispatcher("welcome.jsp").forward(request, response);
-			 * 
-			 */
+			//Corrette
+			//Corrette e cittadino/professionista
+			//Corrette e admin -> Dashboard admin
 			
 		}
 		

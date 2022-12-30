@@ -61,8 +61,9 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	@Override
 	public boolean checkCredentials(String email, String password) {
 
-		//TODO
-		return false;
+		Utente utente = getAccountByEmail(email);
+		
+		return utente.getPassword().equals(password);
 
 	}
 
