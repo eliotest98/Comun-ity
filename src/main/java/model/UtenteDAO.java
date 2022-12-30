@@ -37,7 +37,7 @@ public class UtenteDAO {
 		try {
 			
 
-		database.getCollection("utente").deleteOne(Filters.eq("mail", utente.getMail()));
+		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
 
 		System.out.println("Utente eliminato!");
 		}catch(MongoException e) {
@@ -47,18 +47,18 @@ public class UtenteDAO {
 	
 	
 	//Trova un utente specifico nel database per id
-		public Document findUtenteByMail(String mail) {
-			
-			Document doc=null;
-			
-			try {
-				
-				doc= database.getCollection("utente").find(Filters.eq("mail", utente.getMail())).first();
-			}catch(MongoException e) {
-				System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
-			}
-			
-			return doc;
+	public Document findUtenteByMail(String mail) {
+		
+		Document doc = null;
+		
+		try {
+			doc= database.getCollection("utente").find(Filters.eq("mail", mail)).first();
+		}catch(MongoException e) {
+			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
+		}
+		
+		return doc;
+	}
 			
 	
 	//Crea un documento per mongoDB
