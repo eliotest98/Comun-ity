@@ -2,11 +2,11 @@ package model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import static com.mongodb.client.model.Filters.eq;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
 import com.mongodb.MongoException;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoDatabase;
 import controller.utility.*;
 
