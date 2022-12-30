@@ -6,10 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.mongodb.client.MongoDatabase;
-
-import controller.utility.DBConnection;
+import controller.utility.DbConnection;
 
 /**
  * Servlet implementation class IndexServlet
@@ -32,7 +30,7 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.sendRedirect("/Comun-ity/index.jsp");
 		
-		MongoDatabase db = DBConnection.connectToDb();
+		MongoDatabase db = DbConnection.connectToDb();
 		
 		System.out.println("Connesso");
 		
