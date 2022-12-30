@@ -12,7 +12,7 @@ import controller.utility.*;
 public class AccreditamentoDAO {
 	
 	//Connessione al database
-	MongoDatabase database=  DbConnection.connectToDb();
+	MongoDatabase database = DbConnection.connectToDb();
 	
 	
 	//Inserisce un utente nel database
@@ -69,6 +69,7 @@ public class AccreditamentoDAO {
 
 	}
 
+	//Crea un istanza di Accreditamento da un documento mongoDB
 	private static Accreditamento docToAccreditamento(Document doc) {
 		
 		Accreditamento accreditamento = new Accreditamento(
@@ -76,7 +77,8 @@ public class AccreditamentoDAO {
 				doc.getString("abilitazione"),
 				doc.getString("allegato"),
 				(LocalDate)doc.getDate("dataSottomissione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), 
-				(LocalDate)doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), doc.getString("stato"));
+				(LocalDate)doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+				doc.getString("stato"));
 		return accreditamento;
 	}
 }

@@ -2,13 +2,13 @@ package model;
 
 import java.time.LocalDate;
 
-import org.bson.types.ObjectId;
 
 public class Annuncio {
 	
 	/**
 	 * Attributes.
 	 */
+	private static Long idTracker = 0L;
 	private Long id;
 	private String abilitazioneRichiesta;
 	private String autore;
@@ -37,6 +37,7 @@ public class Annuncio {
 	 */
 	public Annuncio(String abilitazioneRichiesta, String autore, String titolo, String descrizione, String indirizzo) {
 		super();
+		this.id = idTracker++;
 		this.abilitazioneRichiesta = abilitazioneRichiesta;
 		this.autore = autore;
 		this.titolo = titolo;
@@ -45,8 +46,23 @@ public class Annuncio {
 		this.dataPubblicazione = LocalDate.now();
 		this.dataFine = dataPubblicazione.plusDays(30); //default expire date
 	}
-	
-	
+
+	/**
+	 * Full Constructor for Db operations.
+	 */
+	public Annuncio(Long id, String abilitazioneRichiesta, String autore, String titolo, String descrizione,
+			String indirizzo, LocalDate dataPubblicazione, String incaricato, LocalDate dataFine) {
+		super();
+		this.id = id;
+		this.abilitazioneRichiesta = abilitazioneRichiesta;
+		this.autore = autore;
+		this.titolo = titolo;
+		this.descrizione = descrizione;
+		this.indirizzo = indirizzo;
+		this.dataPubblicazione = dataPubblicazione;
+		this.incaricato = incaricato;
+		this.dataFine = dataFine;
+	}
 
 	/**
 	 * @return the annuncioId

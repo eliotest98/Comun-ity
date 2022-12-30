@@ -3,7 +3,6 @@ package model;
 
 import java.time.LocalDate;
 
-import org.bson.types.ObjectId;
 
 public class Accreditamento {
 	

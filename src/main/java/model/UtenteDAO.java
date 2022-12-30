@@ -7,7 +7,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
 import com.mongodb.MongoException;
-import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoDatabase;
 import controller.utility.*;
 
@@ -82,8 +81,7 @@ public class UtenteDAO {
 		
 	}
   
-
-	//Crea un oggetto utente a partire da un documento MongoDB
+	//Crea un istanza di Utentre da un documento mongoDB
 	private static Utente docToUtente(Document doc) {
 		
 		Utente utente = new Utente(
