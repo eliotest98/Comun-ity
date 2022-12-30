@@ -30,9 +30,12 @@ public interface GestioneUtenzaService {
 	 * @return true if the credentials follow the regular-expression,
 	 * false when something is typed wrong.
 	 * @throws IllegalArgumentException //
+	 * @throws IOException 
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
 	 */
 	boolean checkCredentials(String email, String password)
-			throws IllegalArgumentException;
+			throws IllegalArgumentException, InterruptedException, ExecutionException, IOException;
 
 	/**
 	 * This service method checks if an account exists in the database.

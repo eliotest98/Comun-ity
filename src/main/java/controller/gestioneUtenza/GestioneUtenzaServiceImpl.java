@@ -50,6 +50,8 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        return false;
     }
 	
 	 /**
@@ -57,9 +59,12 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
      * @param email of the user
      * @param password of the user
      * @return true if the user credentials correspond.
+	 * @throws IOException 
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
      */
 	@Override
-	public boolean checkCredentials(String email, String password) {
+	public boolean checkCredentials(String email, String password) throws InterruptedException, ExecutionException, IOException {
 
 		Utente utente = getAccountByEmail(email);
 		
