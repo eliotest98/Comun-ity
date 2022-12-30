@@ -7,6 +7,8 @@
   --body-font: "Nunito", sans-serif;
   --normal-font-size: 1rem;
   --z-fixed: 100;
+  --gradient-first: #04034e;
+  --gradient-second: #3b3aef;
 }
 
 *,
@@ -67,7 +69,7 @@ a {
   left: -30%;
   width: var(--nav-width);
   height: 100vh;
-  background-color: var(--first-color);
+  background-image: linear-gradient(var(--gradient-first), var(--gradient-second));
   padding: 0.5rem 1rem 0 0;
   transition: 0.5s;
   z-index: var(--z-fixed);
