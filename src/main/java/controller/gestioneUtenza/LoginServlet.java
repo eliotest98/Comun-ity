@@ -33,8 +33,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     
-    UtenteDAO utenteDao = new UtenteDAO();
-	GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
+	GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
 		
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 						
@@ -65,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			if(service.checkCredentials(email, password)) {				
 				
-				Utente user = utenteDao.findUtenteByMail(email);
+				Utente user = service.getAccountByEmail(email);
 				
 				session.setAttribute("user", user);
 				
@@ -77,6 +76,7 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("HomeServlet");
 				
 			}else {				
+				
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/login.jsp");
 				request.setAttribute("message", "Credenziali non esistenti o errate, Riprova");
 				

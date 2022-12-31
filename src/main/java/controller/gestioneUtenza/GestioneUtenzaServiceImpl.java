@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import model.Accreditamento;
+import model.AccreditamentoDAO;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -14,7 +16,8 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	/**
      * @exclude
      * */
-    private UtenteDAO utenteDao;
+    private UtenteDAO utenteDao = new UtenteDAO();
+    private AccreditamentoDAO accreditamentoDAO = new AccreditamentoDAO();
     /**
      * Service constructor.
      * @param accountDao is required, because is the DAO that
@@ -90,8 +93,10 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
         Utente utente = new Utente();
         utente = utenteDao.findUtenteByMail(email);
         
-
-        return !utente.getMail().isEmpty();
+        if(utente == null)
+        	return false;
+        
+        return true;
     }
 
     /**
@@ -141,6 +146,12 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		}
 		
 		return emails;
+	}
+
+	@Override
+	public boolean saveAccreditamento(Accreditamento accreditamento) {
+		
+		return accreditamentoDAO.saveAccreditamento(accreditamento);
 	}
 
 }

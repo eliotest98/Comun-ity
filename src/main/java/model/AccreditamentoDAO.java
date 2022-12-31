@@ -16,15 +16,17 @@ public class AccreditamentoDAO {
 	
 	
 	//Inserisce un utente nel database
-	public void saveAccreditamento(Accreditamento accreditamento) {
+	public boolean saveAccreditamento(Accreditamento accreditamento) {
 		
 		try {
 		database.getCollection("accreditamento").insertOne(docForDb(accreditamento));
 		System.out.println("Accreditamento aggiunto al database con successo");
+		return true;
 		
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'inserimento dell'accreditamento" + e.getMessage());
 			e.printStackTrace();
+			return false;
 		}
 	}
 	

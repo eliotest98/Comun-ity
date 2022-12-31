@@ -31,8 +31,7 @@ public class IndexServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    UtenteDAO utenteDao = new UtenteDAO();
-	GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
+	GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

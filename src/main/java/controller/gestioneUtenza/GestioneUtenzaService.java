@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import model.Accreditamento;
 import model.Utente;
 
 public interface GestioneUtenzaService {
@@ -23,6 +24,8 @@ public interface GestioneUtenzaService {
 			throws IOException, IllegalArgumentException,
 			ExecutionException, InterruptedException;
 
+	boolean saveAccreditamento(Accreditamento accreditamento);
+	
 	/**
 	 * This function check the credentials of
 	 * the client before insert into the db.
