@@ -19,6 +19,11 @@ public class ListaUtentiServlet extends HttpServlet {
 	 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ArrayList<Utente> listaUtenti;
+		listaUtenti=(ArrayList<Utente>) req.getAttribute("listaUtenti");
+		if(listaUtenti==null) {
+			resp.sendRedirect("");					//Inserire pagina per lista vuota
+		}
 		resp.sendRedirect("");					//Inserire pagina non ancora creata
 	}
 
