@@ -124,5 +124,10 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		
 		return utente.getRuolo().equals("admin");
 	}
+	
+	public boolean isPro(Utente utente) {
+		
+		return utente.getRuolo().equals("professionista");
+	}
 
 }

@@ -81,4 +81,6 @@ public interface GestioneUtenzaService {
 	   void sendEmail(String account, String pw)
 	          throws EmailException;
 	 */
+	
+	public boolean isPro(Utente utente);
 }
