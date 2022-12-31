@@ -132,6 +132,11 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		
 		return utente.getRuolo().equals("admin");
 	}
+	
+	public boolean isPro(Utente utente) {
+		
+		return utente.getRuolo().equals("professionista");
+	}
 
 	@Override
 	public List<String> getAllAdminsEmails() {
@@ -149,9 +154,16 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	}
 
 	@Override
+
 	public boolean saveAccreditamento(Accreditamento accreditamento) {
 		
 		return accreditamentoDAO.saveAccreditamento(accreditamento);
 	}
+
+	public List<Utente> getListaUtenti() {
+		List<Utente> lista = utenteDao.listaUtenti();
+		return lista;
+	}
+	
 
 }

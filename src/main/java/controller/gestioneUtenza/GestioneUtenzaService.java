@@ -86,5 +86,17 @@ public interface GestioneUtenzaService {
 	          throws EmailException;
 	 */
 	
+
 	List<String> getAllAdminsEmails();
+	
+	/**
+	 * This method creates a system user list.
+	   List<Utente> getListaUtenti()
+	          throws Exception;
+	 */
+	List<Utente> getListaUtenti();
+	
+
+	public boolean isPro(Utente utente);
+
 }

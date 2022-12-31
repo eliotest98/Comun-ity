@@ -111,8 +111,6 @@ public class UtenteDAO {
 	}
 	
 	public List<Utente> allAdmins(){
-				
-		Document doc = null;
 		
 		List<Utente> lista = new ArrayList<>();
 		
@@ -120,6 +118,27 @@ public class UtenteDAO {
 			MongoCollection<Document> collection = database.getCollection("utente");
 
 			MongoCursor<Document> cursor = collection.find(Filters.eq("ruolo", "admin")).iterator();
+	        while (cursor.hasNext()) {
+	        	lista.add(UtenteDAO.docToUtente(cursor.next()));
+	        }
+			
+		} catch (MongoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lista;
+				
+	}
+	
+	public List<Utente> listaUtenti(){
+		
+	List<Utente> lista = new ArrayList<>();
+		
+		try {
+			MongoCollection<Document> collection = database.getCollection("utente");
+
+			MongoCursor<Document> cursor = collection.find().iterator();
 	        while (cursor.hasNext()) {
 	        	lista.add(UtenteDAO.docToUtente(cursor.next()));
 	        }
