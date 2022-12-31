@@ -34,7 +34,6 @@ public class HomeServlet extends HttpServlet {
 		
 		if(session.getAttribute("user") != null) {
 			
-			
 			Boolean admin = (Boolean) session.getAttribute("admin");
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");

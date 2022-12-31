@@ -1,6 +1,7 @@
 package controller.gestioneUtenza;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import model.Utente;
@@ -82,5 +83,17 @@ public interface GestioneUtenzaService {
 	          throws EmailException;
 	 */
 	
+
+	List<String> getAllAdminsEmails();
+	
+	/**
+	 * This method creates a system user list.
+	   List<Utente> getListaUtenti()
+	          throws Exception;
+	 */
+	List<Utente> getListaUtenti();
+	
+
 	public boolean isPro(Utente utente);
+
 }

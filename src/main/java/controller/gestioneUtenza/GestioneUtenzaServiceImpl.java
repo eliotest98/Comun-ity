@@ -1,6 +1,9 @@
 package controller.gestioneUtenza;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import model.Utente;
@@ -129,5 +132,28 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		
 		return utente.getRuolo().equals("professionista");
 	}
+
+	@Override
+	public List<String> getAllAdminsEmails() {
+		
+		List<Utente> lista = utenteDao.allAdmins();
+	    Iterator<Utente> it = lista.iterator();
+	    
+	    List<String> emails = new ArrayList<>();
+		
+		while(it.hasNext()){
+			emails.add(it.next().getMail());
+		}
+		
+		return emails;
+	}
+
+	@Override
+	public List<Utente> getListaUtenti() {
+		List<Utente> lista = utenteDao.listaUtenti();
+		return lista;
+	}
+	
+	
 
 }
