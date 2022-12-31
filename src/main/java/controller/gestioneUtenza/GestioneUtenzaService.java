@@ -83,6 +83,7 @@ public interface GestioneUtenzaService {
 	          throws EmailException;
 	 */
 	
+
 	List<String> getAllAdminsEmails();
 	
 	/**
@@ -92,4 +93,7 @@ public interface GestioneUtenzaService {
 	 */
 	List<Utente> getListaUtenti();
 	
+
+	public boolean isPro(Utente utente);
+
 }

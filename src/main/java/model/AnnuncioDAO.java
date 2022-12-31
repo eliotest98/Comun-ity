@@ -2,10 +2,15 @@ package model;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.MongoException;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
@@ -57,6 +62,50 @@ public class AnnuncioDAO {
 		Annuncio annuncio = docToAnnuncio(doc);
 		return annuncio;
 
+	}
+	
+	//Restituisce una lista con tutti i lavori 
+	public List<Annuncio> findLavori(){
+		
+		List<Annuncio> lavori = new ArrayList<Annuncio>();
+		
+		try {
+			
+			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).iterator(); 
+			
+			while (cursor.hasNext()) {
+				lavori.add(docToAnnuncio(cursor.next()));
+			}
+			
+
+		}catch(MongoException e) {
+			System.out.println("Errore durante la ricerca dei lavori disponibili");
+		}
+		
+		return lavori;
+	}
+	
+	//Restituisce una lista di tutti i lavori disponibili
+	public List<Annuncio> findLavoriDisponibili(){
+		
+		List<Annuncio> lavori = new ArrayList<Annuncio>();
+		List<Annuncio> lavoriDisponibili = new ArrayList<Annuncio>();
+		
+		lavori= findLavori();
+		
+		Iterator<Annuncio> it= lavori.iterator();
+		while(it.hasNext()) {
+			if(it.next().getIncaricato().equals("nessuno")) {
+				lavoriDisponibili.add(it.next());
+			}
+		}
+		
+		if(lavoriDisponibili.isEmpty()) {
+			System.out.println("Non ci sono lavori disponibili");
+		}
+		
+		return lavoriDisponibili;
+		
 	}
 
 	//Crea un documento per mongoDB
