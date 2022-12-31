@@ -143,4 +143,12 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		return emails;
 	}
 
+	@Override
+	public List<Utente> getListaUtenti() {
+		List<Utente> lista = utenteDao.listaUtenti();
+		return lista;
+	}
+	
+	
+
 }

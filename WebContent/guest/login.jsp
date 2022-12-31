@@ -18,7 +18,7 @@
 <title>Login - Comun-ity</title>
 </head>
 <body>
-    <%@ include file="./navbar/navbar.html" %> 
+  	<%@ include file="./navbar/navbar.html" %>
     <% if (request.getAttribute("message") != null){%>
     <div id="message">
 		<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -52,6 +52,6 @@
           </div>
         </div>
       </div>
-    <%@ include file="./footer/footer.html" %> 
+      	<%@ include file="./footer/footer.html" %>
 </body>
 </html>

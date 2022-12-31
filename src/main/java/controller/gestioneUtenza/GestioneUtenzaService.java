@@ -84,4 +84,12 @@ public interface GestioneUtenzaService {
 	 */
 	
 	List<String> getAllAdminsEmails();
+	
+	/**
+	 * This method creates a system user list.
+	   List<Utente> getListaUtenti()
+	          throws Exception;
+	 */
+	List<Utente> getListaUtenti();
+	
 }
