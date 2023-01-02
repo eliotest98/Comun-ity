@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import model.Accreditamento;
 import model.Utente;
 
 public interface GestioneUtenzaService {
 
 	/**
-	 * This function give the possibility to register a
-	 * new user into the system.
+	 * Registers a new user into the system.
 	 * @param utente user into the db
 	 * @return true if is possible to insert the
 	 * account after check of the credentials,
@@ -25,8 +23,13 @@ public interface GestioneUtenzaService {
 			ExecutionException, InterruptedException;
 	
 	/**
-	 * This function check the credentials of
-	 * the client before insert into the db.
+	 * Remove the user account with the given email from the db.
+	 * @param email is the email of the user to remove from the db.
+	 */
+	void removeUtente(String email);
+	
+	/**
+	 * Checks the credentials of the client before insert it into the db.
 	 * @param email is the email of the client
 	 * @param newPassword is the password to update
 	 * @return true if the credentials follow the regular-expression,
@@ -40,7 +43,7 @@ public interface GestioneUtenzaService {
 			throws IllegalArgumentException, InterruptedException, ExecutionException, IOException;
 
 	/**
-	 * This service method checks if an account exists in the database.
+	 * Checks if an account exists in the database.
 	 * @param email referring to the account to search for
 	 * @return true if the account exists, false if not
 	 */
@@ -48,7 +51,7 @@ public interface GestioneUtenzaService {
 			throws InterruptedException, ExecutionException, IOException;
 
 	/**
-	 * This method return the account given its mail.
+	 * Return the account given its mail.
 	 * @param email referring to the account to search for
 	 * @return the Account if it exists, null if not
 	 */
@@ -56,7 +59,7 @@ public interface GestioneUtenzaService {
 			throws InterruptedException, ExecutionException, IOException;
 
 	/**
-	 * This service method changes the password of an account.
+	 * Changes the password of an account.
 	 * @param email of the account
 	 * @param password updated
 	 * @return true after the change has taken place
@@ -65,43 +68,31 @@ public interface GestioneUtenzaService {
 			throws IOException, ExecutionException, InterruptedException;
 
 	/**
-	 *
-	 * @param utente is the User registred into the DataBase.
-	 * @return Return true if the following account is
-	 * a Comun-ity Admin.
-	 * @throws IllegalArgumentException
-	 */
-	boolean IsAdmin(Utente utente)
-			throws IllegalArgumentException;
+	 * Checks if the user is an Admin.
+     * @param utente is the registred user into the DataBase.
+     * @return true if the following account is
+     * a Comun-ity Admin.
+     */
+	boolean IsAdmin(Utente utente);
+	
+	/**
+	 * Checks if the user is a Pro.
+     * @param utente is the registred user into the DataBase.
+     * @return true if the following account is
+     * a certified pro.
+     */
+	boolean isPro(Utente utente);
 
 	/**
-	 * This method send an Email with new account credentials.
-	 * @param account
-	 * @param pw
-	 * @throws EmailException
-
-	   void sendEmail(String account, String pw)
-	          throws EmailException;
-	 */
-	
-
+	 * Retrieve all the Admins' email from the db.
+     * @return a List of all Admins' email.
+     */
 	List<String> getAllAdminsEmails();
 	
 	/**
-	 * This method creates a system user list.
-	   List<Utente> getListaUtenti()
-	          throws Exception;
-	 */
-	List<Utente> getListaUtenti();
+	 * Retrieve all the Users from the db.
+     * @return a List of Utente that contains all the users.
+     */
+	List<Utente> getAllUsers();
 	
-	/**
-	 * this method removes a user.
-	   void removeUtente()
-	          throws Exception;
-	 */
-	void removeUtente(String mail);
-	
-	public boolean isPro(Utente utente);
-	
-
 }

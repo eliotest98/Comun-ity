@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import model.UtenteDAO;
 
 public class ModerazioneUtenzaServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	
-	 UtenteDAO utenteDao = new UtenteDAO();
-	 GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
+	GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

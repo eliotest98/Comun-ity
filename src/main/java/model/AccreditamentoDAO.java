@@ -30,10 +30,10 @@ public class AccreditamentoDAO {
 		}
 	}
 	
-	public void deleteAccreditamento(Accreditamento accreditamento) {
+	public void deleteAccreditamento(String richiedente) {
 		try {
 			
-		database.getCollection("accreditamento").deleteOne(Filters.eq("richiedente" , accreditamento.getRichiedente()));
+		database.getCollection("accreditamento").deleteOne(Filters.eq("richiedente" , richiedente));
 		System.out.println("Accreditamento eliminato!");
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
