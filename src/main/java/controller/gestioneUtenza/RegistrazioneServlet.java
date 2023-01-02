@@ -86,7 +86,7 @@ public class RegistrazioneServlet extends HttpServlet {
 		String flag = request.getParameter("professionista");
 				
 		LocalDate dob = LocalDate.parse(data);  
-		
+				
 		if(isValidEmailAddress(email)) {
 			
 			if(patternMatches(password,passwordRegex)) {
@@ -95,8 +95,7 @@ public class RegistrazioneServlet extends HttpServlet {
 				
 				ZoneId defaultZoneId = ZoneId.systemDefault();
 		        Date insert = Date.from(dob.atStartOfDay(defaultZoneId).toInstant());
-
-				
+		        
 				if(current.after(insert)) {
 				
 				if(patternMatches(telefono,phoneRegex)) {
@@ -106,7 +105,7 @@ public class RegistrazioneServlet extends HttpServlet {
 							Utente user = new Utente("cittadino", "nessuna", nome, cognome, calculateAge(dob), email, password, sesso, telefono, indirizzo, dob);
 							
 							Accreditamento accreditamento = null;
-							
+														
 							if(flag != null) {
 								
 								String professione = request.getParameter("professione");
@@ -161,16 +160,6 @@ public class RegistrazioneServlet extends HttpServlet {
 					        			
 					        			List<String> lista = service.getAllAdminsEmails();
 					        			
-					        			try {
-					        				
-											MailSender mail = new MailSender(lista,"no-reply@Comun-ity","localhost","C'è una nuova richiesta di accreditamento!","Vuoi allungare il tuo pisello di 20 metri?");
-											mail.sendMail();
-											
-					        			} catch (MessagingException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-					        			
 					        			response.sendRedirect("HomeServlet");
 					        			
 					        		}else {
@@ -179,7 +168,6 @@ public class RegistrazioneServlet extends HttpServlet {
 										request.setAttribute("message", "Accreditamento non riuscito");
 										
 										requestDispatcher.forward(request, response);
-					        			
 					        		}
 					        		
 					        	}else {
@@ -248,11 +236,8 @@ public class RegistrazioneServlet extends HttpServlet {
 	
 	private static int calculateAge(LocalDate dob){  
 		
-	LocalDate curDate = LocalDate.now();  
-	if ((dob != null) && (curDate != null))
-		return Period.between(dob, curDate).getYears();  
-	else    
-		return 0;  
+	LocalDate curDate = LocalDate.now();  	
+	return Period.between(dob, curDate).getYears();  
 	}  
 	
 	private static boolean patternMatches(String string, String regexPattern) {
@@ -267,7 +252,8 @@ public class RegistrazioneServlet extends HttpServlet {
 		      InternetAddress emailAddr = new InternetAddress(email);
 		      emailAddr.validate();
 		   } catch (AddressException ex) {
-		      result = false;
+			   ex.printStackTrace();
+			   result = false;
 		   }
 		   return result;
 		}

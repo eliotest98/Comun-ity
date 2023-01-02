@@ -44,8 +44,6 @@ public class HomeServlet extends HttpServlet {
 		}else {
 			response.sendRedirect("/Comun-ity/guest/login.jsp");
 		}
-		
-		
 	}
 
 	/**
