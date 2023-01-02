@@ -1,4 +1,4 @@
-package controller.gestioneUtenza;
+package controller.gestioneAnnunci;
 
 import java.io.IOException;
 import java.util.ArrayList;
