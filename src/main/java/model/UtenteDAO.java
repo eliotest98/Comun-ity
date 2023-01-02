@@ -38,11 +38,11 @@ public class UtenteDAO {
 	
 	
 	//Esegue l'eliminazione di un utente nel database
-	public void deleteUtente(Utente utente) {
+	public void deleteUtente(String mail) {
 		try {
 			
 
-		database.getCollection("utente").deleteOne(Filters.eq("mail", utente.getMail()));
+		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
 
 		System.out.println("Utente eliminato!");
 		}catch(MongoException e) {
@@ -144,6 +144,9 @@ public class UtenteDAO {
 			MongoCollection<Document> collection = database.getCollection("utente");
 
 			MongoCursor<Document> cursor = collection.find().iterator();
+			if(!cursor.hasNext()) {
+				return null;
+			}
 	        while (cursor.hasNext()) {
 	        	lista.add(UtenteDAO.docToUtente(cursor.next()));
 	        }

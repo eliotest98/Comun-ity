@@ -6,8 +6,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -48,6 +50,7 @@ public class RegistrazioneServlet extends HttpServlet {
     }
     
 	GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
+	GestioneAccreditamentoService serviceAccre = new GestioneAccreditamentoServiceImpl();
 	
 	private final String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
 	private final String phoneRegex = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$";
@@ -70,7 +73,7 @@ public class RegistrazioneServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
+
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		String email = request.getParameter("email");
@@ -87,6 +90,14 @@ public class RegistrazioneServlet extends HttpServlet {
 			
 			if(patternMatches(password,passwordRegex)) {
 				
+				Date current = new Date();
+				
+				ZoneId defaultZoneId = ZoneId.systemDefault();
+		        Date insert = Date.from(dob.atStartOfDay(defaultZoneId).toInstant());
+
+				
+				if(current.after(insert)) {
+				
 				if(patternMatches(telefono,phoneRegex)) {
 					
 					if(sesso.charAt(0) == 'M' || sesso.charAt(0) == 'F') {
@@ -94,6 +105,8 @@ public class RegistrazioneServlet extends HttpServlet {
 						if(patternMatches(indirizzo,addressRegex)) {
 							
 							Utente user = new Utente("cittadino", "nessuna", nome, cognome, calculateAge(dob), email, password, sesso, telefono, indirizzo, dob);
+							
+							Accreditamento accreditamento = null;
 							
 							if(flag != null) {
 								
@@ -105,6 +118,7 @@ public class RegistrazioneServlet extends HttpServlet {
 									request.setAttribute("message", "Inserisci una professione");
 									
 									requestDispatcher.forward(request, response);
+									
 								}else {
 									 	String path = getServletContext().getRealPath("/temp");
 								        
@@ -114,14 +128,14 @@ public class RegistrazioneServlet extends HttpServlet {
 								                directory.mkdir();      
 								        }
 								        
-								        Part part = request.getPart("images");
-								        
-								        String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+								        Part part = request.getPart("file");
+								        								        
+								        String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 								        part.write(path + fileName);
 								        
 								        String base = encodeFileToBase64Binary(path + fileName);
 								        
-								        Accreditamento accreditamento = new Accreditamento(email, professione, base);   
+								        accreditamento = new Accreditamento(email, professione, base);   
 								}
 								
 							}
@@ -137,8 +151,42 @@ public class RegistrazioneServlet extends HttpServlet {
 					        
 					        if(res) {
 					        	
+					        	if(flag != null) {
+					        		
+					        		if(serviceAccre.saveAccreditamento(accreditamento)) {
+					        			
+					        			HttpSession session = request.getSession(true);
+					        			
+					        			session.setAttribute("user", user);
+					        			session.setAttribute("admin", false);
+					        			
+					        			response.sendRedirect("HomeServlet");
+					        			
+					        		}else {
+					        			
+					        			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/registrazione.jsp");
+										request.setAttribute("message", "Accreditamento non riuscito");
+										
+										requestDispatcher.forward(request, response);
+					        			
+					        		}
+					        		
+					        	}else {
+					        		
+					        		HttpSession session = request.getSession(true);
+				        			
+				        			session.setAttribute("user", user);
+				        			session.setAttribute("admin", false);
+				        			
+					        		response.sendRedirect("HomeServlet");
+					        	}
+					        	
 					        }else {
-					        	//Boolean res
+					        	
+					        	RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/registrazione.jsp");
+								request.setAttribute("message", "Errore nella creazione dell'utente");
+								
+								requestDispatcher.forward(request, response);
 					        }
 							
 						}else {
@@ -158,6 +206,14 @@ public class RegistrazioneServlet extends HttpServlet {
 				}else {
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/registrazione.jsp");
 					request.setAttribute("message", "Il numero di telefono non è corretto");
+					
+					requestDispatcher.forward(request, response);
+				}
+				
+				}else {
+					
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/registrazione.jsp");
+					request.setAttribute("message", "Non puoi essere nato nel futuro");
 					
 					requestDispatcher.forward(request, response);
 				}
