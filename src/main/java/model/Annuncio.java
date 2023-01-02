@@ -8,7 +8,6 @@ public class Annuncio {
 	/**
 	 * Attributes.
 	 */
-	private static Long idTracker = 0L;
 	private Long id;
 	private String abilitazioneRichiesta;
 	private String autore;
@@ -37,7 +36,6 @@ public class Annuncio {
 	 */
 	public Annuncio(String abilitazioneRichiesta, String autore, String titolo, String descrizione, String indirizzo) {
 		super();
-		this.id = idTracker++;
 		this.abilitazioneRichiesta = abilitazioneRichiesta;
 		this.autore = autore;
 		this.titolo = titolo;
@@ -45,6 +43,7 @@ public class Annuncio {
 		this.indirizzo = indirizzo;
 		this.dataPubblicazione = LocalDate.now();
 		this.dataFine = dataPubblicazione.plusDays(30); //default expire date
+		this.id=null;
 	}
 
 	/**
@@ -62,6 +61,11 @@ public class Annuncio {
 		this.dataPubblicazione = dataPubblicazione;
 		this.incaricato = incaricato;
 		this.dataFine = dataFine;
+	}
+	
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package controller.gestioneAnnunci;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,32 @@ import model.UtenteDAO;
 
 public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	
+	/**
+     * this method inserts an ad into the database.
+     * @param utente annuncio into the db.
+     * @return void.
+     * @throws IOException
+     * @throws IllegalArgumentException
+     */
+	@Override
+	public void insertAnnuncio(Annuncio annuncio) {
+		annuncioDAO.saveAnnuncio(annuncio);
+		
+	}
+	
+	/**
+     * this method removes an ad into the database.
+     * @param utente annuncio into the db.
+     * @return void.
+     * @throws IOException
+     * @throws IllegalArgumentException
+     */
+	@Override
+	public void removeAnnuncio(Long annuncio) {
+		annuncioDAO.deleteAnnuncio(annuncio);
+		
+	}
+
 	private AnnuncioDAO annuncioDAO;
 
 	public GestioneAnnunciServiceImpl() {
