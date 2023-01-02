@@ -21,28 +21,26 @@ public class ListaUtentiServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		ArrayList<Utente> listaUtenti;
-		listaUtenti=(ArrayList<Utente>) req.getAttribute("listaUtenti");
+		HttpSession session = req.getSession(true);
 		
-		if(listaUtenti==null) {
-			resp.sendRedirect("");					//Inserire pagina per lista vuota
+		if(session.getAttribute("user") != null && (session.getAttribute("admin") != null && (Boolean) session.getAttribute("admin") == true)) {
+			
+			ArrayList<Utente> listaUtenti = new ArrayList<>();
+			
+			listaUtenti=(ArrayList<Utente>) service.getAllUsers();
+						
+			RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/user/listaUtenti.jsp");
+			req.setAttribute("listaUtenti", listaUtenti);
+			requestDispatcher.forward(req, resp);
+		}else {
+			resp.sendRedirect("/Comun-ity/guest/login.jsp");
 		}
-		resp.sendRedirect("");					//Inserire pagina non ancora creata
 }
 
 	 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		HttpSession session = req.getSession(true);
-		
-		ArrayList<Utente> listaUtenti = new ArrayList<>();
-		
-		listaUtenti=(ArrayList<Utente>) service.getAllUsers();
-		
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/user/listaUtenti.jsp");			//Inserire pagina non ancora creata per il Dispatcher
-		req.setAttribute("listaUtenti", listaUtenti);
-		requestDispatcher.forward(req, resp);
+		doGet(req,resp);
 	}
  
   public ListaUtentiServlet() {

@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet("/ModerazioneUtenza")
 public class ModerazioneUtenzaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -25,13 +27,17 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		String email = request.getParameter("mail");
 		
+		System.out.println(action + " " + email);
+		
 		if(action.equalsIgnoreCase("ban")) {
 			
-			if(service.removeUtente(email)) {
-				request.setAttribute("message", "L'utente: " + email + ", è stato rimosso correttamente dal sistema.");
-			}else request.setAttribute("message", "L'operazione di rimozione dell'utente: " + email + ", non è andata a buon fine.");
+			if(service.removeUtente(email)) 
+				request.setAttribute("success", "L'utente: " + email + ", Ã¨ stato rimosso correttamente dal sistema");
+			else 
+				request.setAttribute("error", "L'operazione di rimozione dell'utente: " + email + ", non Ã¨ andata a buon fine");
 			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(" "); //AGGIUNGERE PATH JSP LISTA UTENTI
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 			
 		}else if(action.equalsIgnoreCase("tiemout")) {

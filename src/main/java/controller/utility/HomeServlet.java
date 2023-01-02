@@ -33,11 +33,8 @@ public class HomeServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		
 		if(session.getAttribute("user") != null) {
-			
-			Boolean admin = (Boolean) session.getAttribute("admin");
-			
+									
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");
-			request.setAttribute("admin", admin);
 			
 			requestDispatcher.forward(request, response);
 			

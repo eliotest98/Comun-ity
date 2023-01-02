@@ -38,15 +38,18 @@ public class UtenteDAO {
 	
 	
 	//Esegue l'eliminazione di un utente nel database
-	public void deleteUtente(String mail) {
+	public boolean deleteUtente(String mail) {
 		
 		try {
-		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
-
-		System.out.println("Utente eliminato!");
-		}catch(MongoException e) {
-			System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
-		}
+			database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
+	
+			System.out.println("Utente eliminato!");
+			return true;
+			
+			}catch(MongoException e) {
+				System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
+				return false;
+			}
 	}
 	
 	

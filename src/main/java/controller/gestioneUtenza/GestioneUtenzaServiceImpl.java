@@ -54,16 +54,9 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
      */
     @Override
 	public boolean removeUtente(String email) {
-		utenteDao.deleteUtente(email);
 		
-		try {
-			return searchAccountByEmail(email);
-		} catch (InterruptedException | ExecutionException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	return utenteDao.deleteUtente(email);
 		
-		return false;
 	}
 
 	 /**
