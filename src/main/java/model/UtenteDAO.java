@@ -39,9 +39,8 @@ public class UtenteDAO {
 	
 	//Esegue l'eliminazione di un utente nel database
 	public void deleteUtente(String mail) {
+		
 		try {
-			
-
 		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
 
 		System.out.println("Utente eliminato!");
