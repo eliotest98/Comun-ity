@@ -15,7 +15,7 @@
           <i class="bx bxs-dashboard nav_icon"></i>
           <span class="nav_name">Dashboard</span>
         </a>
-        <a href="#" class="nav_link" id="bacheca">
+        <a href="ListaAnnunciServlet" class="nav_link" id="bacheca">
           <i class="bx bx-clipboard nav_icon"></i>
           <span class="nav_name">Bacheca Annunci</span>
         </a>

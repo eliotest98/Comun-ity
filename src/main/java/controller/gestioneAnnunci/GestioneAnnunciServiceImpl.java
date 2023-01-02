@@ -70,7 +70,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 			System.out.println("Annunci disponibili rimossi correttamente.");
 			return true;
 		}else {
-			System.out.println("L'operazione di rimozione degli annunci non è andata a buon fine.");
+			System.out.println("L'operazione di rimozione degli annunci non ï¿½ andata a buon fine.");
 			return false;
 		}
 		
@@ -93,8 +93,8 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
      */
 	@Override
 	public List<Annuncio> getAvailableErrands() {
-		List<Annuncio> commissioni= new ArrayList<Annuncio>();
-		commissioni= annuncioDAO.findAvailableErrands();
+		List<Annuncio> commissioni = new ArrayList<Annuncio>();
+		commissioni = annuncioDAO.findAvailableErrands();
 		return commissioni;
 	}
 

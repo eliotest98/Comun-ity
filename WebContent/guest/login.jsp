@@ -11,9 +11,9 @@
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-<script src="/Comun-ity/js/login.js"></script>
-<link href="/Comun-ity/styles/login.css" rel="stylesheet" />
-<link href="/Comun-ity/styles/navbar.css" rel="stylesheet" />
+<script src="${pageContext.request.contextPath}/js/login.js"></script>
+<link href="${pageContext.request.contextPath}/styles/login.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}y/styles/navbar.css" rel="stylesheet" />
 
 <title>Login - Comun-ity</title>
 </head>

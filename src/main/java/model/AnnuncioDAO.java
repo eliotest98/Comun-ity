@@ -147,12 +147,10 @@ public class AnnuncioDAO {
 
 		List<Annuncio> commissioni = new ArrayList<Annuncio>();
 		List<Annuncio> commissioniDisponibili = new ArrayList<Annuncio>();
-
-		commissioni= findErrands();
-
-		if(commissioni==null) {
+		
+		if(commissioni == null)
 			return null;
-		}
+		
 		Iterator<Annuncio> it= commissioni.iterator();
 		while(it.hasNext()) {
 			if(it.next().getIncaricato().equals("nessuno")) {
