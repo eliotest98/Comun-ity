@@ -162,12 +162,5 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	public void removeUtente(String utente) {
 		utenteDao.deleteUtente(utente);	
 	}
-	
-	//Assegna valutazione
-	
-	public void assignRating(Utente utente, Double recensione) {
-		utenteDao.assegnaValutazione(utente, recensione);
-	}
-	
 
 }

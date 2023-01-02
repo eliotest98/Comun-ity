@@ -103,6 +103,5 @@ public interface GestioneUtenzaService {
 	
 	public boolean isPro(Utente utente);
 	
-	public void assignRating(Utente utente, Double recensione);
 
 }

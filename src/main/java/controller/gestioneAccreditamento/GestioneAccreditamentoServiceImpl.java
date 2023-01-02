@@ -1,4 +1,4 @@
-package controller.gestioneUtenza;
+package controller.gestioneAccreditamento;
 
 import model.Accreditamento;
 import model.AccreditamentoDAO;
