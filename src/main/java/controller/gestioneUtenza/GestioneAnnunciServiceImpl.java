@@ -5,10 +5,28 @@ import java.util.List;
 
 import model.Annuncio;
 import model.AnnuncioDAO;
+import model.UtenteDAO;
 
 public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	
 	private AnnuncioDAO annuncioDAO;
+
+	public GestioneAnnunciServiceImpl() {
+	    }
+
+	@Override
+	public List<Annuncio> getCommissioni() {
+		List<Annuncio> commissioni= new ArrayList<Annuncio>();
+		commissioni= annuncioDAO.findCommissioni();
+		return commissioni;
+	}
+
+	@Override
+	public List<Annuncio> getCommissioniDisponibili() {
+		List<Annuncio> commissioni= new ArrayList<Annuncio>();
+		commissioni= annuncioDAO.findCommissioni();
+		return commissioni;
+	}
 
 	public GestioneAnnunciServiceImpl(AnnuncioDAO annuncioDAO) {
 		super();

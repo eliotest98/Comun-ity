@@ -94,7 +94,13 @@ public interface GestioneUtenzaService {
 	 */
 	List<Utente> getListaUtenti();
 	
-
+	/**
+	 * this method removes a user.
+	   void removeUtente()
+	          throws Exception;
+	 */
+	void removeUtente(String mail);
+	
 	public boolean isPro(Utente utente);
 
 }

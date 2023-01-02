@@ -157,6 +157,11 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		List<Utente> lista = utenteDao.listaUtenti();
 		return lista;
 	}
+
+	@Override
+	public void removeUtente(String utente) {
+		utenteDao.deleteUtente(utente);	
+	}
 	
 
 }

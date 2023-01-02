@@ -17,13 +17,19 @@ public class ListaUtentiServlet extends HttpServlet {
 	 UtenteDAO utenteDao = new UtenteDAO();
 	 GestioneUtenzaService service = new GestioneUtenzaServiceImpl(utenteDao);
 	 
-	 public ListaUtentiServlet() {
-		 super();
-		// TODO Auto-generated constructor stub
-	}
-	 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ArrayList<Utente> listaUtenti;
+		listaUtenti=(ArrayList<Utente>) req.getAttribute("listaUtenti");
+		if(listaUtenti==null) {
+			resp.sendRedirect("");					//Inserire pagina per lista vuota
+		}
+		resp.sendRedirect("");					//Inserire pagina non ancora creata
+}
+
+	 
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		HttpSession session = req.getSession(true);
 		
@@ -35,10 +41,9 @@ public class ListaUtentiServlet extends HttpServlet {
 		req.setAttribute("listaUtenti", listaUtenti);
 		requestDispatcher.forward(req, resp);
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req,resp);
+ 
+  public ListaUtentiServlet() {
+		 super();
+		// TODO Auto-generated constructor stub
 	}
-
 }

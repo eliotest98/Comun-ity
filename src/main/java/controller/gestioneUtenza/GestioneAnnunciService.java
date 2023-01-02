@@ -8,5 +8,8 @@ public interface GestioneAnnunciService {
 	
 	public List<Annuncio> getJobs();
 	public List<Annuncio> getJobsAvailable();
-
+	
+	List<Annuncio> getCommissioni();
+	
+	List<Annuncio> getCommissioniDisponibili();
 }
