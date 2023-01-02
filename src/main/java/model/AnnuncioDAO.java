@@ -58,112 +58,162 @@ public class AnnuncioDAO {
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dell'annuncio" + e.getMessage());
 		}
-
-		Annuncio annuncio = docToAnnuncio(doc);
-		return annuncio;
+		
+		if(doc == null)
+			return null;
+		else {
+			Annuncio annuncio = docToAnnuncio(doc);
+			return annuncio;
+		}
 
 	}
-	
+
 	//this method returns the id of the last annuncio
 	public Long getLastId() {
 		Document myDoc = (Document)database.getCollection("annuncio").find().sort(new Document("id",-1)).first();
 		Annuncio lastAnnuncio=docToAnnuncio(myDoc);
 		return lastAnnuncio.getId();
 	}
-	
+
 	//Restituisce una lista con tutti i lavori 
-	public List<Annuncio> findLavori(){
-		
+	public List<Annuncio> findJobs(){
+
 		List<Annuncio> lavori = new ArrayList<Annuncio>();
-		
+
 		try {
-			
+
 			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).iterator(); 
-			
+
 			while (cursor.hasNext()) {
 				lavori.add(docToAnnuncio(cursor.next()));
 			}
-			
+
 
 		}catch(MongoException e) {
 			System.out.println("Errore durante la ricerca dei lavori disponibili");
 		}
-		
+
 		return lavori;
 	}
-	
-	//Restituisce una lista con tutte le commissioni
-		public List<Annuncio> findCommissioni(){
-			
-			List<Annuncio> commissioni = new ArrayList<Annuncio>();
-			
-			try {
-				
-				MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna")).iterator(); 
-				if(!cursor.hasNext()) {
-					return null;
-				}
-				while (cursor.hasNext()) {
-					commissioni.add(docToAnnuncio(cursor.next()));
-				}
-				
 
-			}catch(MongoException e) {
-				System.out.println("Errore durante la ricerca delle commissioni disponibili");
+	//Restituisce una lista con tutte le commissioni
+	public List<Annuncio> findErrands(){
+
+		List<Annuncio> commissioni = new ArrayList<Annuncio>();
+
+		try {
+
+			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna")).iterator(); 
+			if(!cursor.hasNext()) {
+				return null;
 			}
-			
-			return commissioni;
+			while (cursor.hasNext()) {
+				commissioni.add(docToAnnuncio(cursor.next()));
+			}
+
+
+		}catch(MongoException e) {
+			System.out.println("Errore durante la ricerca delle commissioni disponibili");
 		}
-	
+
+		return commissioni;
+	}
+
 	//Restituisce una lista di tutti i lavori disponibili
-	public List<Annuncio> findLavoriDisponibili(){
-		
+	public List<Annuncio> findAvailableJobs(){
+
 		List<Annuncio> lavori = new ArrayList<Annuncio>();
 		List<Annuncio> lavoriDisponibili = new ArrayList<Annuncio>();
-		
-		lavori= findLavori();
-		
+
+		lavori= findJobs();
+
 		Iterator<Annuncio> it= lavori.iterator();
 		while(it.hasNext()) {
 			if(it.next().getIncaricato().equals("nessuno")) {
 				lavoriDisponibili.add(it.next());
 			}
 		}
-		
+
 		if(lavoriDisponibili.isEmpty()) {
 			System.out.println("Non ci sono lavori disponibili");
 		}
-		
+
 		return lavoriDisponibili;
-		
+
+	}
+
+	//Restituisce una lista di tutte le commissioni disponibili
+	public List<Annuncio> findAvailableErrands(){
+
+		List<Annuncio> commissioni = new ArrayList<Annuncio>();
+		List<Annuncio> commissioniDisponibili = new ArrayList<Annuncio>();
+
+		commissioni= findErrands();
+
+		if(commissioni==null) {
+			return null;
+		}
+		Iterator<Annuncio> it= commissioni.iterator();
+		while(it.hasNext()) {
+			if(it.next().getIncaricato().equals("nessuno")) {
+				commissioniDisponibili.add(it.next());
+			}
+		}
+
+		if(commissioniDisponibili.isEmpty()) {
+			return null;
+		}
+
+		return commissioniDisponibili;
+
 	}
 	
-	//Restituisce una lista di tutte le commissioni disponibili
-		public List<Annuncio> findCommissioniDisponibili(){
-			
-			List<Annuncio> commissioni = new ArrayList<Annuncio>();
-			List<Annuncio> commissioniDisponibili = new ArrayList<Annuncio>();
-			
-			commissioni= findCommissioni();
-			
-			if(commissioni==null) {
-				return null;
-			}
-			Iterator<Annuncio> it= commissioni.iterator();
-			while(it.hasNext()) {
-				if(it.next().getIncaricato().equals("nessuno")) {
-					commissioniDisponibili.add(it.next());
-				}
-			}
-			
-			if(commissioniDisponibili.isEmpty()) {
-				return null;
-			}
-			
-			return commissioniDisponibili;
-			
-		}
+	//Restituisce una lista di tutti gli annunci pubblicati da un utente
+	public List<Annuncio> findAllByUser(String autore){
 		
+		List<Annuncio> allAdsByUser = new ArrayList<Annuncio>();
+
+		try {
+
+			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.eq("autore", autore)).iterator(); 
+			if(!cursor.hasNext()) {
+				return null;
+			}
+			while (cursor.hasNext()) {
+				allAdsByUser.add(docToAnnuncio(cursor.next()));
+			}
+
+
+		}catch(MongoException e) {
+			System.out.println("Errore durante la ricerca degli annunci pubblicati da: " + autore + ".");
+		}
+
+		return allAdsByUser;
+	}
+
+	//Restituisce una lista di annunci ancora disponibili per autore
+	public List<Annuncio> findAllAvailableByUser(String autore){
+		
+		List<Annuncio> allAdsByUser = new ArrayList<Annuncio>();
+		List<Annuncio> availables = new ArrayList<Annuncio>();
+		
+		allAdsByUser = findAllByUser(autore);
+
+		Iterator<Annuncio> it= allAdsByUser.iterator();
+		while(it.hasNext()) {
+			if(it.next().getIncaricato().equals("nessuno")) {
+				availables.add(it.next());
+			}
+		}
+
+		if(availables.isEmpty()) {
+			System.out.println("Non ci sono annunci disponibili pubblicati dall'utente: " + autore + ".");
+		}
+
+		return availables;
+		
+	}
+
 	//Crea un documento per mongoDB
 	private static Document docForDb(Annuncio annuncio) {
 
@@ -181,7 +231,7 @@ public class AnnuncioDAO {
 		return doc;
 
 	}
-	
+
 	//Crea un istanza di Annuncio da un documento mongoDB
 	private static Annuncio docToAnnuncio(Document doc) {
 
@@ -195,7 +245,7 @@ public class AnnuncioDAO {
 				(LocalDate)doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
 				doc.getString("incaricato"),
 				(LocalDate)doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-				
+
 		return annuncio;
 	}
 

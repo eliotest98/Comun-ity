@@ -15,10 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mongodb.internal.ExpirableValue;
 
+import controller.gestioneAnnunci.GestioneAnnunciService;
+import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
+
 public class ModerazioneUtenzaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
+	GestioneUtenzaService serviceUtenza = new GestioneUtenzaServiceImpl();
+	GestioneAnnunciService serviceAnnunci = new GestioneAnnunciServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +39,7 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 		
 		if(action.equalsIgnoreCase("ban")) {
 			
-			if(service.removeUtente(email)) {
+			if(serviceUtenza.removeUtente(email) && serviceAnnunci.removeAllAvailableByUser(email)) {
 				request.setAttribute("message", "L'utente: " + email + ", è stato rimosso correttamente dal sistema.");
 				try (BufferedWriter writer = new BufferedWriter(new FileWriter("banned-IPs.txt", true))) {
 					writer.write(userIp);
