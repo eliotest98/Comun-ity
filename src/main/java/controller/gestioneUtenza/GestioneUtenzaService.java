@@ -102,5 +102,7 @@ public interface GestioneUtenzaService {
 	void removeUtente(String mail);
 	
 	public boolean isPro(Utente utente);
+	
+	public void assignRating(Utente utente, Double recensione);
 
 }

@@ -10,6 +10,11 @@ import javax.servlet.http.HttpSession;
 
 public class AreaPersonaleServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public AreaPersonaleServlet() {
 		// TODO Auto-generated constructor stub
 	}
@@ -18,6 +23,8 @@ public class AreaPersonaleServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		super.doGet(req, resp);
+		
+		resp.sendRedirect(null);  //va inserita la jsp dell'area personale
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package controller.gestioneUtenza;
+package controller.gestioneAnnunci;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controller.gestioneUtenza.GestioneUtenzaService;
+import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import model.Annuncio;
 import model.AnnuncioDAO;
 import model.Utente;
@@ -47,7 +49,7 @@ public class VisualizzazioneLavoriServlet extends HttpServlet {
 		
 		if(utente != null && serviceUtenza.isPro(utente)==true) {
 			
-			response.sendRedirect("jsp visualizzazaione lavori");
+			response.sendRedirect("jsp visualizzazaione lavori");		//va inserita la jsp (ancora da fare)
 			
 		}else{
 			request.setAttribute("message", "Sembra che per la piattaforma tu non sia registrato come professionista, autenticati");
@@ -66,7 +68,7 @@ public class VisualizzazioneLavoriServlet extends HttpServlet {
 		List<Annuncio> lavoriDisponibili= serviceAnnuncio.getJobsAvailable();
 		request.setAttribute("lavoriDisponibili", lavoriDisponibili);
 		
-		RequestDispatcher disp = this.getServletContext().getRequestDispatcher("jsp visualizzazaione lavori");
+		RequestDispatcher disp = this.getServletContext().getRequestDispatcher("jsp visualizzazaione lavori");				//va inserita la jsp (ancora da fare)
 		
 		disp.forward(request, response);
 	}

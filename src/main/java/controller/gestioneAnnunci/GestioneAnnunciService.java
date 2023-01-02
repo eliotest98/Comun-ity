@@ -1,8 +1,9 @@
-package controller.gestioneUtenza;
+package controller.gestioneAnnunci;
 
 import java.util.List;
 
 import model.Annuncio;
+import model.Utente;
 
 public interface GestioneAnnunciService {
 	

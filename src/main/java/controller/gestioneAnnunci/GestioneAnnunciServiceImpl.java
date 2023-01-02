@@ -1,4 +1,4 @@
-package controller.gestioneUtenza;
+package controller.gestioneAnnunci;
 
 import java.util.ArrayList;
 import java.util.List;
