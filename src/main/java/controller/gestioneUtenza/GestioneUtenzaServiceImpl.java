@@ -53,8 +53,17 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
      * @param email is the email of the user to remove from the db.
      */
     @Override
-	public void removeUtente(String email) {
-		utenteDao.deleteUtente(email);	
+	public boolean removeUtente(String email) {
+		utenteDao.deleteUtente(email);
+		
+		try {
+			return searchAccountByEmail(email);
+		} catch (InterruptedException | ExecutionException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 	 /**
