@@ -63,7 +63,7 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-			request.setAttribute("message", "L'utente: " + email + ", � stato sospeso dal sistema fino a: " + expirationDate + ".");
+			request.setAttribute("success", "L'utente: " + email + ", � stato sospeso dal sistema fino a: " + expirationDate + ".");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 		}
