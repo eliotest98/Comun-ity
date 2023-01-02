@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import model.Accreditamento;
-import model.AccreditamentoDAO;
 import model.Utente;
 import model.UtenteDAO;
 
