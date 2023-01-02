@@ -8,6 +8,7 @@ import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
@@ -110,6 +111,8 @@ public class UtenteDAO {
 		return utente;
 	}
 	
+	
+	//Restitituisce una lista di admin
 	public List<Utente> allAdmins(){
 		
 		List<Utente> lista = new ArrayList<>();
@@ -131,6 +134,8 @@ public class UtenteDAO {
 				
 	}
 	
+	
+	//Restituisce tutti gli utenti del sistema
 	public List<Utente> listaUtenti(){
 		
 	List<Utente> lista = new ArrayList<>();
@@ -151,5 +156,24 @@ public class UtenteDAO {
 		return lista;
 				
 	}
+	
+	//Assegna una valutazione ad un utente
+	public void assegnaValutazione(Utente utente, Double recensione) {
+		
+		Utente utente1= findUtenteByMail(utente.getMail());
+		
+		if(utente1==null) {
+			System.out.println("L'utente a cui si vuole assegnare una valutazione non esiste");
+		}else {
+			utente1.getRecensioni().add(recensione);
+			List<Double> recensioni= utente1.getRecensioni();
+			
+			database.getCollection("utente").updateOne(Filters.eq("mail", utente.getMail()), Updates.set("recensioni", recensioni));
+			
+			System.out.println("valutazione assegnata");
+		}
+		
+	}
+	
 
 }

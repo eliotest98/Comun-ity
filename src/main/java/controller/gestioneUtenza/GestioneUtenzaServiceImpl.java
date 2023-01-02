@@ -165,5 +165,11 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		return lista;
 	}
 	
+	//Assegna valutazione
+	
+	public void assignRating(Utente utente, Double recensione) {
+		utenteDao.assegnaValutazione(utente, recensione);
+	}
+	
 
 }
