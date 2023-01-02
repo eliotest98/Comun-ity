@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import model.Accreditamento;
-import model.AccreditamentoDAO;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -15,17 +13,9 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 
 	/**
      * @exclude
-     * */
-    private UtenteDAO utenteDao = new UtenteDAO();
-    /**
-     * Service constructor.
-     * @param accountDao is required, because is the DAO that
-     * all the service methods will call.
      **/
-    public GestioneUtenzaServiceImpl(UtenteDAO utenteDao) {
-        this.utenteDao = utenteDao;
-    }
-
+    private UtenteDAO utenteDao = new UtenteDAO();
+    
     /**
      * Empty Constructor.
      **/
@@ -33,7 +23,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
     }
 
     /**
-     * this function register a new user account.
+     * Registers a new user account.
      * @param utente user into the db.
      * @return true if the operation ends in success.
      * @throws IOException
@@ -58,9 +48,18 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
         
         return false;
     }
-	
+    
+    /**
+     * Registers a new user account.
+     * @param email is the email of the user to remove from the db.
+     */
+    @Override
+	public void removeUtente(String email) {
+		utenteDao.deleteUtente(email);	
+	}
+
 	 /**
-     * check if the credential entered are correct.
+     * Checks if the credential entered are correct.
      * @param email of the user
      * @param password of the user
      * @return true if the user credentials correspond.
@@ -81,7 +80,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	}
 
 	/**
-     * This service method checks if an account exists in the database.
+     * Checks if an account exists in the database.
      * @param email referring to the account to search for
      * @return true if the account exists, false if not
      */
@@ -113,34 +112,38 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
         return utente == null ? null : utente;
 	}
 
-	@Override
-	public boolean changePassword(String email, String password)
-			throws IOException, ExecutionException, InterruptedException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	/**
+	 * Checks if the user is an Admin.
      * @param utente is the registred user into the DataBase.
-     * @return Return true if the following account is
+     * @return true if the following account is
      * a Comun-ity Admin.
-     * @throws IllegalArgumentException
      */
 	@Override
-	public boolean IsAdmin(Utente utente) throws IllegalArgumentException {
+	public boolean IsAdmin(Utente utente) {
 		
 		return utente.getRuolo().equals("admin");
 	}
 	
+	/**
+	 * Checks if the user is a Pro.
+     * @param utente is the registred user into the DataBase.
+     * @return true if the following account is
+     * a certified pro.
+     */
+	@Override
 	public boolean isPro(Utente utente) {
 		
 		return utente.getRuolo().equals("professionista");
 	}
 
+	/**
+	 * Retrieve all the Admins' email from the db.
+     * @return a List of all Admins' email.
+     */
 	@Override
 	public List<String> getAllAdminsEmails() {
 		
-		List<Utente> lista = utenteDao.allAdmins();
+		List<Utente> lista = utenteDao.getAllAdmins();
 	    Iterator<Utente> it = lista.iterator();
 	    
 	    List<String> emails = new ArrayList<>();
@@ -152,15 +155,20 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		return emails;
 	}
 
+	/**
+	 * Retrieve all the Users from the db.
+     * @return a List of Utente that contains all the users.
+     */
 	@Override
-	public List<Utente> getListaUtenti() {
-		List<Utente> lista = utenteDao.listaUtenti();
+	public List<Utente> getAllUsers() {
+		List<Utente> lista = utenteDao.getAllUsers();
 		return lista;
 	}
-
+	
 	@Override
-	public void removeUtente(String utente) {
-		utenteDao.deleteUtente(utente);	
+	public boolean changePassword(String email, String password)
+			throws IOException, ExecutionException, InterruptedException {
+		// TODO Auto-generated method stub
+		return false;
 	}
-
 }

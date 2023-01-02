@@ -14,29 +14,25 @@ import javax.servlet.http.HttpSession;
 import controller.gestioneUtenza.GestioneUtenzaService;
 import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import model.Annuncio;
-import model.AnnuncioDAO;
 import model.Utente;
-import model.UtenteDAO;
 
 /**
- * Servlet implementation class VisualizzazioneLavoriServlet
+ * Servlet implementation class ListaLavoriServlet
  */
-@WebServlet("/VisualizzazioneLavoriServlet")
-public class VisualizzazioneLavoriServlet extends HttpServlet {
+@WebServlet("/ListaLavoriServlet")
+public class ListaLavoriServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VisualizzazioneLavoriServlet() {
+    public ListaLavoriServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
     
-    UtenteDAO utenteDao = new UtenteDAO();
-    AnnuncioDAO annuncioDAO = new AnnuncioDAO();
-	GestioneUtenzaService serviceUtenza = new GestioneUtenzaServiceImpl(utenteDao);
-	GestioneAnnunciService serviceAnnuncio= new GestioneAnnunciServiceImpl(annuncioDAO);
+	GestioneUtenzaService serviceUtenza = new GestioneUtenzaServiceImpl();
+	GestioneAnnunciService serviceAnnuncio= new GestioneAnnunciServiceImpl();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,7 +45,7 @@ public class VisualizzazioneLavoriServlet extends HttpServlet {
 		
 		if(utente != null && serviceUtenza.isPro(utente)==true) {
 			
-			response.sendRedirect("jsp visualizzazaione lavori");		//va inserita la jsp (ancora da fare)
+			response.sendRedirect("jsp lista lavori");		//va inserita la jsp (ancora da fare)
 			
 		}else{
 			request.setAttribute("message", "Sembra che per la piattaforma tu non sia registrato come professionista, autenticati");
@@ -65,7 +61,7 @@ public class VisualizzazioneLavoriServlet extends HttpServlet {
 		doGet(request, response);
 		HttpSession session= request.getSession(true);
 		
-		List<Annuncio> lavoriDisponibili= serviceAnnuncio.getJobsAvailable();
+		List<Annuncio> lavoriDisponibili= serviceAnnuncio.getAvailableJobs();
 		request.setAttribute("lavoriDisponibili", lavoriDisponibili);
 		
 		RequestDispatcher disp = this.getServletContext().getRequestDispatcher("jsp visualizzazaione lavori");				//va inserita la jsp (ancora da fare)

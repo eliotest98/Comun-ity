@@ -38,8 +38,8 @@ public class AnnuncioDAO {
 
 	//Esegue l'eliminazione di un annuncio nel database
 	public void deleteAnnuncio(Annuncio annuncio) {
+		
 		try {
-
 			database.getCollection("annuncio").deleteOne(Filters.eq("id", annuncio.getId()));
 			System.out.println("Annuncio eliminato!");
 		}catch(MongoException e) {

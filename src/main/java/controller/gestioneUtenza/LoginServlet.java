@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Utente;
-import model.UtenteDAO;
 
 /**
  * Servlet implementation class LoginServlet

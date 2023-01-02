@@ -3,14 +3,31 @@ package controller.gestioneAnnunci;
 import java.util.List;
 
 import model.Annuncio;
-import model.Utente;
 
 public interface GestioneAnnunciService {
 	
-	public List<Annuncio> getJobs();
-	public List<Annuncio> getJobsAvailable();
+
+	/**
+	 * Retrieves all the Errands from the db.
+     * @return a List of Annuncio that contains all the errands.
+     */
+	List<Annuncio> getErrands();
 	
-	List<Annuncio> getCommissioni();
+	/**
+	 * Retrieves all the available Errands from the db.
+     * @return a List of Annuncio that contains all the available errands.
+     */
+	List<Annuncio> getAvailableErrands();
 	
-	List<Annuncio> getCommissioniDisponibili();
+	/**
+	 * Retrieve all the Jobs from the db.
+     * @return a List of Annuncio that contains all the jobs.
+     */
+	List<Annuncio> getJobs();
+	
+	/**
+	 * Retrieve all the available Jobs from the db.
+     * @return a List of Annuncio that contains all the available jobs.
+     */
+	List<Annuncio> getAvailableJobs();
 }

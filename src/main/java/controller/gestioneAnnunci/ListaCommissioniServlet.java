@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Annuncio;
 
 public class ListaCommissioniServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	
 	GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
 	
@@ -23,7 +24,7 @@ public class ListaCommissioniServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ArrayList<Annuncio> commissioni;
-		commissioni=(ArrayList<Annuncio>) service.getCommissioniDisponibili();
+		commissioni=(ArrayList<Annuncio>) service.getAvailableErrands();
 		if(commissioni==null) {
 			//COMMISSIONI NON DISPONIBILI
 		}
