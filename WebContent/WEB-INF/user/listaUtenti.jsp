@@ -18,7 +18,6 @@
 <script src="/Comun-ity/js/main.js"></script>
 <link rel=stylesheet href="/Comun-ity/styles/main.css" />
 <link rel="stylesheet" href="/Comun-ity/styles/lista_utenti.css"/>
-	
 </head>
 
 <body id="body-pd">
@@ -50,6 +49,7 @@
 	
 		<div class="container-fluid">
 			<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+				<div class="row justify-content-center">
 			
 			<% 
 			if(lista == null){
@@ -63,22 +63,9 @@
 			
 			while(it.hasNext()){
 				
-				Utente user = (Utente)it.next();
+				Utente user = (Utente)it.next(); %>
 				
-				if(cont == 0){
-					
-					%>
-					<div class="row justify-content-center">
-					<%
-				}
-				
-				if(cont == 3){
-					cont = 0; %>
-					</div>
-					<div class="row justify-content-center">
-				<% } %>
-				
-				<div class="col-xxl-4">
+				<div class="col">
 					<div class="card center">
 						<div class="additional">
 						<div class="user-card">
@@ -115,10 +102,9 @@
 						</div>
 					</div>
 				</div>
-				<% cont++;} %>
+				<%} %>
 			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>

@@ -11,7 +11,7 @@
            <span class="nav_logo-name">Comun-ity</span>
          </a>
       <div class="nav_list">
-        <a href="#" class="nav_link active" id="dashboard">
+        <a href="HomeServlet" class="nav_link" id="dashboard">
           <i class="bx bxs-dashboard nav_icon"></i>
           <span class="nav_name">Dashboard</span>
         </a>
@@ -56,3 +56,25 @@
     </div>
   </nav>
 </div>
+
+	<% if (request.getAttribute("link") != null){%>
+  		<script>
+  		
+  			$(document).ready(function () {
+  				
+  				var value = <%=(String) request.getAttribute("link")%>;
+  			
+  				console.log(value);
+  				value.classList.add("active");
+  			});
+  		
+  			
+  		</script>
+  	<%}else{%>
+  	<script>
+	  	$(document).ready(function () {
+	  		$('#dashboard').addClass("active");
+	  	});
+  	</script>
+  	
+  	<%}%>

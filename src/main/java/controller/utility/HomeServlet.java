@@ -36,6 +36,7 @@ public class HomeServlet extends HttpServlet {
 									
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");
 			
+			request.setAttribute("link", "dashboard");
 			requestDispatcher.forward(request, response);
 			
 		}else {

@@ -31,6 +31,7 @@ public class ListaUtentiServlet extends HttpServlet {
 						
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/user/listaUtenti.jsp");
 			req.setAttribute("listaUtenti", listaUtenti);
+			req.setAttribute("link", "utenti");
 			requestDispatcher.forward(req, resp);
 		}else {
 			resp.sendRedirect("/Comun-ity/guest/login.jsp");

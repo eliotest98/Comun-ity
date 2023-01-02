@@ -27,19 +27,5 @@ $(document).ready(function () {
           }
         };
         
-        showNavbar("header-toggle", "nav-bar", "body-pd", "header");
-
-        /*===== LINK ACTIVE =====*/
-        const linkColor = document.querySelectorAll(".nav_link");
-        
-        function colorLink() {
-          if (linkColor) {
-            linkColor.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");	
-            var section = $(this).attr('id');
-          }
-        }
-        
-        linkColor.forEach((l) => l.addEventListener("click", colorLink));
-	
+        showNavbar("header-toggle", "nav-bar", "body-pd", "header");	
 });
