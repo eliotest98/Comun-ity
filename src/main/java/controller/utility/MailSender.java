@@ -14,7 +14,7 @@ public class MailSender {
 	
 	public MailSender (List<String> list, String from, String host, String text, String subject) throws AddressException, MessagingException {
 		
-		properties.setProperty("mail.smtp.host", host);
+		properties.setProperty("mail.smtp.host", "smtp.comun-ity.com");
 		
 		list.forEach((to) -> {
 			try {
@@ -27,6 +27,11 @@ public class MailSender {
 				e.printStackTrace();
 			}
 		});		
+		
+		message.addHeader("Content-type", "text/HTML; charset=UTF-8");
+	    message.addHeader("format", "flowed");
+	    message.addHeader("Content-Transfer-Encoding", "8bit");
+		
 		message.setSubject(subject);
 		message.setFrom(new InternetAddress(from));
 		message.setText(text);

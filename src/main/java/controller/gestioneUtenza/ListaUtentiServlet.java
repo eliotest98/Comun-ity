@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import model.Utente;
 import model.UtenteDAO;
 
+@WebServlet("/ListaUtenti")
 public class ListaUtentiServlet extends HttpServlet {
 
 	 UtenteDAO utenteDao = new UtenteDAO();
@@ -27,11 +29,11 @@ public class ListaUtentiServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession(true);
 		
-		ArrayList<Utente> listaUtenti= new ArrayList<>();
+		ArrayList<Utente> listaUtenti = new ArrayList<>();
 		
-		listaUtenti=(ArrayList<Utente>) service.getListaUtenti();
+		listaUtenti = (ArrayList<Utente>) service.getListaUtenti();
 		
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("");			//Inserire pagina non ancora creata per il Dispatcher
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/user/listaUtenti.jsp");			//Inserire pagina non ancora creata per il Dispatcher
 		req.setAttribute("listaUtenti", listaUtenti);
 		requestDispatcher.forward(req, resp);
 	}

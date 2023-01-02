@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import controller.utility.MailSender;
 import model.Accreditamento;
 import model.Utente;
 import model.UtenteDAO;
@@ -54,7 +56,6 @@ public class RegistrazioneServlet extends HttpServlet {
 	
 	private final String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
 	private final String phoneRegex = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$";
-	private final String addressRegex ="^([a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$";
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -101,8 +102,6 @@ public class RegistrazioneServlet extends HttpServlet {
 				if(patternMatches(telefono,phoneRegex)) {
 					
 					if(sesso.charAt(0) == 'M' || sesso.charAt(0) == 'F') {
-						
-						if(patternMatches(indirizzo,addressRegex)) {
 							
 							Utente user = new Utente("cittadino", "nessuna", nome, cognome, calculateAge(dob), email, password, sesso, telefono, indirizzo, dob);
 							
@@ -160,6 +159,18 @@ public class RegistrazioneServlet extends HttpServlet {
 					        			session.setAttribute("user", user);
 					        			session.setAttribute("admin", false);
 					        			
+					        			List<String> lista = service.getAllAdminsEmails();
+					        			
+					        			try {
+					        				
+											MailSender mail = new MailSender(lista,"no-reply@Comun-ity","localhost","C'è una nuova richiesta di accreditamento!","Vuoi allungare il tuo pisello di 20 metri?");
+											mail.sendMail();
+											
+					        			} catch (MessagingException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+					        			
 					        			response.sendRedirect("HomeServlet");
 					        			
 					        		}else {
@@ -189,13 +200,6 @@ public class RegistrazioneServlet extends HttpServlet {
 								requestDispatcher.forward(request, response);
 					        }
 							
-						}else {
-						
-							RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/registrazione.jsp");
-							request.setAttribute("message", "Il campo indirizzo è incompleto");
-							
-							requestDispatcher.forward(request, response);
-						}
 					}else {
 						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/registrazione.jsp");
 						request.setAttribute("message", "Devi compilare il campo del sesso");
