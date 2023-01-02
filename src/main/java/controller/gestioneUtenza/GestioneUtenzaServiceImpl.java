@@ -17,7 +17,6 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
      * @exclude
      * */
     private UtenteDAO utenteDao = new UtenteDAO();
-    private AccreditamentoDAO accreditamentoDAO = new AccreditamentoDAO();
     /**
      * Service constructor.
      * @param accountDao is required, because is the DAO that
@@ -154,12 +153,6 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	}
 
 	@Override
-
-	public boolean saveAccreditamento(Accreditamento accreditamento) {
-		
-		return accreditamentoDAO.saveAccreditamento(accreditamento);
-	}
-
 	public List<Utente> getListaUtenti() {
 		List<Utente> lista = utenteDao.listaUtenti();
 		return lista;

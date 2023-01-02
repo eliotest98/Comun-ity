@@ -23,8 +23,6 @@ public interface GestioneUtenzaService {
 	boolean registerAccount(Utente utente)
 			throws IOException, IllegalArgumentException,
 			ExecutionException, InterruptedException;
-
-	boolean saveAccreditamento(Accreditamento accreditamento);
 	
 	/**
 	 * This function check the credentials of

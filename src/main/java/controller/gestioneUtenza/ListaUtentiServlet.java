@@ -25,21 +25,25 @@ public class ListaUtentiServlet extends HttpServlet {
 			resp.sendRedirect("");					//Inserire pagina per lista vuota
 		}
 		resp.sendRedirect("");					//Inserire pagina non ancora creata
-	}
+}
 
+	 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		HttpSession session = req.getSession(true);
+		
 		ArrayList<Utente> listaUtenti= new ArrayList<>();
+		
 		listaUtenti=(ArrayList<Utente>) service.getListaUtenti();
+		
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("");			//Inserire pagina non ancora creata per il Dispatcher
 		req.setAttribute("listaUtenti", listaUtenti);
 		requestDispatcher.forward(req, resp);
-		doGet(req,resp);
 	}
-
-	public ListaUtentiServlet() {
+ 
+  public ListaUtentiServlet() {
+		 super();
 		// TODO Auto-generated constructor stub
 	}
-
 }
