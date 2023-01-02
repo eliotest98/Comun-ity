@@ -26,6 +26,7 @@ public class AnnuncioDAO {
 	public void saveAnnuncio(Annuncio annuncio) {
 
 		try {
+			annuncio.setId(lastIdAnnuncio()+1);
 			database.getCollection("annuncio").insertOne(docForDb(annuncio));
 			System.out.println("Annuncio aggiunto al database con successo");
 
@@ -34,13 +35,19 @@ public class AnnuncioDAO {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//this method returns the id of the last annuncio
+	public Long lastIdAnnuncio() {
+		Document myDoc = (Document)database.getCollection("annuncio").find().sort(new Document("id",-1)).first();
+		Annuncio lastAnnuncio=docToAnnuncio(myDoc);
+		return lastAnnuncio.getId();
+	}
 
 	//Esegue l'eliminazione di un annuncio nel database
-	public void deleteAnnuncio(Annuncio annuncio) {
+	public void deleteAnnuncio(Long id) {
 		try {
 
-			database.getCollection("annuncio").deleteOne(Filters.eq("id", annuncio.getId()));
+			database.getCollection("annuncio").deleteOne(Filters.eq("id", id));
 			System.out.println("Annuncio eliminato!");
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'eliminazione dell'annuncio" + e.getMessage());

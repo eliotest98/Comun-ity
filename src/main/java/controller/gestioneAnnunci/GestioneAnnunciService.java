@@ -13,4 +13,10 @@ public interface GestioneAnnunciService {
 	List<Annuncio> getCommissioni();
 	
 	List<Annuncio> getCommissioniDisponibili();
+	
+	//Insert annuncio into db
+	void insertAnnuncio(Annuncio annuncio);
+	
+	//Remove annuncio into db
+	void removeAnnuncio(Long annuncio);
 }
