@@ -42,6 +42,7 @@ public class Annuncio {
 		this.descrizione = descrizione;
 		this.indirizzo = indirizzo;
 		this.dataPubblicazione = LocalDate.now();
+		this.incaricato = "nessuno";
 		this.dataFine = dataPubblicazione.plusDays(30); //default expire date
 	}
 
