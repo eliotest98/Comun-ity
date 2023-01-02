@@ -169,7 +169,7 @@ function initAutocomplete() {
 					</select>
 			    </div>
 			    <div class="col">
-				    <input id="ship-address" class="form-control" name="ship-address" required autocomplete="off"/>
+				    <input id="ship-address" class="form-control" name="ship-address" placeholder="Inserisci un indirizzo" required autocomplete="off"/>
 				    <label class="form-label" for="form3Example3">Indirizzo</label>
 			    </div>
 			  </div>
