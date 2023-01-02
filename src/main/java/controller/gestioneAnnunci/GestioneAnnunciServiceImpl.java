@@ -6,16 +6,23 @@ import java.util.List;
 
 import model.Annuncio;
 import model.AnnuncioDAO;
-import model.UtenteDAO;
 
 public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	
 	/**
-     * this method inserts an ad into the database.
-     * @param utente annuncio into the db.
-     * @return void.
-     * @throws IOException
-     * @throws IllegalArgumentException
+     * @exclude
+     */
+	private AnnuncioDAO annuncioDAO;
+
+	/**
+     * Empty Constructor.
+     **/
+	public GestioneAnnunciServiceImpl() {
+	}
+	
+	/**
+     * Inserts an ad into the database.
+     * @param annuncio is the ad Object
      */
 	@Override
 	public void insertAnnuncio(Annuncio annuncio) {
@@ -24,43 +31,42 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	}
 	
 	/**
-     * this method removes an ad into the database.
-     * @param utente annuncio into the db.
-     * @return void.
-     * @throws IOException
-     * @throws IllegalArgumentException
+     * Removes an ad from the database.
+     * @param id is the ad identifier
      */
 	@Override
 	public void removeAnnuncio(Long annuncio) {
 		annuncioDAO.deleteAnnuncio(annuncio);
 		
 	}
-
-	private AnnuncioDAO annuncioDAO;
-
-	public GestioneAnnunciServiceImpl() {
-	    }
-
-	@Override
-	public List<Annuncio> getCommissioni() {
-		List<Annuncio> commissioni= new ArrayList<Annuncio>();
-		commissioni= annuncioDAO.findCommissioni();
-		return commissioni;
-	}
-
-	@Override
-	public List<Annuncio> getCommissioniDisponibili() {
-		List<Annuncio> commissioni= new ArrayList<Annuncio>();
-		commissioni= annuncioDAO.findCommissioni();
-		return commissioni;
-	}
-
-	public GestioneAnnunciServiceImpl(AnnuncioDAO annuncioDAO) {
-		super();
-		this.annuncioDAO = annuncioDAO;
-	}
 	
-	//Restituisce una lista di lavori
+	/**
+	 * Retrieves all the Errands from the db.
+     * @return a List of Annuncio that contains all the errands.
+     */
+	@Override
+	public List<Annuncio> getErrands() {
+		List<Annuncio> commissioni= new ArrayList<Annuncio>();
+		commissioni= annuncioDAO.findCommissioni();
+		return commissioni;
+	}
+
+	/**
+	 * Retrieves all the available Errands from the db.
+     * @return a List of Annuncio that contains all the available errands.
+     */
+	@Override
+	public List<Annuncio> getAvailableErrands() {
+		List<Annuncio> commissioni= new ArrayList<Annuncio>();
+		commissioni= annuncioDAO.findCommissioni();
+		return commissioni;
+	}
+
+	/**
+	 * Retrieve all the Jobs from the db.
+     * @return a List of Annuncio that contains all the jobs.
+     */
+	@Override
 	public List<Annuncio> getJobs(){
 		
 		List<Annuncio> lavori= new ArrayList<Annuncio>();
@@ -74,8 +80,12 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 		return lavori;
 	}
 	
-	//Restituisce una lista di lavori disponibili
-	public List<Annuncio> getJobsAvailable(){
+	/**
+	 * Retrieve all the available Jobs from the db.
+     * @return a List of Annuncio that contains all the available jobs.
+     */
+	@Override
+	public List<Annuncio> getAvailableJobs(){
 		
 		List<Annuncio> lavori= new ArrayList<Annuncio>();
 		

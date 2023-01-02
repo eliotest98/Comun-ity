@@ -7,10 +7,22 @@ public class GestioneReputazioneServiceImpl implements GestioneReputazioneServic
 
 	/**
      * @exclude
-     * */
+     */
     private UtenteDAO utenteDao = new UtenteDAO();
+    
+    /**
+     * Empty Constructor.
+     **/
+    public GestioneReputazioneServiceImpl() {
+	}
 	
-		public void assignRating(Utente utente, Double recensione) {
-			utenteDao.assegnaValutazione(utente, recensione);
-		}
+    /**
+	 * Assign a rating to a user.
+	 * @param utente is the user to assign the rating to
+	 * @param recensione is the the rating
+	 */
+    public void assignRating(Utente utente, Double recensione) {
+    	
+    	utenteDao.assignRating(utente, recensione);
+    }
 }

@@ -76,29 +76,6 @@
 	  </nav>
 	</div>
 	<div class="height-100">
-	  <section id="dashboardSection">
-	  	<h1>Dash</h1>
-	  </section>
-	  <section id="bachecaSection">
-	  	<h1>Bacheca</h1>
-	  </section>
-	  <section id="archivioSection">
-	  	<h1>Archivio</h1>
-	  </section>
-	  <section id="impostazioniSection">
-	  	<h1>Impostazioni</h1>
-	  </section>
-	  <!-- TODO mostra solo se admin -->
-	  <section id="utentiSection">
-	  	<h1>Utenti</h1>
-	  </section>
-	  <!-- TODO mostra solo se admin -->
-	  <section id="accreditamentiSection">
-	  	<h1>Accreditamenti</h1>
-	  </section>
-	  <section id="areaPersonaleSection">
-	  	<h1>Area Personale</h1>
-	  </section>
 	</div>
 </body>
 

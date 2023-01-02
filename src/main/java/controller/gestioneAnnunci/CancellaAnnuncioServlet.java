@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CancellaAnnuncioServlet extends HttpServlet {
-
+	private static final long serialVersionUID = 1L;
+	
 	GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
 	
 	@Override

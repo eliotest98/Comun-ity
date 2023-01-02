@@ -39,9 +39,8 @@ public class UtenteDAO {
 	
 	//Esegue l'eliminazione di un utente nel database
 	public void deleteUtente(String mail) {
+		
 		try {
-			
-
 		database.getCollection("utente").deleteOne(Filters.eq("mail", mail));
 
 		System.out.println("Utente eliminato!");
@@ -71,49 +70,8 @@ public class UtenteDAO {
 		}
 	}
 	
-	//Crea un documento per mongoDB
-	private static Document docForDb(Utente utente) {
-		
-		Document doc= new Document("_id", new ObjectId())
-									.append("ruolo", utente.getRuolo())
-									.append("abilitazione", utente.getAbilitazione())
-									.append("nome", utente.getNome())
-									.append("cognome", utente.getCognome())
-									.append("eta", utente.getEta())
-									.append("mail", utente.getMail())
-									.append("password", utente.getPassword())
-									.append("sesso", utente.getSesso())
-									.append("numeroTelefono", utente.getNumeroTelefono())
-									.append("indirizzo", utente.getIndirizzo())
-									.append("dataNascita", utente.getDataNascita())
-									.append("recensioni", utente.getRecensioni());
-		
-		return doc;
-		
-	}
-  
-	//Crea un istanza di Utentre da un documento mongoDB
-	private static Utente docToUtente(Document doc) {
-		
-		Utente utente = new Utente(
-				doc.getString("ruolo"),
-				doc.getString("abilitazione"),
-				doc.getString("nome"),
-				doc.getString("cognome"),
-				doc.getInteger("eta"),
-				doc.getString("mail"),
-				doc.getString("password"),
-				doc.getString("sesso"),
-				doc.getString("numeroTelefono"),
-				doc.getString("indirizzo"),
-				(LocalDate)doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-		
-		return utente;
-	}
-	
-	
 	//Restitituisce una lista di admin
-	public List<Utente> allAdmins(){
+	public List<Utente> getAllAdmins(){
 		
 		List<Utente> lista = new ArrayList<>();
 		
@@ -136,7 +94,7 @@ public class UtenteDAO {
 	
 	
 	//Restituisce tutti gli utenti del sistema
-	public List<Utente> listaUtenti(){
+	public List<Utente> getAllUsers(){
 		
 	List<Utente> lista = new ArrayList<>();
 		
@@ -161,7 +119,7 @@ public class UtenteDAO {
 	}
 	
 	//Assegna una valutazione ad un utente
-	public void assegnaValutazione(Utente utente, Double recensione) {
+	public void assignRating(Utente utente, Double recensione) {
 		
 		Utente utente1= findUtenteByMail(utente.getMail());
 		
@@ -179,4 +137,45 @@ public class UtenteDAO {
 	}
 	
 
+	
+	//LASCIARE ALLA FINE
+	//Crea un documento per mongoDB
+		private static Document docForDb(Utente utente) {
+			
+			Document doc= new Document("_id", new ObjectId())
+										.append("ruolo", utente.getRuolo())
+										.append("abilitazione", utente.getAbilitazione())
+										.append("nome", utente.getNome())
+										.append("cognome", utente.getCognome())
+										.append("eta", utente.getEta())
+										.append("mail", utente.getMail())
+										.append("password", utente.getPassword())
+										.append("sesso", utente.getSesso())
+										.append("numeroTelefono", utente.getNumeroTelefono())
+										.append("indirizzo", utente.getIndirizzo())
+										.append("dataNascita", utente.getDataNascita())
+										.append("recensioni", utente.getRecensioni());
+			
+			return doc;
+			
+		}
+	  
+		//Crea un istanza di Utentre da un documento mongoDB
+		private static Utente docToUtente(Document doc) {
+			
+			Utente utente = new Utente(
+					doc.getString("ruolo"),
+					doc.getString("abilitazione"),
+					doc.getString("nome"),
+					doc.getString("cognome"),
+					doc.getInteger("eta"),
+					doc.getString("mail"),
+					doc.getString("password"),
+					doc.getString("sesso"),
+					doc.getString("numeroTelefono"),
+					doc.getString("indirizzo"),
+					(LocalDate)doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+			
+			return utente;
+		}
 }

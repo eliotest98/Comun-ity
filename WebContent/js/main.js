@@ -1,4 +1,7 @@
 $(document).ready(function () {
+	
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+ 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
     $('#dashboardSection').show();
 
@@ -36,6 +39,19 @@ $(document).ready(function () {
             this.classList.add("active");	
             var section = $(this).attr('id');
             $('#'+section+"Section").show();
+            
+            switch(section){
+				case "utenti": 
+					$.ajax({
+						 url: "ListaUtenti",
+    					type: 'GET',
+    					success: function (data){
+							console.log(data);
+						}
+					})
+				break;
+				default: break;
+			}
           }
         }
         
