@@ -52,7 +52,7 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 			
-		}else if(action.equalsIgnoreCase("tiemout")) {
+		}else if(action.equalsIgnoreCase("timeout")) {
 			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			String expirationDate = formatter.format(LocalDateTime.now().plusHours(24));
@@ -64,7 +64,7 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 	            e.printStackTrace();
 	        }
 			request.setAttribute("message", "L'utente: " + email + ", � stato sospeso dal sistema fino a: " + expirationDate + ".");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(" "); //AGGIUNGERE PATH JSP LISTA UTENTI
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 		}
 		
