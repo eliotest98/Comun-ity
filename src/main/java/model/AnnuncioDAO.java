@@ -26,6 +26,7 @@ public class AnnuncioDAO {
 	public void saveAnnuncio(Annuncio annuncio) {
 
 		try {
+			annuncio.setId(getLastId()+1);
 			database.getCollection("annuncio").insertOne(docForDb(annuncio));
 			System.out.println("Annuncio aggiunto al database con successo");
 
@@ -35,12 +36,11 @@ public class AnnuncioDAO {
 		}
 	}
 
-
 	//Esegue l'eliminazione di un annuncio nel database
-	public void deleteAnnuncio(Annuncio annuncio) {
+	public void deleteAnnuncio(Long id) {
 		try {
 
-			database.getCollection("annuncio").deleteOne(Filters.eq("id", annuncio.getId()));
+			database.getCollection("annuncio").deleteOne(Filters.eq("id", id));
 			System.out.println("Annuncio eliminato!");
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'eliminazione dell'annuncio" + e.getMessage());
@@ -64,6 +64,13 @@ public class AnnuncioDAO {
 
 	}
 	
+	//this method returns the id of the last annuncio
+	public Long getLastId() {
+		Document myDoc = (Document)database.getCollection("annuncio").find().sort(new Document("id",-1)).first();
+		Annuncio lastAnnuncio=docToAnnuncio(myDoc);
+		return lastAnnuncio.getId();
+	}
+	
 	//Restituisce una lista con tutti i lavori 
 	public List<Annuncio> findLavori(){
 		
@@ -84,6 +91,29 @@ public class AnnuncioDAO {
 		
 		return lavori;
 	}
+	
+	//Restituisce una lista con tutte le commissioni
+		public List<Annuncio> findCommissioni(){
+			
+			List<Annuncio> commissioni = new ArrayList<Annuncio>();
+			
+			try {
+				
+				MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna")).iterator(); 
+				if(!cursor.hasNext()) {
+					return null;
+				}
+				while (cursor.hasNext()) {
+					commissioni.add(docToAnnuncio(cursor.next()));
+				}
+				
+
+			}catch(MongoException e) {
+				System.out.println("Errore durante la ricerca delle commissioni disponibili");
+			}
+			
+			return commissioni;
+		}
 	
 	//Restituisce una lista di tutti i lavori disponibili
 	public List<Annuncio> findLavoriDisponibili(){
@@ -107,7 +137,33 @@ public class AnnuncioDAO {
 		return lavoriDisponibili;
 		
 	}
-
+	
+	//Restituisce una lista di tutte le commissioni disponibili
+		public List<Annuncio> findCommissioniDisponibili(){
+			
+			List<Annuncio> commissioni = new ArrayList<Annuncio>();
+			List<Annuncio> commissioniDisponibili = new ArrayList<Annuncio>();
+			
+			commissioni= findCommissioni();
+			
+			if(commissioni==null) {
+				return null;
+			}
+			Iterator<Annuncio> it= commissioni.iterator();
+			while(it.hasNext()) {
+				if(it.next().getIncaricato().equals("nessuno")) {
+					commissioniDisponibili.add(it.next());
+				}
+			}
+			
+			if(commissioniDisponibili.isEmpty()) {
+				return null;
+			}
+			
+			return commissioniDisponibili;
+			
+		}
+		
 	//Crea un documento per mongoDB
 	private static Document docForDb(Annuncio annuncio) {
 

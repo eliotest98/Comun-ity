@@ -29,10 +29,10 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import controller.utility.MailSender;
+import controller.gestioneAccreditamento.GestioneAccreditamentoService;
+import controller.gestioneAccreditamento.GestioneAccreditamentoServiceImpl;
 import model.Accreditamento;
 import model.Utente;
-import model.UtenteDAO;
-
 /**
  * Servlet implementation class RegistrazioneServlet
  */

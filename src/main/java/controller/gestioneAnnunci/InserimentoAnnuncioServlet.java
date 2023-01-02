@@ -1,4 +1,4 @@
-package controller.gestioneUtenza;
+package controller.gestioneAnnunci;
 
 import java.io.IOException;
 
@@ -6,35 +6,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class AreaPersonaleServlet extends HttpServlet {
+import model.Annuncio;
 
-	/**
-	 * 
-	 */
+public class InserimentoAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public AreaPersonaleServlet() {
-		// TODO Auto-generated constructor stub
-	}
-
+	
+	GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
-		
-		resp.sendRedirect(null);  //va inserita la jsp dell'area personale
+		resp.sendRedirect("");       //INSERIRE PAGINA MANCANTE
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		HttpSession session = req.getSession(true);
-		
-		super.doPost(req, resp);
+		Annuncio annuncio=(Annuncio) req.getAttribute("annuncio");
+		service.insertAnnuncio(annuncio);
+		doGet(req, resp);
 	}
-	
-	
 
 }

@@ -1,8 +1,6 @@
-package controller.gestioneUtenza;
+package controller.gestioneReputazione;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,41 +8,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Utente;
+
 /**
- * Servlet implementation class HomeServlet
+ * Servlet implementation class AssegnaValutazioneServlet
  */
-@WebServlet("/HomeServlet")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/AssegnaValutazioneServlet")
+public class AssegnaValutazioneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeServlet() {
+    public AssegnaValutazioneServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+    GestioneReputazioneService service= new GestioneReputazioneServiceImpl();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession(true);
+		Utente utente= (Utente) session.getAttribute("user");
 		
-		if(session.getAttribute("user") != null) {
-			
-			Boolean admin = (Boolean) session.getAttribute("admin");
-			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");
-			request.setAttribute("admin", admin);
-			
-			requestDispatcher.forward(request, response);
-			
+		if(utente == null) {
+			response.sendRedirect("/Comun-ity/guest/login.jsp"); 
 		}else {
-			response.sendRedirect("/Comun-ity/guest/login.jsp");
+			response.sendRedirect(" "); //jsp per assegnare la valutazione (da fare)
 		}
-		
 		
 	}
 
@@ -54,6 +50,14 @@ public class HomeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
+		HttpSession session= request.getSession(true);
+		Utente utente= (Utente) session.getAttribute("user");
+		Double valutazione= Double.valueOf(request.getParameter(" ")); //Inserire nome parametro
+		
+		service.assignRating(utente, valutazione);
+		response.sendRedirect("HomeServlet");
+		
 	}
 
 }
