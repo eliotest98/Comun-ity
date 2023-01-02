@@ -25,8 +25,9 @@ public interface GestioneUtenzaService {
 	/**
 	 * Remove the user account with the given email from the db.
 	 * @param email is the email of the user to remove from the db.
+	 * @return true if the user has been removed correctly.
 	 */
-	void removeUtente(String email);
+	boolean removeUtente(String email);
 	
 	/**
 	 * Checks the credentials of the client before insert it into the db.
