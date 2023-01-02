@@ -3,7 +3,6 @@ package controller.gestioneUtenza;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.mongodb.internal.ExpirableValue;
 
 import controller.gestioneAnnunci.GestioneAnnunciService;
 import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
