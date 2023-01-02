@@ -9,15 +9,13 @@ import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.mongodb.internal.ExpirableValue;
 
-import controller.gestioneAnnunci.GestioneAnnunciService;
-import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
-
+@WebServlet("/ModerazioneUtenza")
 public class ModerazioneUtenzaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -37,22 +35,25 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 		String email = request.getParameter("mail");
 		String userIp = request.getRemoteAddr();
 		
+		System.out.println(action + " " + email);
+		
 		if(action.equalsIgnoreCase("ban")) {
 			
 			if(serviceUtenza.removeUtente(email) && serviceAnnunci.removeAllAvailableByUser(email)) {
-				request.setAttribute("message", "L'utente: " + email + ", è stato rimosso correttamente dal sistema.");
+				request.setAttribute("message", "L'utente: " + email + ", ï¿½ stato rimosso correttamente dal sistema.");
 				try (BufferedWriter writer = new BufferedWriter(new FileWriter("banned-IPs.txt", true))) {
 					writer.write(userIp);
 		            writer.newLine();
 		        } catch (IOException e) {
 		            e.printStackTrace();
 		        }
-			}else request.setAttribute("message", "L'operazione di rimozione dell'utente: " + email + ", non è andata a buon fine.");
+			}else request.setAttribute("message", "L'operazione di rimozione dell'utente: " + email + ", non Ã¨ andata a buon fine.");
 			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(" "); //AGGIUNGERE PATH JSP LISTA UTENTI
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 			
-		}else if(action.equalsIgnoreCase("tiemout")) {
+		}else if(action.equalsIgnoreCase("timeout")) {
 			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			String expirationDate = formatter.format(LocalDateTime.now().plusHours(24));
@@ -63,8 +64,8 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-			request.setAttribute("message", "L'utente: " + email + ", è stato sospeso dal sistema fino a: " + expirationDate + ".");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(" "); //AGGIUNGERE PATH JSP LISTA UTENTI
+			request.setAttribute("success", "L'utente: " + email + ", ï¿½ stato sospeso dal sistema fino a: " + expirationDate + ".");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 		}
 		

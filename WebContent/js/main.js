@@ -35,23 +35,8 @@ $(document).ready(function () {
         function colorLink() {
           if (linkColor) {
             linkColor.forEach((l) => l.classList.remove("active"));
-            $('section').hide();
             this.classList.add("active");	
             var section = $(this).attr('id');
-            $('#'+section+"Section").show();
-            
-            switch(section){
-				case "utenti": 
-					$.ajax({
-						 url: "ListaUtenti",
-    					type: 'GET',
-    					success: function (data){
-							console.log(data);
-						}
-					})
-				break;
-				default: break;
-			}
           }
         }
         
