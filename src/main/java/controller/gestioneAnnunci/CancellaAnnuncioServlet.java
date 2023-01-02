@@ -6,6 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.Utente;
 
 public class CancellaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -14,15 +17,25 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect("");       //INSERIRE PAGINA MANCANTE
-		super.doGet(req, resp);
+		
+		HttpSession session = req.getSession(true);
+		
+		Utente user = (Utente) session.getAttribute("user");
+		
+		if(user == null) {
+			resp.sendRedirect("/Comun-ity/guest/login.jsp"); 
+		}else {
+			resp.sendRedirect(" ");	//jsp cancellazione annuncio
+		}
 	}
 
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		doGet(req, resp);
+		
 		Long id=(Long)req.getAttribute("id");
 		service.removeAnnuncio(id);
-		doGet(req, resp);
 	}
 
 }
