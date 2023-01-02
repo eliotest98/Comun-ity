@@ -26,7 +26,7 @@ public class AnnuncioDAO {
 	public void saveAnnuncio(Annuncio annuncio) {
 
 		try {
-			annuncio.setId(lastIdAnnuncio()+1);
+			annuncio.setId(getLastId()+1);
 			database.getCollection("annuncio").insertOne(docForDb(annuncio));
 			System.out.println("Annuncio aggiunto al database con successo");
 
@@ -34,13 +34,6 @@ public class AnnuncioDAO {
 			System.out.println("Errore durante l'inserimento dell'annuncio" + e.getMessage());
 			e.printStackTrace();
 		}
-	}
-	
-	//this method returns the id of the last annuncio
-	public Long lastIdAnnuncio() {
-		Document myDoc = (Document)database.getCollection("annuncio").find().sort(new Document("id",-1)).first();
-		Annuncio lastAnnuncio=docToAnnuncio(myDoc);
-		return lastAnnuncio.getId();
 	}
 
 	//Esegue l'eliminazione di un annuncio nel database
@@ -69,6 +62,13 @@ public class AnnuncioDAO {
 		Annuncio annuncio = docToAnnuncio(doc);
 		return annuncio;
 
+	}
+	
+	//this method returns the id of the last annuncio
+	public Long getLastId() {
+		Document myDoc = (Document)database.getCollection("annuncio").find().sort(new Document("id",-1)).first();
+		Annuncio lastAnnuncio=docToAnnuncio(myDoc);
+		return lastAnnuncio.getId();
 	}
 	
 	//Restituisce una lista con tutti i lavori 
