@@ -172,6 +172,7 @@ public class UtenteDAO {
 		//Check if it already exists
 		Document doc = database.getCollection("utente").find(Filters.eq("mail", utente.getMail())).first();
 		
+		//If it doesn't, create a new document
 		if(doc == null) {
 			
 			doc= new Document("_id", new ObjectId())
@@ -189,9 +190,8 @@ public class UtenteDAO {
 			.append("recensioni", utente.getRecensioni())
 			.append("blacklist", utente.getBlacklist())
 			.append("durataBL", utente.getDurataBL());
-		}
-			
-		else {
+		
+		}else {
 			doc.replace("ruolo", utente.getRuolo());
 			doc.replace("abilitazione", utente.getAbilitazione());
 			doc.replace("nome", utente.getNome());

@@ -64,18 +64,12 @@ public class AnnuncioDAO {
 	//Trova un annuncio specifico nel database
 	public Annuncio findAnnuncioById(Long id) {
 
-		Document doc=null;
-
-		try {
-
-			doc= database.getCollection("utente").find(Filters.eq("id", id)).first();
-		}catch(MongoException e) {
-			System.out.println("Errore durante la ricerca dell'annuncio" + e.getMessage());
-		}
+		Document doc = database.getCollection("utente").find(Filters.eq("id", id)).first();
 		
-		if(doc == null)
+		if(doc == null) {
+			System.out.println("Annuncio non trovato!");
 			return null;
-		else {
+		}else {
 			Annuncio annuncio = docToAnnuncio(doc);
 			return annuncio;
 		}
