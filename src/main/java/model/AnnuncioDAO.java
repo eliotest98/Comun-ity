@@ -245,16 +245,17 @@ public class AnnuncioDAO {
 	private static Annuncio docToAnnuncio(Document doc) {
 
 		Annuncio annuncio = new Annuncio(
-				doc.getLong("id"),
 				doc.getString("abilitazioneRichiesta"),
 				doc.getString("autore"),
 				doc.getString("titolo"),
 				doc.getString("descrizione"),
-				doc.getString("indirizzo"),
-				(LocalDate)doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-				doc.getString("incaricato"),
-				(LocalDate)doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+				doc.getString("indirizzo"));
 
+		annuncio.setId(doc.getLong("id"));
+		annuncio.setDataPubblicazione((LocalDate)doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		annuncio.setIncaricato(doc.getString("incaricato"));
+		annuncio.setDataFine((LocalDate)doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		
 		return annuncio;
 	}
 

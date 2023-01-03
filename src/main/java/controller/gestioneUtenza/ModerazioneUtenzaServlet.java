@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.gestioneAnnunci.GestioneAnnunciService;
 import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
+import model.Utente;
 
 @WebServlet("/ModerazioneUtenza")
 public class ModerazioneUtenzaServlet extends HttpServlet {
@@ -34,38 +35,25 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		String email = request.getParameter("mail");
-		String userIp = request.getRemoteAddr();
-		
-		System.out.println(action + " " + email);
 		
 		if(action.equalsIgnoreCase("ban")) {
 			
-			if(serviceUtenza.removeUtente(email) && serviceAnnunci.removeAllAvailableByUser(email)) {
-				request.setAttribute("message", "L'utente: " + email + ", ï¿½ stato rimosso correttamente dal sistema.");
-				try (BufferedWriter writer = new BufferedWriter(new FileWriter("banned-IPs.txt", true))) {
-					writer.write(userIp);
-		            writer.newLine();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
+			if(serviceUtenza.banUser(email) && serviceAnnunci.removeAllAvailableByUser(email)) {
+				request.setAttribute("message", "L'utente: " + email + ", ï¿½ stato bannato correttamente dal sistema.");
+				
 			}else request.setAttribute("message", "L'operazione di rimozione dell'utente: " + email + ", non Ã¨ andata a buon fine.");
-			
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 			
 		}else if(action.equalsIgnoreCase("timeout")) {
 			
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			String expirationDate = formatter.format(LocalDateTime.now().plusHours(24));
+			LocalDateTime duration = LocalDateTime.now().plusHours(24);
 			
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter("banned-IPs.txt", true))) {
-				writer.write(userIp+" "+expirationDate);
-	            writer.newLine();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			request.setAttribute("success", "L'utente: " + email + ", ï¿½ stato sospeso dal sistema fino a: " + expirationDate + ".");
+			if(serviceUtenza.timeoutUser(email, duration)) {
+				request.setAttribute("success", "L'utente: " + email + ", ï¿½ stato sospeso dal sistema fino a: " + duration + ".");
+			}else request.setAttribute("success", "La sospensione non è andata a buon fine.");
+			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
 		}

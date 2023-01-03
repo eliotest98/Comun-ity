@@ -1,10 +1,16 @@
 package controller.gestioneUtenza;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+
 import model.Utente;
 import model.UtenteDAO;
 
@@ -51,6 +57,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
     /**
      * Registers a new user account.
      * @param email is the email of the user to remove from the db.
+     * @return true if the user has been removed correctly.
      */
     @Override
 	public boolean removeUtente(String email) {
@@ -58,8 +65,20 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
     	return utenteDao.deleteUtente(email);
 		
 	}
-
-	 /**
+	
+    /**
+	 * Update user datas in the db.
+	 * @param utente is the User Object already stored in the db to update.
+	 * @return true if the user datas have been updated correctly.
+	 */
+    @Override
+	public boolean updateUtente(Utente utente) {
+		
+    	return utenteDao.updateUtente(utente);
+		
+	}
+	 
+	/**
      * Checks if the credential entered are correct.
      * @param email of the user
      * @param password of the user
@@ -166,11 +185,54 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		return lista;
 	}
 	
+	/**
+	 * Changes the password of an account.
+	 * @param email of the account
+	 * @param password updated
+	 * @return true after the change has taken place
+	 */
 	@Override
-	public boolean changePassword(String email, String password)
-			throws IOException, ExecutionException, InterruptedException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean changePassword(String email, String password) {
+		
+		Utente utente = utenteDao.findUtenteByMail(email);
+		
+		utente.setPassword(password);
+		
+		return utenteDao.updateUtente(utente);
+	}
+	
+	/**
+	 * Ban a user from accessing the system.
+     * @param email is the email of the user to ban.
+     * @return true if user is banned correctly.
+     */
+	@Override
+	public boolean banUser(String email) {
+		
+		Utente utente = utenteDao.findUtenteByMail(email);
+		
+		utente.setBlacklist(true);
+		
+		return utenteDao.updateUtente(utente);
+	}
+	
+	/**
+	 * Temporarily ban a user from accessing the system.
+     * @param email is the email of the user to ban.
+     * @param duration is the date until the user is banned.
+     * @return true if user is banned correctly.
+     */
+	@Override
+	public boolean timeoutUser(String email, LocalDateTime duration) {
+		
+		Utente utente = utenteDao.findUtenteByMail(email);
+		
+		utente.setBlacklist(true);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String until = formatter.format(duration);
+		utente.setDurataBL(until);
+		
+		return utenteDao.updateUtente(utente);
 	}
 
 	@Override
