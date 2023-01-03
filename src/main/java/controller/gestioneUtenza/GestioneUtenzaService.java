@@ -73,8 +73,7 @@ public interface GestioneUtenzaService {
 	 * @param password updated
 	 * @return true after the change has taken place
 	 */
-	boolean changePassword(String email, String password)
-			throws IOException, ExecutionException, InterruptedException;
+	boolean changePassword(String email, String password);
 
 	/**
 	 * Checks if the user is an Admin.

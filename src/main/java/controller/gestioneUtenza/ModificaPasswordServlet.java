@@ -60,16 +60,13 @@ public class ModificaPasswordServlet extends HttpServlet {
 		try {
 			if(service.checkCredentials(user.getMail(), vecchiaPassword)) {
 				if(!vecchiaPassword.equals(nuovaPassword)) {
-				try {
-					service.changePassword(user.getMail(), nuovaPassword);
-					response.getWriter().write("<h3>Password aggiornata con successo<h3>");
-				} catch (IOException | ExecutionException | InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					if(service.changePassword(user.getMail(), nuovaPassword))
+						response.getWriter().write("<h3>Password aggiornata con successo<h3>");
+					else
+						response.getWriter().write("<h3>Errore durante l'aggiornamento della password<h3>");
 				}
 			}else {
-				response.getWriter().write("<h3>La password vecchia non corrisponde<h3>");
+				response.getWriter().write("<h3>La vecchia password non corrisponde<h3>");
 			}
 		} catch (IllegalArgumentException | InterruptedException | ExecutionException | IOException e) {
 			// TODO Auto-generated catch block

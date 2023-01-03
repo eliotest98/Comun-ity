@@ -185,12 +185,20 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		return lista;
 	}
 	
+	/**
+	 * Changes the password of an account.
+	 * @param email of the account
+	 * @param password updated
+	 * @return true after the change has taken place
+	 */
 	@Override
-	public boolean changePassword(String email, String password)
-			throws IOException, ExecutionException, InterruptedException {
-		// TODO Auto-generated method stub
+	public boolean changePassword(String email, String password) {
 		
-		return utenteDao.changePassword(email, password);
+		Utente utente = utenteDao.findUtenteByMail(email);
+		
+		utente.setPassword(password);
+		
+		return utenteDao.updateUtente(utente);
 	}
 	
 	/**
