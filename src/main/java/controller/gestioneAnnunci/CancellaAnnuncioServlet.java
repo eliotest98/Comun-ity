@@ -34,7 +34,7 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 		
 		doGet(req, resp);
 		
-		Long id=(Long)req.getAttribute("id");
+		Long id = (Long.parseLong((String)req.getParameter("annuncio")));
 		service.removeAnnuncio(id);
 	}
 
