@@ -2,6 +2,7 @@ package controller.gestioneUtenza;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -126,9 +127,10 @@ public class RegistrazioneServlet extends HttpServlet {
 								                directory.mkdir();      
 								        }
 								        
+								        String description = request.getParameter("description");
 								        Part part = request.getPart("file");
-								        								        
 								        String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+								        InputStream fileContent = part.getInputStream();					
 								        part.write(path + fileName);
 								        
 								        String base = encodeFileToBase64Binary(path + fileName);
