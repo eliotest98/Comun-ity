@@ -107,7 +107,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 		
 		List<Annuncio> lavori= new ArrayList<Annuncio>();
 		
-		lavori= annuncioDAO.findJobs();
+		lavori = annuncioDAO.findJobs();
 		
 		if(lavori.isEmpty()) {
 			System.out.println("Non ci sono lavori");

@@ -66,9 +66,11 @@ public class ListaLavoriServlet extends HttpServlet {
 		
 		Utente utente = (Utente) session.getAttribute("user");
 				
-		if(serviceUtenza.isPro(utente)) {
+		if(serviceUtenza.isPro(utente) || serviceUtenza.IsAdmin(utente)) {
 			
 			List<Annuncio> lavoriDisponibili = serviceAnnuncio.getAvailableJobs();
+			
+			System.out.println(lavoriDisponibili);
 			
 			Iterator it = lavoriDisponibili.iterator();
 			
@@ -82,7 +84,7 @@ public class ListaLavoriServlet extends HttpServlet {
 						+ "				<div class=\"card center\">\n"
 						+ "					<div class=\"additional\">\n"
 						+ "					<div class=\"user-card\">\n"
-						+ "						<img class='center' src=\"${pageContext.request.contextPath}/images/hammer.png\" width=\"100%\">\n"
+						+ "						<img class='center' src=\"/Comun-ity/images/hammer.png\" width=\"90%\">\n"
 						+ "					</div>\n"
 						+ "					<div class=\"more-info\">\n"
 						+ "						<h3 class=\"text-center\">"+annuncio.getTitolo()+"</h3>\n"
@@ -107,7 +109,13 @@ public class ListaLavoriServlet extends HttpServlet {
 			
 		}else {
 			
-			response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
+			if(serviceUtenza.isPro(utente) || serviceUtenza.IsAdmin(utente)) {
+			
+				response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
+				
+			}else {
+				response.getWriter().write("<h3>Non puoi accettare lavori<h3>");
+			}
 		}
 	}
 

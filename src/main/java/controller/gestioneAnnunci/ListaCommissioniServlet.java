@@ -35,7 +35,7 @@ public class ListaCommissioniServlet extends HttpServlet {
 			resp.getWriter().write("<h3>Non ci sono commissioni disponibili</h3>");
 			
 		}else {
-			
+						
 			commissioni = (ArrayList<Annuncio>) service.getAvailableErrands();
 		
 			Iterator it = commissioni.iterator();
@@ -48,7 +48,7 @@ public class ListaCommissioniServlet extends HttpServlet {
 						+ "				<div class=\"card center\">\n"
 						+ "					<div class=\"additional\">\n"
 						+ "					<div class=\"user-card\">\n"
-						+ "						<img class='center' src=\"${pageContext.request.contextPath}/images/to-do-list.png\" width=\"100%\">\n"
+						+ "						<img class='center' src=\"/Comun-ity/images/to-do-list.png\" width=\"100%\">\n"
 						+ "					</div>\n"
 						+ "					<div class=\"more-info\">\n"
 						+ "						<h3 class=\"text-center\">"+annuncio.getTitolo()+"</h3>\n"

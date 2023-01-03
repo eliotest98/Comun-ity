@@ -32,7 +32,7 @@ public class AreaPersonaleServlet extends HttpServlet {
 		
 		Utente user = (Utente) session.getAttribute("user");
 		
-		if(user == null) {
+		if(user != null) {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/user/areaPersonale.jsp");
 			req.setAttribute("link", "areaPersonale");
 			requestDispatcher.forward(req, resp);
