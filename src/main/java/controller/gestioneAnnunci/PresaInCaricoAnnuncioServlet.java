@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Annuncio;
-import model.Utente;
+import model.*;
 
 /**
  * Servlet implementation class PresaInCaricoAnnuncioServlet
@@ -19,6 +18,8 @@ import model.Utente;
 @WebServlet("/PresaInCaricoAnnuncioServlet")
 public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,15 +52,15 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 		doGet(request, response);
 		
 		HttpSession session= request.getSession(true);
-		request.getParameter("ListaAnnunciServlet");
 		Utente utente = (Utente) session.getAttribute("user");
-		
-		
-		
+		String mail = utente.getMail();
 		Long id = (Long.parseLong((String)request.getParameter("annuncio")));
+		/*
+		 * Annuncio annuncio = new Annuncio(); AnnuncioDAO dao = new AnnuncioDAO();
+		 * dao.updateAnnuncio(annuncio);
+		 */
+		service.acceptAnnuncio(id, mail);
 		
-		System.out.println(id);
-		 
 		response.sendRedirect("ListaAnnunciServlet");
 		
 	}
