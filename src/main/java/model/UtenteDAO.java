@@ -175,6 +175,23 @@ public class UtenteDAO {
 		return doc;
 
 	}
+	
+	public List<Utente> searchUtente(String mail){
+
+			List<Utente> lista = new ArrayList<>();
+
+			MongoCollection<Document> collection = database.getCollection("utente");
+
+			BasicDBObject regexQuery = new BasicDBObject();
+			regexQuery.put("mail", new BasicDBObject("$regex", mail).append("$options", "i"));
+
+			MongoCursor<Document> cursor = collection.find(regexQuery).iterator();
+
+			while (cursor.hasNext()) {
+	        	lista.add(UtenteDAO.docToUtente(cursor.next()));
+	        }
+	        return lista;
+		}
 
 	//Crea un istanza di Utentre da un documento mongoDB
 	private static Utente docToUtente(Document doc) {

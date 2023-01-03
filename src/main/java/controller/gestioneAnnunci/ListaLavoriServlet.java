@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,12 +47,9 @@ public class ListaLavoriServlet extends HttpServlet {
 		HttpSession session= request.getSession(true);
 		Utente utente= (Utente) session.getAttribute("user");
 		
-		if(utente != null && serviceUtenza.isPro(utente)==true) {
-			
-			response.sendRedirect("jsp lista lavori");		//va inserita la jsp (ancora da fare)
-			
+		if(utente != null) {
+			response.sendRedirect("ListaAnnunci");		//va inserita la jsp (ancora da fare)
 		}else{
-			request.setAttribute("message", "Sembra che per la piattaforma tu non sia registrato come professionista, autenticati");
 			response.sendRedirect("/Comun-ity/guest/login.jsp");
 		}
 	}
@@ -59,7 +57,6 @@ public class ListaLavoriServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	final String OLD_FORMAT = "dd/MM/yyyy";
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
 		HttpSession session= request.getSession(true);
@@ -69,22 +66,26 @@ public class ListaLavoriServlet extends HttpServlet {
 		if(serviceUtenza.isPro(utente) || serviceUtenza.IsAdmin(utente)) {
 			
 			List<Annuncio> lavoriDisponibili = serviceAnnuncio.getAvailableJobs();
-			
-			System.out.println(lavoriDisponibili);
-			
+						
 			Iterator it = lavoriDisponibili.iterator();
 			
 			while(it.hasNext()) {
 				
 				Annuncio annuncio = (Annuncio) it.next();
+				Utente user = null;
 				
-				SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-								
+				try {
+					user = serviceUtenza.getAccountByEmail(annuncio.getAutore());
+				} catch (InterruptedException | ExecutionException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+							
 				response.getWriter().write("<div class=\"col\">\n"
 						+ "				<div class=\"card center\">\n"
 						+ "					<div class=\"additional\">\n"
 						+ "					<div class=\"user-card\">\n"
-						+ "						<img class='center' src=\"/Comun-ity/images/hammer.png\" width=\"90%\">\n"
+						+ "						<img class='center' src=\"/Comun-ity/images/hammer.png\" width=\"80%\">\n"
 						+ "					</div>\n"
 						+ "					<div class=\"more-info\">\n"
 						+ "						<h3 class=\"text-center\">"+annuncio.getTitolo()+"</h3>\n"
@@ -99,13 +100,19 @@ public class ListaLavoriServlet extends HttpServlet {
 						+ "					<p>Autore: "+annuncio.getAutore()+"<br>\n"
 						+ "						Descrizione: "+annuncio.getDescrizione()+"<br>\n"
 						+ "						Indirizzo: "+annuncio.getIndirizzo()+"<br>\n"
-						+ "						Data Fine: "+annuncio.getDataFine()+"3\n"
+						+ "						Data Fine: "+annuncio.getDataFine()+"<br>\n"
+						+ "						Valutazione Utente: <span class=\"heading\" id=\"val\">"+user.getReputazione()+"</span>\n"
+						+ "								<i class='bx bxs-star' id=\"star1\"></i>\n"
+						+ "								<i class='bx bxs-star' id=\"star2\"></i>\n"
+						+ "								<i class='bx bxs-star' id=\"star3\"></i>\n"
+						+ "								<i class='bx bxs-star' id=\"star4\"></i>\n"
+						+ "								<i class='bx bxs-star' id=\"star5\"></i></p>"					
 						+ "					</p>\n"
 						+ "					<span class=\"more\">Muovi il mouse per accettare</span>\n"
 						+ "					</div>\n"
 						+ "				</div>\n"
 						+ "			</div>");
-			}
+				}
 			
 		}else {
 			

@@ -55,10 +55,6 @@ public class ListaUtentiServlet extends HttpServlet {
 				listaUtenti = (ArrayList<Utente>) service.searchUser(search);
 			}
 			
-			//listaUtenti = (ArrayList<Utente>) service.getAllUsers();
-			
-			System.out.println(listaUtenti);
-						
 			if(listaUtenti.isEmpty()) {
 				
 				resp.getWriter().write("<h1>Non ci sono utenti</h1>");

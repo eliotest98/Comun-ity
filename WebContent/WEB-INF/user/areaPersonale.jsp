@@ -16,6 +16,24 @@
 <script src="/Comun-ity/js/main.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/areaPersonale.css" />
+
+<script>
+
+	$(document).ready(function () {
+
+			var valutazione = $('.card-body span').text();
+
+			for(let i = 1; i <= 5; i++){
+				if(i <= Math.round(valutazione)){
+					$('#star'+i).addClass("checked");
+				}else{
+					break;
+				}
+			}
+	});
+
+</script>
+
 </head>
 <body id="body-pd">
 
@@ -34,7 +52,13 @@
 						Età: <%=user.getEta() %><br>
 						Email: <%=user.getMail() %><br>
 						Sesso: <%=user.getSesso() %><br>
-						Ruolo: <%=user.getRuolo()%></p>
+						Ruolo: <%=user.getRuolo()%><br>
+						Valutazione: <span class="heading" id="val"><%=user.getReputazione() %></span>
+								<i class='bx bxs-star' id="star1"></i>
+								<i class='bx bxs-star' id="star2"></i>
+								<i class='bx bxs-star' id="star3"></i>
+								<i class='bx bxs-star' id="star4"></i>
+								<i class='bx bxs-star' id="star5"></i></p>
 					</div>
 				</div>
 			</div>
