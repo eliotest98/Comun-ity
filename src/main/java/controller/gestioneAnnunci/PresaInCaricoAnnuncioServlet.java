@@ -55,10 +55,6 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 		Utente utente = (Utente) session.getAttribute("user");
 		String mail = utente.getMail();
 		Long id = (Long.parseLong((String)request.getParameter("annuncio")));
-		/*
-		 * Annuncio annuncio = new Annuncio(); AnnuncioDAO dao = new AnnuncioDAO();
-		 * dao.updateAnnuncio(annuncio);
-		 */
 		service.acceptAnnuncio(id, mail);
 		
 		response.sendRedirect("ListaAnnunciServlet");
