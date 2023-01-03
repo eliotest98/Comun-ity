@@ -208,7 +208,7 @@ public class AnnuncioDAO {
 		
 		allAdsByUser = findAllByUser(autore);
 
-		Iterator<Annuncio> it= allAdsByUser.iterator();
+		Iterator<Annuncio> it = allAdsByUser.iterator();
 		while(it.hasNext()) {
 			if(it.next().getIncaricato().equals("nessuno")) {
 				availables.add(it.next());

@@ -96,4 +96,6 @@ public interface GestioneUtenzaService {
      */
 	List<Utente> getAllUsers();
 	
+	List<Utente> searchUser(String email);
+	
 }

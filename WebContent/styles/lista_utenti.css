@@ -3,6 +3,10 @@
   --gradient-second: #3b3aef;
 }
 
+body{
+	min-width:530px;
+}
+
 .center {
   position: absolute;
   top: 50%;
@@ -116,4 +120,29 @@
 
 .alert{
 	width: 50%;
+}
+
+#searchbar{
+	margin: 10px;
+}
+
+.search{
+	border-radius:10px 0px 0px 10px;
+	width: 200px;
+	height: 30px;
+	border: 1px solid grey;
+}
+
+.searchButton {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(var(--gradient-first), var( --gradient-second));
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  border: none;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

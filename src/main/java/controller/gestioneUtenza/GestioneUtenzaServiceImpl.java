@@ -172,4 +172,9 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<Utente> searchUser(String email) {	
+		return utenteDao.searchUtente(email);
+	}
 }

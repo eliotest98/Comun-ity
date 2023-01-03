@@ -9,9 +9,11 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -124,7 +126,7 @@ public class UtenteDAO {
 	//Assegna una valutazione ad un utente
 	public void assignRating(Utente utente, Double recensione) {
 		
-		Utente utente1= findUtenteByMail(utente.getMail());
+		Utente utente1 = findUtenteByMail(utente.getMail());
 		
 		if(utente1==null) {
 			System.out.println("L'utente a cui si vuole assegnare una valutazione non esiste");
@@ -165,7 +167,7 @@ public class UtenteDAO {
 	  
 		//Crea un istanza di Utentre da un documento mongoDB
 		private static Utente docToUtente(Document doc) {
-			
+						
 			Utente utente = new Utente(
 					doc.getString("ruolo"),
 					doc.getString("abilitazione"),
@@ -180,5 +182,22 @@ public class UtenteDAO {
 					(LocalDate)doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 			
 			return utente;
+		}
+		
+		public List<Utente> searchUtente(String mail){
+			
+			List<Utente> lista = new ArrayList<>();
+			
+			MongoCollection<Document> collection = database.getCollection("utente");
+			
+			BasicDBObject regexQuery = new BasicDBObject();
+			regexQuery.put("mail", new BasicDBObject("$regex", mail).append("$options", "i"));
+
+			MongoCursor<Document> cursor = collection.find(regexQuery).iterator();
+			
+			while (cursor.hasNext()) {
+	        	lista.add(UtenteDAO.docToUtente(cursor.next()));
+	        }
+	        return lista;
 		}
 }
