@@ -103,6 +103,7 @@ public interface GestioneUtenzaService {
      */
 	List<Utente> getAllUsers();
 	
+	List<Utente> searchUser(String email);
 	/**
 	 * Ban a user from accessing the system.
      * @param email is the email of the user to ban.

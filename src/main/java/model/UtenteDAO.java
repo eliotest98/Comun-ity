@@ -9,9 +9,11 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -21,7 +23,7 @@ public class UtenteDAO {
 
 
 	//Connessione al database
-	private static MongoDatabase database = DbConnection.connectToDb();
+	static MongoDatabase database = DbConnection.connectToDb();
 
 
 	//Inserisce un utente nel database
@@ -55,7 +57,7 @@ public class UtenteDAO {
 	//Esegue l'update dei dati di un utente nel database
 	public boolean updateUtente(Utente utente) {
 		try {
-			database.getCollection("utente").updateOne(Filters.eq("mail", utente.getMail()), docForDb(utente));
+			database.getCollection("utente").replaceOne(Filters.eq("mail", utente.getMail()), docForDb(utente));
 			System.out.println("Dati dell'utente " + utente.getMail() + " aggiornati.");
 			return true;
 		}catch(MongoException e) {
@@ -67,19 +69,15 @@ public class UtenteDAO {
 	//Trova un utente specifico nel database per id
 	public Utente findUtenteByMail(String mail) {
 
-		Document doc = null;
+		Document doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
 
-		try {
-			doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
-		}catch(MongoException e) {
-			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
-		}
-
-		if(doc == null)
+		if(doc == null) {
+			System.out.println("Utente non trovato!");
 			return null;
-		else {
-			Utente utente = docToUtente(doc);
-			return utente;
+		}else {
+			System.out.println("Utente trovato!");
+			Utente user = docToUtente(doc);
+			return user;
 		}
 	}
 
@@ -147,9 +145,9 @@ public class UtenteDAO {
 
 	//Assegna una valutazione ad un utente
 	public void assignRating(Utente utente, Double recensione) {
-
-		Utente utente1= findUtenteByMail(utente.getMail());
-
+		
+		Utente utente1 = findUtenteByMail(utente.getMail());
+		
 		if(utente1==null) {
 			System.out.println("L'utente a cui si vuole assegnare una valutazione non esiste");
 		}else {
@@ -212,6 +210,23 @@ public class UtenteDAO {
 		return doc;
 
 	}
+	
+	public List<Utente> searchUtente(String mail){
+
+			List<Utente> lista = new ArrayList<>();
+
+			MongoCollection<Document> collection = database.getCollection("utente");
+
+			BasicDBObject regexQuery = new BasicDBObject();
+			regexQuery.put("mail", new BasicDBObject("$regex", mail).append("$options", "i"));
+
+			MongoCursor<Document> cursor = collection.find(regexQuery).iterator();
+
+			while (cursor.hasNext()) {
+	        	lista.add(UtenteDAO.docToUtente(cursor.next()));
+	        }
+	        return lista;
+		}
 
 	//Crea un istanza di Utentre da un documento mongoDB
 	private static Utente docToUtente(Document doc) {

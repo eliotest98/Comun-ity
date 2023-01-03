@@ -74,17 +74,17 @@
 	
 	<div class="container-fluid" id="selector">
 		<div class="row">
-			<div class="col d-flex justify-content-center">
-				<h5>Commissioni</h5>
+			<div class="col-4 justify-content-center">
+				<h5 class="text-center">Commissioni</h5>
 			</div>
-			<div class="col d-flex justify-content-center">
+			<div class="col-4">
 				<div class="switch">
 					<input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
 					<label for="cmn-toggle-4"></label>
 				</div>
 			</div>
-			<div class="col d-flex justify-content-center">
-				<h5>Lavori</h5>
+			<div class="col-4 justify-content-center">
+				<h5 class="text-center">Lavori</h5>
 			</div>
 		</div>
 	</div>

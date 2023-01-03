@@ -18,14 +18,50 @@
 <script src="/Comun-ity/js/main.js"></script>
 <link rel=stylesheet href="/Comun-ity/styles/main.css" />
 <link rel="stylesheet" href="/Comun-ity/styles/lista_utenti.css"/>
+
+<script>
+
+	$(document).ready(function () {
+		
+		var firstData = new FormData();
+		
+		firstData.append("search","prova");
+		
+		$.ajax({
+			method:'POST',
+			url:'ListaUtenti',
+			data: "&search=" + "",
+			dataType: "html",
+			success: function (response){
+				$('#utentiRow').html(response);
+			}
+		});
+		
+		$('#searchtext').on('input',function () {
+			
+			var val = $('#searchtext').val();
+		
+			$.ajax({
+				method:'POST',
+				url:'ListaUtenti',
+				data: "&search=" + val,
+				dataType: "html",
+				success: function (response){
+					$('#utentiRow').html(response);
+				}
+			});
+			
+		});
+		
+	});
+</script>
+
 </head>
 
 <body id="body-pd">
 	
 	<%@ include file="../header.jsp" %>
-	
-	<%ArrayList<Utente> lista = (ArrayList<Utente>) request.getAttribute("listaUtenti");%>
-	
+		
 	<div class="height-100">
 	
 	 <% if (request.getAttribute("error") != null){%>
@@ -45,64 +81,19 @@
 		</div>
 	</div>
 	<%}%>
-	
-	
 		<div class="container-fluid">
 			<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-				<div class="row justify-content-center">
-			
-			<% 
-			if(lista == null){
-				%>
-				<h1>Non ci sono utenti</h1> <% 
-			}
-			
-			Iterator it = lista.iterator();
-			
-			int cont = 0;
-			
-			while(it.hasNext()){
-				
-				Utente user = (Utente)it.next(); %>
-				
-				<div class="col">
-					<div class="card center">
-						<div class="additional">
-						<div class="user-card">
-							<img class='center' src="./images/user.png">
-						</div>
-						<div class="more-info">
-							<h3 class="text-center"><%=user.getNome()%> <%=user.getCognome()%></h3>
-							<div class="row justify-content-center">
-								<form action="ModerazioneUtenza" method="POST">
-									<button type="submit" class="button" name="mail" id="timeout" value=<%=user.getMail() %> onclick="timeoutUtente(this.value)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sospensione momentanea">
-										<i class='bx bxs-time'></i>
-									</button>
-									<input type="hidden" value="timeout" name="action">
-								</form>
-								<form action="ModerazioneUtenza" method="POST">
-									<button type="submit" class="button" id="ban" name="mail" value=<%=user.getMail() %> onclick="banUtente(this.value)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ban utente">
-										<i class='bx bxs-x-circle'></i>
-									</button>
-									<input type="hidden" value="ban" name="action">
-								</form>
-							</div>
-						</div>
-						</div>
-						<div class="general">
-						<h3 class="text-center"><%=user.getNome()%> <%=user.getCognome()%></h3>
-						<hr>
-						<p>Ruolo: <%=user.getRuolo() %><br>
-							Età: <%=user.getEta() %><br>
-							Sesso: <%=user.getSesso() %> <br>
-							Indirizzo:<%=user.getIndirizzo() %><br>
-							Email: <%=user.getMail() %>
-						</p>
-						<span class="more">Muovi il mouse per eseguire azioni</span>
-						</div>
+				<div clas="container">
+					<div class="row" id="searchbar">
+					      <input type="text" class="search" id="searchtext" placeholder="Cerca tra gli utenti">
+					      <button type="submit" class="searchButton" id="search">
+					        <i class='bx bx-search-alt-2'></i>
+					     </button>
 					</div>
 				</div>
-				<%} %>
+				<div class="row justify-content-center" id="utentiRow">
+							
+				</div>
 			</div>
 		</div>
 	</div>

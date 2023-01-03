@@ -234,4 +234,9 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		
 		return utenteDao.updateUtente(utente);
 	}
+
+	@Override
+	public List<Utente> searchUser(String email) {	
+		return utenteDao.searchUtente(email);
+	}
 }
