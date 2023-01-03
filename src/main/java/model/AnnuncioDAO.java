@@ -19,7 +19,7 @@ import controller.utility.DbConnection;
 public class AnnuncioDAO {
 
 	//Connessione al database
-	MongoDatabase database = DbConnection.connectToDb();
+	static MongoDatabase database = DbConnection.connectToDb();
 
 
 	//Inserisce un annuncio nel database
@@ -52,7 +52,7 @@ public class AnnuncioDAO {
 	//Esegue l'update dei dati di un annuncio nel database
 		public boolean updateAnnuncio(Annuncio annuncio) {
 			try {
-				database.getCollection("annuncio").updateOne(Filters.eq("id", annuncio.getId()), docForDb(annuncio));
+				database.getCollection("annuncio").replaceOne(Filters.eq("id", annuncio.getId()), docForDb(annuncio));
 				System.out.println("Dati dell'annuncio " + annuncio.getId() + " aggiornati.");
 				return true;
 			}catch(MongoException e) {
@@ -64,12 +64,13 @@ public class AnnuncioDAO {
 	//Trova un annuncio specifico nel database
 	public Annuncio findAnnuncioById(Long id) {
 
-		Document doc = database.getCollection("utente").find(Filters.eq("id", id)).first();
+		Document doc = database.getCollection("annuncio").find(Filters.eq("id", id)).first();
 		
 		if(doc == null) {
 			System.out.println("Annuncio non trovato!");
 			return null;
 		}else {
+			System.out.println("Annuncio trovato");
 			Annuncio annuncio = docToAnnuncio(doc);
 			return annuncio;
 		}
@@ -233,21 +234,40 @@ public class AnnuncioDAO {
 
 	//Crea un documento per mongoDB
 	private static Document docForDb(Annuncio annuncio) {
-
-		Document doc= new Document("_id", new ObjectId())
-				.append("id", annuncio.getId())
-				.append("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta())
-				.append("autore" , annuncio.getAutore())
-				.append("titolo", annuncio.getTitolo())
-				.append("descrizione" , annuncio.getDescrizione())
-				.append("indirizzo", annuncio.getIndirizzo())
-				.append("dataPubblicazione", annuncio.getDataPubblicazione())
-				.append("incaricato", annuncio.getIncaricato())
-				.append("dataFine", annuncio.getDataFine());
+		
+		//Check if it already exists
+		Document doc = database.getCollection("annuncio").find(Filters.eq("id", annuncio.getId())).first();
+		
+		//If it doesn't, create a new document
+		if(doc == null) {
+			doc = new Document("_id", new ObjectId())
+					.append("id", annuncio.getId())
+					.append("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta())
+					.append("autore" , annuncio.getAutore())
+					.append("titolo", annuncio.getTitolo())
+					.append("descrizione" , annuncio.getDescrizione())
+					.append("indirizzo", annuncio.getIndirizzo())
+					.append("dataPubblicazione", annuncio.getDataPubblicazione())
+					.append("incaricato", annuncio.getIncaricato())
+					.append("dataFine", annuncio.getDataFine());
+		} else {
+			doc.replace("id", annuncio.getId());
+			doc.replace("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta());
+			doc.replace("autore" , annuncio.getAutore());
+			doc.replace("titolo", annuncio.getTitolo());
+			doc.replace("descrizione" , annuncio.getDescrizione());
+			doc.replace("indirizzo", annuncio.getIndirizzo());
+			doc.replace("dataPubblicazione", annuncio.getDataPubblicazione());
+			doc.replace("incaricato", annuncio.getIncaricato());
+			doc.replace("dataFine", annuncio.getDataFine());
+		}
+		
 
 		return doc;
 
 	}
+	
+	
 
 	//Crea un istanza di Annuncio da un documento mongoDB
 	private static Annuncio docToAnnuncio(Document doc) {
