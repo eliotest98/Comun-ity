@@ -37,15 +37,29 @@ public class AnnuncioDAO {
 	}
 
 	//Esegue l'eliminazione di un annuncio nel database
-	public void deleteAnnuncio(Long id) {
+	public boolean deleteAnnuncio(Long id) {
 		try {
 
 			database.getCollection("annuncio").deleteOne(Filters.eq("id", id));
 			System.out.println("Annuncio eliminato!");
+			return true;
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'eliminazione dell'annuncio" + e.getMessage());
+			return false;
 		}
 	}
+	
+	//Esegue l'update dei dati di un annuncio nel database
+		public boolean updateAnnuncio(Annuncio annuncio) {
+			try {
+				database.getCollection("annuncio").updateOne(Filters.eq("id", annuncio.getId()), docForDb(annuncio));
+				System.out.println("Dati dell'annuncio " + annuncio.getId() + " aggiornati.");
+				return true;
+			}catch(MongoException e) {
+				System.out.println("Errore durante l'update dell'annuncio" + e.getMessage());
+				return false;
+			}
+		}
 
 	//Trova un annuncio specifico nel database
 	public Annuncio findAnnuncioById(Long id) {
@@ -245,16 +259,17 @@ public class AnnuncioDAO {
 	private static Annuncio docToAnnuncio(Document doc) {
 
 		Annuncio annuncio = new Annuncio(
-				doc.getLong("id"),
 				doc.getString("abilitazioneRichiesta"),
 				doc.getString("autore"),
 				doc.getString("titolo"),
 				doc.getString("descrizione"),
-				doc.getString("indirizzo"),
-				(LocalDate)doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-				doc.getString("incaricato"),
-				(LocalDate)doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+				doc.getString("indirizzo"));
 
+		annuncio.setId(doc.getLong("id"));
+		annuncio.setDataPubblicazione((LocalDate)doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		annuncio.setIncaricato(doc.getString("incaricato"));
+		annuncio.setDataFine((LocalDate)doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		
 		return annuncio;
 	}
 

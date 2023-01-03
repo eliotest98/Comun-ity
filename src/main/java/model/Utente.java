@@ -20,6 +20,8 @@ public class Utente {
 	private String indirizzo;
 	private LocalDate dataNascita;
 	private ArrayList<Double> recensioni;
+	private Boolean blacklist;
+	private String durataBL;
 	
 	
 	/**
@@ -59,7 +61,9 @@ public class Utente {
 		this.numeroTelefono = numeroTelefono;
 		this.indirizzo = indirizzo;
 		this.dataNascita = dataNascita;
-		this.recensioni = new ArrayList<Double>(); 
+		this.recensioni = new ArrayList<Double>();
+		this.blacklist = false;
+		this.durataBL = "permanente"; //default value
 	}
 	
 	/**
@@ -268,12 +272,43 @@ public class Utente {
 
 		return sum / recensioni.size();
 	}
+	
+	
+
+	/**
+	 * @return true if the user is blacklisted.
+	 */
+	public Boolean getBlacklist() {
+		return blacklist;
+	}
+
+	/**
+	 * @param blacklist is the Boolean value to set whether or not the user is blacklisted.
+	 */
+	public void setBlacklist(Boolean blacklist) {
+		this.blacklist = blacklist;
+	}
+
+	/**
+	 * @return a string that tells the duration of the blacklist {default: "permanente"}
+	 */
+	public String getDurataBL() {
+		return durataBL;
+	}
+
+	/**
+	 * @param durataBL is the duration of the blacklist for the user.
+	 */
+	public void setDurataBL(String durataBL) {
+		this.durataBL = durataBL;
+	}
 
 	@Override
 	public String toString() {
 		return "Utente [ruolo=" + ruolo + ", abilitazione=" + abilitazione +", nome=" + nome + ", cognome=" + cognome + ", eta=" + eta
 				+ ", mail=" + mail + ", password=" + password + ", sesso=" + sesso + ", numeroTelefono="
-				+ numeroTelefono + ", indirizzo=" + indirizzo + ", dataNascita=" + dataNascita + ", reputazione=" + getReputazione() + "]";
+				+ numeroTelefono + ", indirizzo=" + indirizzo + ", dataNascita=" + dataNascita + ", reputazione=" + getReputazione() 
+				+ ", blacklist=" + blacklist + ", durataBL=" + durataBL +"]";
 	}
 
 }

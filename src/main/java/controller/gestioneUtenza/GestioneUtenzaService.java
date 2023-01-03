@@ -1,6 +1,7 @@
 package controller.gestioneUtenza;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -28,6 +29,13 @@ public interface GestioneUtenzaService {
 	 * @return true if the user has been removed correctly.
 	 */
 	boolean removeUtente(String email);
+	
+	/**
+	 * Update user datas in the db.
+	 * @param utente is the User Object already stored in the db to update.
+	 * @return true if the user datas have been updated correctly.
+	 */
+	boolean updateUtente(Utente utente);
 	
 	/**
 	 * Checks the credentials of the client before insert it into the db.
@@ -65,8 +73,7 @@ public interface GestioneUtenzaService {
 	 * @param password updated
 	 * @return true after the change has taken place
 	 */
-	boolean changePassword(String email, String password)
-			throws IOException, ExecutionException, InterruptedException;
+	boolean changePassword(String email, String password);
 
 	/**
 	 * Checks if the user is an Admin.
@@ -95,5 +102,20 @@ public interface GestioneUtenzaService {
      * @return a List of Utente that contains all the users.
      */
 	List<Utente> getAllUsers();
+	
+	/**
+	 * Ban a user from accessing the system.
+     * @param email is the email of the user to ban.
+     * @return true if user is banned correctly.
+     */
+	boolean banUser(String email);
+	
+	/**
+	 * Temporarily ban a user from accessing the system.
+     * @param email is the email of the user to ban.
+     * @param duration is the date until the user is banned.
+     * @return true if user is banned correctly.
+     */
+	boolean timeoutUser(String email, LocalDateTime duration);
 	
 }

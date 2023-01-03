@@ -45,24 +45,6 @@ public class Annuncio {
 		this.incaricato = "nessuno";
 		this.dataFine = dataPubblicazione.plusDays(30); //default expire date
 	}
-
-	/**
-	 * Full Constructor for Db operations.
-	 */
-	public Annuncio(Long id, String abilitazioneRichiesta, String autore, String titolo, String descrizione,
-			String indirizzo, LocalDate dataPubblicazione, String incaricato, LocalDate dataFine) {
-		super();
-		this.id = id;
-		this.abilitazioneRichiesta = abilitazioneRichiesta;
-		this.autore = autore;
-		this.titolo = titolo;
-		this.descrizione = descrizione;
-		this.indirizzo = indirizzo;
-		this.dataPubblicazione = dataPubblicazione;
-		this.incaricato = incaricato;
-		this.dataFine = dataFine;
-	}
-	
 	
 	public void setId(Long id) {
 		this.id = id;
