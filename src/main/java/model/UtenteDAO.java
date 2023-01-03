@@ -52,6 +52,7 @@ public class UtenteDAO {
 		}
 	}
 
+	//Esegue l'update dei dati di un utente nel database
 	public boolean updateUtente(Utente utente) {
 		try {
 			database.getCollection("utente").updateOne(Filters.eq("mail", utente.getMail()), docForDb(utente));
@@ -62,8 +63,8 @@ public class UtenteDAO {
 			return false;
 		}
 	}
+	
 	//Trova un utente specifico nel database per id
-
 	public Utente findUtenteByMail(String mail) {
 
 		Document doc = null;
@@ -128,6 +129,20 @@ public class UtenteDAO {
 
 		return lista;
 
+	}
+	
+	public List<Utente> getAllBlacklistedUsers(){
+		
+		List<Utente> list = new ArrayList<>();
+		List<Document> documents = new ArrayList<>();
+		
+		database.getCollection("utente").find(Filters.eq("blacklist", true)).into(documents);
+		for(Document d : documents) {
+			list.add(docToUtente(d));
+		}
+		
+		return list;
+		
 	}
 
 	//Assegna una valutazione ad un utente

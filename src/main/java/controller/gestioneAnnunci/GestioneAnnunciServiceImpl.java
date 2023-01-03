@@ -1,6 +1,7 @@
 package controller.gestioneAnnunci;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +38,18 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	 */
 	@Override
 	public boolean removeAnnuncio(Long id) {
+		return annuncioDAO.deleteAnnuncio(id);
 
-		annuncioDAO.deleteAnnuncio(id);
-
-		return annuncioDAO.findAnnuncioById(id) == null ? true : false;
-
+	}
+	
+	/**
+	 * Update ad datas in the db.
+	 * @param annuncio is the Ad Object already stored in the db to update.
+	 * @return true if the ad datas have been updated correctly.
+	 */
+	@Override
+	public boolean updateAnnuncio(Annuncio annuncio) {
+		return annuncioDAO.updateAnnuncio(annuncio);
 	}
 
 	/**
@@ -134,4 +142,20 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 		return lavori;
 	}
 
+	/**
+     * Establish that the ad identified by the given id has been taken on by the specified user.
+     * @param id is the ad identifier.
+     * @param incaricato is the the email of the user that accepts the ad.
+     * @return true if the ad has been accepted correctly.
+     */
+	@Override
+	public boolean acceptAnnuncio(Long id, String incaricato) {
+		
+		Annuncio annuncio = annuncioDAO.findAnnuncioById(id);
+		
+		annuncio.setIncaricato(incaricato);
+		annuncio.setDataFine(LocalDate.now());
+		
+		return annuncioDAO.updateAnnuncio(annuncio);
+	}
 }
