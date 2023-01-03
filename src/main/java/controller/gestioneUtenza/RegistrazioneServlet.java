@@ -127,10 +127,8 @@ public class RegistrazioneServlet extends HttpServlet {
 								                directory.mkdir();      
 								        }
 								        
-								        String description = request.getParameter("description");
 								        Part part = request.getPart("file");
-								        String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-								        InputStream fileContent = part.getInputStream();					
+								        String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();					
 								        part.write(path + fileName);
 								        
 								        String base = encodeFileToBase64Binary(path + fileName);
