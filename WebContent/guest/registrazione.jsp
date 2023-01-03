@@ -14,7 +14,6 @@
 
 <link href="${pageContext.request.contextPath}/styles/registrazione.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/js/registrazione.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete&language=nl&output=json&key=YOUR_API_KEY" async defer></script>
 
 <script type="text/javascript">
   function initAutocomplete() {
@@ -23,18 +22,18 @@
   }
   //AIzaSyC66Vh19_mI72al4xsEnoJTzBFdFeA6y4A
   
-  // This sample uses the Places Autocomplete widget to:
-// 1. Help the user select a place
-// 2. Retrieve the address components associated with that place
-// 3. Populate the form fields with those address components.
-// This sample requires the Places library, Maps JavaScript API.
-// Include the libraries=places parameter when you first load the API.
-// For example: <script
-// src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-let autocomplete;
-let address1Field;
-let address2Field;
-let postalField;
+	  // This sample uses the Places Autocomplete widget to:
+	// 1. Help the user select a place
+	// 2. Retrieve the address components associated with that place
+	// 3. Populate the form fields with those address components.
+	// This sample requires the Places library, Maps JavaScript API.
+	// Include the libraries=places parameter when you first load the API.
+	// For example: <script
+	// src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+	let autocomplete;
+	let address1Field;
+	let address2Field;
+	let postalField;
 
 function initAutocomplete() {
   address1Field = document.querySelector("#ship-address");
@@ -169,7 +168,7 @@ function initAutocomplete() {
 					</select>
 			    </div>
 			    <div class="col">
-				    <input id="ship-address" class="form-control" name="ship-address" placeholder="Inserisci un indirizzo" required autocomplete="off"/>
+				    <input id="ship-address" class="form-control" name="indirizzo" placeholder="Inserisci un indirizzo" required autocomplete="off"/>
 				    <label class="form-label" for="form3Example3">Indirizzo</label>
 			    </div>
 			  </div>
@@ -188,7 +187,6 @@ function initAutocomplete() {
 			  	</div>
 			  	<div class="col">
 				  <input class="form-control" type="file" id="formFileMultiple" name="file">
-				  <label for="formFileMultiple" class="form-label">Multiple files input example</label>
 			  	</div>
 			  </div>
 			  

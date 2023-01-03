@@ -1,4 +1,4 @@
-package controller.utility;
+package controller.gestioneAnnunci;
 
 import java.io.IOException;
 
@@ -8,19 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class HomeServlet
+ * Servlet implementation class ListaAnnunciServlet
  */
-@WebServlet("/HomeServlet")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/ListaAnnunciServlet")
+public class ListaAnnunciServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeServlet() {
+    public ListaAnnunciServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,18 +29,10 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession(true);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/bachecaAnnunci.jsp");
 		
-		if(session.getAttribute("user") != null) {
-									
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");
-			
-			request.setAttribute("link", "dashboard");
-			requestDispatcher.forward(request, response);
-			
-		}else {
-			response.sendRedirect("/Comun-ity/guest/login.jsp");
-		}
+		request.setAttribute("link", "bacheca");
+		requestDispatcher.forward(request, response);
 	}
 
 	/**

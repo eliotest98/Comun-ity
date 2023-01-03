@@ -17,8 +17,16 @@ public interface GestioneAnnunciService {
 	/**
      * Removes an ad from the database.
      * @param id is the ad identifier
+     * @return true if the ad has been eliminated correctly.
      */
-	public void removeAnnuncio(Long id);
+	public boolean removeAnnuncio(Long id);
+	
+	/**
+     * Removes all the available ads published by a User from the database.
+     * @param autore is the ad author email
+     * @return true if all the available ads for the given user have been eliminated.
+     */
+	public boolean removeAllAvailableByUser(String autore);
 	
 	/**
 	 * Retrieves all the Errands from the db.

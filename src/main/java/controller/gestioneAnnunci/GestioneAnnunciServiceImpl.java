@@ -33,10 +33,46 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	/**
      * Removes an ad from the database.
      * @param id is the ad identifier
+     * @return true if the ad has been eliminated correctly.
      */
 	@Override
-	public void removeAnnuncio(Long annuncio) {
-		annuncioDAO.deleteAnnuncio(annuncio);
+	public boolean removeAnnuncio(Long id) {
+		
+		annuncioDAO.deleteAnnuncio(id);
+		
+		return annuncioDAO.findAnnuncioById(id) == null ? true : false;
+		
+	}
+	
+	/**
+     * Removes all the available ads published by a User from the database.
+     * @param autore is the ad author email
+     * @return true if all the available ads for the given user have been eliminated.
+     */
+	@Override
+	public boolean removeAllAvailableByUser(String autore) {
+		
+		List<Annuncio> availables = new ArrayList<Annuncio>();
+		availables = annuncioDAO.findAllAvailableByUser(autore);
+		
+		//Check if the list is not empty
+		if(!availables.isEmpty()) {
+			for(Annuncio available : availables) {
+				//Check if the ads are being removed correctly
+				if(removeAnnuncio(available.getId())) {
+					//If they are actually removed, they can be also removed from the list
+					availables.remove(available);
+				}
+			}
+		}
+		
+		if(availables.isEmpty()) {
+			System.out.println("Annunci disponibili rimossi correttamente.");
+			return true;
+		}else {
+			System.out.println("L'operazione di rimozione degli annunci non � andata a buon fine.");
+			return false;
+		}
 		
 	}
 	
@@ -47,7 +83,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	@Override
 	public List<Annuncio> getErrands() {
 		List<Annuncio> commissioni= new ArrayList<Annuncio>();
-		commissioni= annuncioDAO.findCommissioni();
+		commissioni= annuncioDAO.findErrands();
 		return commissioni;
 	}
 
@@ -57,8 +93,8 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
      */
 	@Override
 	public List<Annuncio> getAvailableErrands() {
-		List<Annuncio> commissioni= new ArrayList<Annuncio>();
-		commissioni= annuncioDAO.findCommissioni();
+		List<Annuncio> commissioni = new ArrayList<Annuncio>();
+		commissioni = annuncioDAO.findAvailableErrands();
 		return commissioni;
 	}
 
@@ -71,7 +107,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 		
 		List<Annuncio> lavori= new ArrayList<Annuncio>();
 		
-		lavori= annuncioDAO.findLavori();
+		lavori= annuncioDAO.findJobs();
 		
 		if(lavori.isEmpty()) {
 			System.out.println("Non ci sono lavori");
@@ -89,7 +125,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 		
 		List<Annuncio> lavori= new ArrayList<Annuncio>();
 		
-		lavori= annuncioDAO.findLavoriDisponibili();
+		lavori= annuncioDAO.findAvailableJobs();
 		
 		if(lavori.isEmpty()) {
 			System.out.println("Non ci sono lavori");

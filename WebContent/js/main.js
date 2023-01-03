@@ -27,34 +27,5 @@ $(document).ready(function () {
           }
         };
         
-        showNavbar("header-toggle", "nav-bar", "body-pd", "header");
-
-        /*===== LINK ACTIVE =====*/
-        const linkColor = document.querySelectorAll(".nav_link");
-        
-        function colorLink() {
-          if (linkColor) {
-            linkColor.forEach((l) => l.classList.remove("active"));
-            $('section').hide();
-            this.classList.add("active");	
-            var section = $(this).attr('id');
-            $('#'+section+"Section").show();
-            
-            switch(section){
-				case "utenti": 
-					$.ajax({
-						 url: "ListaUtenti",
-    					type: 'GET',
-    					success: function (data){
-							console.log(data);
-						}
-					})
-				break;
-				default: break;
-			}
-          }
-        }
-        
-        linkColor.forEach((l) => l.addEventListener("click", colorLink));
-	
+        showNavbar("header-toggle", "nav-bar", "body-pd", "header");	
 });

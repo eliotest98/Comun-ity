@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
       <a class="navbar-brand" href="/Comun-ity/index.jsp">
-        <img src="/Comun-ity/images/logo2.png" alt="Logo" width="50" height="50" class="d-inline-block align-text-top"> <!-- TODO fix navbar (immagine globale solo con jsp)-->
+        <img src="${pageContext.request.contextPath}/images/logo2.png" alt="Logo" width="50" height="50" class="d-inline-block align-text-top"> <!-- TODO fix navbar (immagine globale solo con jsp)-->
     	</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="/Comun-ity/loginServlet">Login</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/loginServlet">Login</a>
           </li>
         </ul>
       </div>
