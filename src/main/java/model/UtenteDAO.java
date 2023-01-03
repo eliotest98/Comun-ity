@@ -23,7 +23,7 @@ public class UtenteDAO {
 
 
 	//Connessione al database
-	MongoDatabase database = DbConnection.connectToDb();
+	static MongoDatabase database = DbConnection.connectToDb();
 
 
 	//Inserisce un utente nel database
@@ -54,9 +54,10 @@ public class UtenteDAO {
 		}
 	}
 
+	//Esegue l'update dei dati di un utente nel database
 	public boolean updateUtente(Utente utente) {
 		try {
-			database.getCollection("utente").updateOne(Filters.eq("mail", utente.getMail()), docForDb(utente));
+			database.getCollection("utente").replaceOne(Filters.eq("mail", utente.getMail()), docForDb(utente));
 			System.out.println("Dati dell'utente " + utente.getMail() + " aggiornati.");
 			return true;
 		}catch(MongoException e) {
@@ -64,23 +65,19 @@ public class UtenteDAO {
 			return false;
 		}
 	}
+	
 	//Trova un utente specifico nel database per id
-
 	public Utente findUtenteByMail(String mail) {
 
-		Document doc = null;
+		Document doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
 
-		try {
-			doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
-		}catch(MongoException e) {
-			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
-		}
-
-		if(doc == null)
+		if(doc == null) {
+			System.out.println("Utente non trovato!");
 			return null;
-		else {
-			Utente utente = docToUtente(doc);
-			return utente;
+		}else {
+			System.out.println("Utente trovato!");
+			Utente user = docToUtente(doc);
+			return user;
 		}
 	}
 
@@ -131,6 +128,20 @@ public class UtenteDAO {
 		return lista;
 
 	}
+	
+	public List<Utente> getAllBlacklistedUsers(){
+		
+		List<Utente> list = new ArrayList<>();
+		List<Document> documents = new ArrayList<>();
+		
+		database.getCollection("utente").find(Filters.eq("blacklist", true)).into(documents);
+		for(Document d : documents) {
+			list.add(docToUtente(d));
+		}
+		
+		return list;
+		
+	}
 
 	//Assegna una valutazione ad un utente
 	public void assignRating(Utente utente, Double recensione) {
@@ -155,23 +166,47 @@ public class UtenteDAO {
 	//LASCIARE ALLA FINE
 	//Crea un documento per mongoDB
 	private static Document docForDb(Utente utente) {
-
-		Document doc= new Document("_id", new ObjectId())
-				.append("ruolo", utente.getRuolo())
-				.append("abilitazione", utente.getAbilitazione())
-				.append("nome", utente.getNome())
-				.append("cognome", utente.getCognome())
-				.append("eta", utente.getEta())
-				.append("mail", utente.getMail())
-				.append("password", utente.getPassword())
-				.append("sesso", utente.getSesso())
-				.append("numeroTelefono", utente.getNumeroTelefono())
-				.append("indirizzo", utente.getIndirizzo())
-				.append("dataNascita", utente.getDataNascita())
-				.append("recensioni", utente.getRecensioni())
-				.append("blacklist", utente.getBlacklist())
-				.append("durataBL", utente.getDurataBL());
-
+		
+		//Check if it already exists
+		Document doc = database.getCollection("utente").find(Filters.eq("mail", utente.getMail())).first();
+		
+		//If it doesn't, create a new document
+		if(doc == null) {
+			
+			doc= new Document("_id", new ObjectId())
+			.append("ruolo", utente.getRuolo())
+			.append("abilitazione", utente.getAbilitazione())
+			.append("nome", utente.getNome())
+			.append("cognome", utente.getCognome())
+			.append("eta", utente.getEta())
+			.append("mail", utente.getMail())
+			.append("password", utente.getPassword())
+			.append("sesso", utente.getSesso())
+			.append("numeroTelefono", utente.getNumeroTelefono())
+			.append("indirizzo", utente.getIndirizzo())
+			.append("dataNascita", utente.getDataNascita())
+			.append("recensioni", utente.getRecensioni())
+			.append("blacklist", utente.getBlacklist())
+			.append("durataBL", utente.getDurataBL());
+		
+		}else {
+			doc.replace("ruolo", utente.getRuolo());
+			doc.replace("abilitazione", utente.getAbilitazione());
+			doc.replace("nome", utente.getNome());
+			doc.replace("cognome", utente.getCognome());
+			doc.replace("eta", utente.getEta());
+			doc.replace("mail", utente.getMail());
+			doc.replace("password", utente.getPassword());
+			doc.replace("sesso", utente.getSesso());
+			doc.replace("numeroTelefono", utente.getNumeroTelefono());
+			doc.replace("indirizzo", utente.getIndirizzo());
+			doc.replace("dataNascita", utente.getDataNascita());
+			doc.replace("recensioni", utente.getRecensioni());
+			doc.replace("blacklist", utente.getBlacklist());
+			doc.replace("durataBL", utente.getDurataBL());
+			
+		}
+		
 		return doc;
 
 	}
