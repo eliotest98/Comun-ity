@@ -21,7 +21,7 @@ public class UtenteDAO {
 
 
 	//Connessione al database
-	MongoDatabase database = DbConnection.connectToDb();
+	private static MongoDatabase database = DbConnection.connectToDb();
 
 
 	//Inserisce un utente nel database
@@ -168,23 +168,47 @@ public class UtenteDAO {
 	//LASCIARE ALLA FINE
 	//Crea un documento per mongoDB
 	private static Document docForDb(Utente utente) {
-
-		Document doc= new Document("_id", new ObjectId())
-				.append("ruolo", utente.getRuolo())
-				.append("abilitazione", utente.getAbilitazione())
-				.append("nome", utente.getNome())
-				.append("cognome", utente.getCognome())
-				.append("eta", utente.getEta())
-				.append("mail", utente.getMail())
-				.append("password", utente.getPassword())
-				.append("sesso", utente.getSesso())
-				.append("numeroTelefono", utente.getNumeroTelefono())
-				.append("indirizzo", utente.getIndirizzo())
-				.append("dataNascita", utente.getDataNascita())
-				.append("recensioni", utente.getRecensioni())
-				.append("blacklist", utente.getBlacklist())
-				.append("durataBL", utente.getDurataBL());
-
+		
+		//Check if it already exists
+		Document doc = database.getCollection("utente").find(Filters.eq("mail", utente.getMail())).first();
+		
+		if(doc == null) {
+			
+			doc= new Document("_id", new ObjectId())
+			.append("ruolo", utente.getRuolo())
+			.append("abilitazione", utente.getAbilitazione())
+			.append("nome", utente.getNome())
+			.append("cognome", utente.getCognome())
+			.append("eta", utente.getEta())
+			.append("mail", utente.getMail())
+			.append("password", utente.getPassword())
+			.append("sesso", utente.getSesso())
+			.append("numeroTelefono", utente.getNumeroTelefono())
+			.append("indirizzo", utente.getIndirizzo())
+			.append("dataNascita", utente.getDataNascita())
+			.append("recensioni", utente.getRecensioni())
+			.append("blacklist", utente.getBlacklist())
+			.append("durataBL", utente.getDurataBL());
+		}
+			
+		else {
+			doc.replace("ruolo", utente.getRuolo());
+			doc.replace("abilitazione", utente.getAbilitazione());
+			doc.replace("nome", utente.getNome());
+			doc.replace("cognome", utente.getCognome());
+			doc.replace("eta", utente.getEta());
+			doc.replace("mail", utente.getMail());
+			doc.replace("password", utente.getPassword());
+			doc.replace("sesso", utente.getSesso());
+			doc.replace("numeroTelefono", utente.getNumeroTelefono());
+			doc.replace("indirizzo", utente.getIndirizzo());
+			doc.replace("dataNascita", utente.getDataNascita());
+			doc.replace("recensioni", utente.getRecensioni());
+			doc.replace("blacklist", utente.getBlacklist());
+			doc.replace("durataBL", utente.getDurataBL());
+			
+		}
+		
 		return doc;
 
 	}
