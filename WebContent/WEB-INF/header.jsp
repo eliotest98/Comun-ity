@@ -45,7 +45,7 @@
       </div>
       </div>
     <div>
-	    <a href="#" class="nav_link" id="areaPersonale">
+	    <a href="AreaPersonale" class="nav_link" id="areaPersonale">
 	      <i class="bx bx-user-circle nav_icon"></i>
 	      <span class="nav_name">Area Personale</span>
 	    </a>

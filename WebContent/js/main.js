@@ -16,7 +16,7 @@ $(document).ready(function () {
             
             toggle.addEventListener("click", () => {
               // show navbar
-              nav.classList.toggle("show");
+              nav.classList.toggle("show-nav");
               // change icon
               toggle.classList.toggle("bx-x");
               // add padding to body

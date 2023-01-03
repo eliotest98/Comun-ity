@@ -207,7 +207,7 @@ section{
     padding: 1rem 1rem 0 0;
   }
 
-  .show {
+  .show-nav {
     width: calc(var(--nav-width) + 156px);
   }
 

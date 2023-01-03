@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.Utente;
 
 /**
  * Servlet implementation class ListaAnnunciServlet
@@ -29,10 +32,18 @@ public class ListaAnnunciServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/bachecaAnnunci.jsp");
+		HttpSession session = request.getSession(true);
 		
-		request.setAttribute("link", "bacheca");
-		requestDispatcher.forward(request, response);
+		Utente user = (Utente) session.getAttribute("user");
+		
+		if(user == null) {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/bachecaAnnunci.jsp");
+			
+			request.setAttribute("link", "bacheca");
+			requestDispatcher.forward(request, response);
+		}else {
+			response.sendRedirect("/Comun-ity/guest/login.jsp");
+		}
 	}
 
 	/**

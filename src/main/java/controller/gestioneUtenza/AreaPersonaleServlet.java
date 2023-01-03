@@ -2,12 +2,17 @@ package controller.gestioneUtenza;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Utente;
+
+@WebServlet("/AreaPersonale")
 public class AreaPersonaleServlet extends HttpServlet {
 
 	/**
@@ -21,18 +26,24 @@ public class AreaPersonaleServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doGet(req, resp);
+		// TODO Auto-generated method stub		
 		
-		resp.sendRedirect(null);  //va inserita la jsp dell'area personale
+		HttpSession session = req.getSession(true);
+		
+		Utente user = (Utente) session.getAttribute("user");
+		
+		if(user == null) {
+			RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/user/areaPersonale.jsp");
+			req.setAttribute("link", "areaPersonale");
+			requestDispatcher.forward(req, resp);
+		}else {
+			resp.sendRedirect("/Comun-ity/guest/login.jsp");
+		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		HttpSession session = req.getSession(true);
-		
-		super.doPost(req, resp);
+		doGet(req,resp);
 	}
 	
 	
