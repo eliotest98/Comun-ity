@@ -15,30 +15,19 @@
 <link href="${pageContext.request.contextPath}/styles/registrazione.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/js/registrazione.js"></script>
 
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1-j4UoyADZnRxieozZUOUHmX5CXOCcaI&libraries=places">
+</script>
 <script type="text/javascript">
   function initAutocomplete() {
     var address = document.getElementById('address');
     var autocomplete = new google.maps.places.Autocomplete(address);
   }
-  //AIzaSyC66Vh19_mI72al4xsEnoJTzBFdFeA6y4A
-  
-	  // This sample uses the Places Autocomplete widget to:
-	// 1. Help the user select a place
-	// 2. Retrieve the address components associated with that place
-	// 3. Populate the form fields with those address components.
-	// This sample requires the Places library, Maps JavaScript API.
-	// Include the libraries=places parameter when you first load the API.
-	// For example: <script
-	// src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 	let autocomplete;
 	let address1Field;
-	let address2Field;
-	let postalField;
 
 function initAutocomplete() {
   address1Field = document.querySelector("#ship-address");
-  address2Field = document.querySelector("#address2");
-  postalField = document.querySelector("#postcode");
   // Create the autocomplete object, restricting the search predictions to
   // addresses in the US and Canada.
   autocomplete = new google.maps.places.Autocomplete(address1Field, {
@@ -97,10 +86,6 @@ function initAutocomplete() {
 	
 	  address1Field.value = address1;
 	  postalField.value = postcode;
-	  // After filling the form with address components from the Autocomplete
-	  // prediction, set cursor focus on the second address line to encourage
-	  // entry of subpremise information such as apartment, unit, or floor number.
-	  address2Field.focus();
 	}
 	
 	window.initAutocomplete = initAutocomplete;
@@ -198,12 +183,6 @@ function initAutocomplete() {
           </div>
         </div>
       </div>
-      
-      <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initAutocomplete&libraries=places&v=weekly"
-      defer
-    ></script>
-	
 	<%@ include file="./footer/footer.html" %>
 </body>
 </html>
