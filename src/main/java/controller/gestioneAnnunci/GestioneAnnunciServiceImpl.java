@@ -149,11 +149,11 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
      * @return true if the ad has been accepted correctly.
      */
 	@Override
-	public boolean acceptAnnuncio(Long id, String incaricato) {
+	public boolean acceptAnnuncio(Long id, String mail) {
 		
 		Annuncio annuncio = annuncioDAO.findAnnuncioById(id);
 		
-		annuncio.setIncaricato(incaricato);
+		annuncio.setIncaricato(mail);
 		annuncio.setDataFine(LocalDate.now());
 		
 		return annuncioDAO.updateAnnuncio(annuncio);
