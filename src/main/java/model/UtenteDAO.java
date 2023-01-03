@@ -21,7 +21,7 @@ public class UtenteDAO {
 
 
 	//Connessione al database
-	private static MongoDatabase database = DbConnection.connectToDb();
+	static MongoDatabase database = DbConnection.connectToDb();
 
 
 	//Inserisce un utente nel database
@@ -55,7 +55,7 @@ public class UtenteDAO {
 	//Esegue l'update dei dati di un utente nel database
 	public boolean updateUtente(Utente utente) {
 		try {
-			database.getCollection("utente").updateOne(Filters.eq("mail", utente.getMail()), docForDb(utente));
+			database.getCollection("utente").replaceOne(Filters.eq("mail", utente.getMail()), docForDb(utente));
 			System.out.println("Dati dell'utente " + utente.getMail() + " aggiornati.");
 			return true;
 		}catch(MongoException e) {
@@ -67,19 +67,15 @@ public class UtenteDAO {
 	//Trova un utente specifico nel database per id
 	public Utente findUtenteByMail(String mail) {
 
-		Document doc = null;
+		Document doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
 
-		try {
-			doc = database.getCollection("utente").find(Filters.eq("mail", mail)).first();
-		}catch(MongoException e) {
-			System.out.println("Errore durante la ricerca dell'utente" + e.getMessage());
-		}
-
-		if(doc == null)
+		if(doc == null) {
+			System.out.println("Utente non trovato!");
 			return null;
-		else {
-			Utente utente = docToUtente(doc);
-			return utente;
+		}else {
+			System.out.println("Utente trovato!");
+			Utente user = docToUtente(doc);
+			return user;
 		}
 	}
 
