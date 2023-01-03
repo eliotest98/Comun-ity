@@ -139,7 +139,25 @@ public class UtenteDAO {
 		
 	}
 	
-
+	//Cambia la password di un utente
+	public boolean changePassword(String email, String password) {
+		
+		Utente utente= findUtenteByMail(email);
+		boolean res= true;
+		
+		if(utente!=null) {
+		utente.setPassword(password);
+		
+		database.getCollection("utente").updateOne(Filters.eq("mail", utente.getMail()), Updates.set("password", password));
+		
+		System.out.println("Password cambiata");
+		}else {
+			System.out.println("L'utente non esiste");
+			res= false;
+		}
+		
+		return res;
+	}
 	
 	//LASCIARE ALLA FINE
 	//Crea un documento per mongoDB

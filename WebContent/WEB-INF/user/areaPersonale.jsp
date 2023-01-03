@@ -88,7 +88,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid">
-					<form>
+					<form >
 						<div class="row">
 							<div class="col">
 								<input type="text" class="form-control" name="oldPass" id="oldPass"/>
