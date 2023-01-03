@@ -79,11 +79,15 @@ public class AnnuncioDAO {
 	public List<Annuncio> findJobs(){
 
 		List<Annuncio> lavori = new ArrayList<Annuncio>();
-
+		
 		try {
 
 			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).iterator(); 
-
+			
+			if(!cursor.hasNext()) {
+				return null;
+			}
+			
 			while (cursor.hasNext()) {
 				lavori.add(docToAnnuncio(cursor.next()));
 			}
@@ -102,7 +106,6 @@ public class AnnuncioDAO {
 		List<Annuncio> commissioni = new ArrayList<Annuncio>();
 
 		try {
-
 			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna")).iterator(); 
 			if(!cursor.hasNext()) {
 				return null;
@@ -122,15 +125,19 @@ public class AnnuncioDAO {
 	//Restituisce una lista di tutti i lavori disponibili
 	public List<Annuncio> findAvailableJobs(){
 
-		List<Annuncio> lavori = new ArrayList<Annuncio>();
+		List<Annuncio> lavori;
 		List<Annuncio> lavoriDisponibili = new ArrayList<Annuncio>();
 
 		lavori= findJobs();
-
+		
+		if(lavori == null)
+			return null;
+		
 		Iterator<Annuncio> it= lavori.iterator();
 		while(it.hasNext()) {
-			if(it.next().getIncaricato().equals("nessuno")) {
-				lavoriDisponibili.add(it.next());
+			Annuncio annuncio=it.next();
+			if(annuncio.getIncaricato().equals("nessuno")) {
+				lavoriDisponibili.add(annuncio);
 			}
 		}
 
@@ -145,16 +152,20 @@ public class AnnuncioDAO {
 	//Restituisce una lista di tutte le commissioni disponibili
 	public List<Annuncio> findAvailableErrands(){
 
-		List<Annuncio> commissioni = new ArrayList<Annuncio>();
+		List<Annuncio> commissioni;
 		List<Annuncio> commissioniDisponibili = new ArrayList<Annuncio>();
+		
+		commissioni=this.findErrands();
 		
 		if(commissioni == null)
 			return null;
 		
 		Iterator<Annuncio> it= commissioni.iterator();
+		Annuncio commissione;
 		while(it.hasNext()) {
-			if(it.next().getIncaricato().equals("nessuno")) {
-				commissioniDisponibili.add(it.next());
+			commissione=it.next();
+			if(commissione.getIncaricato().equals("nessuno")) {
+				commissioniDisponibili.add(commissione);
 			}
 		}
 

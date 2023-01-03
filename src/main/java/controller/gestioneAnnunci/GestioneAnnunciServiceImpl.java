@@ -12,7 +12,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	/**
      * @exclude
      */
-	private AnnuncioDAO annuncioDAO;
+	private AnnuncioDAO annuncioDAO= new AnnuncioDAO();
 
 	/**
      * Empty Constructor.
