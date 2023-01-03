@@ -39,7 +39,7 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 		if(action.equalsIgnoreCase("ban")) {
 			
 			if(serviceUtenza.banUser(email) && serviceAnnunci.removeAllAvailableByUser(email)) {
-				request.setAttribute("message", "L'utente: " + email + ", � stato bannato correttamente dal sistema.");
+				request.setAttribute("message", "L'utente: " + email + ", è stato bannato correttamente dal sistema.");
 				
 			}else request.setAttribute("message", "L'operazione di rimozione dell'utente: " + email + ", non è andata a buon fine.");
 			
@@ -51,8 +51,8 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 			LocalDateTime duration = LocalDateTime.now().plusHours(24);
 			
 			if(serviceUtenza.timeoutUser(email, duration)) {
-				request.setAttribute("success", "L'utente: " + email + ", � stato sospeso dal sistema fino a: " + duration + ".");
-			}else request.setAttribute("success", "La sospensione non � andata a buon fine.");
+				request.setAttribute("success", "L'utente: " + email + ", è stato sospeso dal sistema fino a: " + duration + ".");
+			}else request.setAttribute("success", "La sospensione non è andata a buon fine.");
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaUtenti");
 			requestDispatcher.forward(request, response);
