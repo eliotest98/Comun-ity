@@ -41,10 +41,10 @@ public class ListaLavoriServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
 		HttpSession session= request.getSession(true);
 		Utente utente= (Utente) session.getAttribute("user");
-		
 		
 		if(utente != null && serviceUtenza.isPro(utente)==true) {
 			
@@ -69,8 +69,6 @@ public class ListaLavoriServlet extends HttpServlet {
 		if(serviceUtenza.isPro(utente)) {
 			
 			List<Annuncio> lavoriDisponibili = serviceAnnuncio.getAvailableJobs();
-			
-			System.out.println(lavoriDisponibili);
 			
 			Iterator it = lavoriDisponibili.iterator();
 			
