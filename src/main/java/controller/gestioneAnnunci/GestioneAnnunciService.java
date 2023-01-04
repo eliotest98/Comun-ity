@@ -13,7 +13,7 @@ public interface GestioneAnnunciService {
      * Inserts an ad into the database.
      * @param annuncio is the ad Object
      */
-	void insertAnnuncio(Annuncio annuncio);
+	boolean insertAnnuncio(Annuncio annuncio);
 	
 	/**
      * Removes an ad from the database.
@@ -68,10 +68,26 @@ public interface GestioneAnnunciService {
 	List<Annuncio> getAvailableJobs();
 	
 	/**
+	 * Retrieve all the Ads published from the given author from the db.
+	 * @param autore is the email of the ad's author. 
+     * @return a List of Annuncio that contains all the ads published from the given author.
+     */
+	List<Annuncio> getAllByAuthor(String autore);
+	
+	/**
+	 * Retrieve all the Ads accepted from the given appointee from the db.
+	 * @param incaricato is the email of the ad's appointee. 
+     * @return a List of Annuncio that contains all the ads accepted from the given appointee.
+     */
+	List<Annuncio> getAllByAppointee(String incaricato);
+	
+	/**
      * Establish that the ad identified by the given id has been taken on by the specified user.
      * @param id is the ad identifier.
      * @param incaricato is the the email of the user that accepts the ad.
      * @return true if the ad has been accepted correctly.
      */
 	boolean acceptAnnuncio(Long id, String incaricato);
+	
+	
 }
