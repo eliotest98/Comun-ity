@@ -46,6 +46,4 @@ public class AreaPersonaleServlet extends HttpServlet {
 		doGet(req,resp);
 	}
 	
-	
-
 }

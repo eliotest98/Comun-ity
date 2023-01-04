@@ -92,7 +92,7 @@ public class ListaLavoriServlet extends HttpServlet {
 						+ "					<div class=\"more-info\">\n"
 						+ "						<h3 class=\"text-center\">"+annuncio.getTitolo()+"</h3>\n"
 						+ "						<div class=\"row justify-content-center\">\n"
-						+ "							<form action=\"PresaInCaricoAnnuncioServlet\" method=\"post\">"
+						+ "							<form action=\"PresaInCaricoAnnuncioServlet\" method=\"post\" style=\"width:auto;\">"
 						+ "								<input type=\"hidden\"  name=\"annuncio\" id=\"annuncio\" value="+annuncio.getId()+">"
 						+ "									<button type=\"submit\" class=\"btn btn-primary\" id=\"bottone\">Accetta</button>\n"
 						+ "							</form>"
