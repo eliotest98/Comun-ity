@@ -39,6 +39,7 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		Utente user = (Utente) session.getAttribute("user");
 		
+
 		System.out.println(req.getParameter("annuncio"));
 		
 		Long id = Long.valueOf((String) req.getParameter("annuncio"));
