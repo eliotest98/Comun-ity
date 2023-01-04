@@ -32,3 +32,4 @@ src/main/java/mio
 /target/
 src/main/webapp/META-INF/MANIFEST.MF
 .DS_Store
+/.idea/
