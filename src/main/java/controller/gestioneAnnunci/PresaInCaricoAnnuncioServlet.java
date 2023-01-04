@@ -2,6 +2,7 @@ package controller.gestioneAnnunci;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +39,7 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 			if(utente == null) {
 				response.sendRedirect("/Comun-ity/guest/login.jsp"); 
 			}else {
-				request.getParameter("ListaCommissionServlet");
+				response.sendRedirect("ListaCommissionServlet");
 			}
 		
 	}
@@ -48,15 +49,26 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 		
 		HttpSession session= request.getSession(true);
 		Utente utente = (Utente) session.getAttribute("user");
 		Long id = (Long.parseLong((String)request.getParameter("annuncio")));
-		service.acceptAnnuncio(id, utente.getMail());
 		
-		response.sendRedirect("ListaAnnunciServlet");
-		
+		if(service.acceptAnnuncio(id, utente.getMail())) {
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
+			request.setAttribute("link", "areaPersonale");
+			request.setAttribute("success", "Annuncio accettato con successo");
+			requestDispatcher.forward(request, response);
+			
+		}else {
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
+			request.setAttribute("link", "areaPersonale");
+			request.setAttribute("errore", "C'è stato un problema con il tuo annuncio");
+			requestDispatcher.forward(request, response);
+		}
+				
 	}
 
 }

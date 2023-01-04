@@ -37,6 +37,7 @@ public class ListaAnnunciServlet extends HttpServlet {
 		Utente user = (Utente) session.getAttribute("user");
 				
 		if(user != null) {
+			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/bachecaAnnunci.jsp");
 			
 			request.setAttribute("link", "bacheca");
