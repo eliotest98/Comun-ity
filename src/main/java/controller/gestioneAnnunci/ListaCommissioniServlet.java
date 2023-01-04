@@ -62,7 +62,7 @@ public class ListaCommissioniServlet extends HttpServlet {
 				Annuncio annuncio = (Annuncio) it.next();
 				Utente user = null;
 				
-				if(!annuncio.getAutore().equals(utente.getMail())||serviceUtenza.IsAdmin(utente)) {
+				if(!annuncio.getAutore().equals(utente.getMail())) {
 				try {
 					user = serviceUtenza.getAccountByEmail(annuncio.getAutore());
 				} catch (InterruptedException | ExecutionException | IOException e) {
