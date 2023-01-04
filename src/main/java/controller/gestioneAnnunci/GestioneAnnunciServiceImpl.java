@@ -51,6 +51,16 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	public boolean updateAnnuncio(Annuncio annuncio) {
 		return annuncioDAO.updateAnnuncio(annuncio);
 	}
+	
+	/**
+	 * Get an ad with a specific id.
+	 * @param id is the Ad id that you want to get.
+	 * @return The Ad if it exists.
+	 */
+	@Override
+	public Annuncio findAnnuncioById(Long id) {
+		return annuncioDAO.findAnnuncioById(id);
+	}
 
 	/**
 	 * Removes all the available ads published by a User from the database.

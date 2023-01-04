@@ -2,12 +2,14 @@ package controller.gestioneAnnunci;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Annuncio;
 import model.Utente;
 
 public class CancellaAnnuncioServlet extends HttpServlet {
@@ -34,8 +36,37 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 		
 		doGet(req, resp);
 		
-		Long id = (Long.parseLong((String)req.getParameter("annuncio")));
-		service.removeAnnuncio(id);
+		HttpSession session = req.getSession(true);
+		Utente user = (Utente) session.getAttribute("user");
+		
+		Long id= Long.valueOf((String) req.getAttribute("annuncioId")); //annuncioId place holder (non so come si chiama il parametro nella jsp ma serve l'id dell'annuncio sul quale è stato premuto rimuovi)
+		
+		Annuncio annuncio= service.findAnnuncioById(id);
+		
+		if(autoreOK(user, annuncio)) {
+			service.removeAnnuncio(annuncio.getId());
+			
+			RequestDispatcher requestDispatcher = req.getRequestDispatcher("  "); //jsp cancellazione annuncio
+			req.setAttribute("message", "annuncio rimosso con successo");
+			
+			requestDispatcher.forward(req, resp);
+		}else {
+			RequestDispatcher requestDispatcher = req.getRequestDispatcher("  "); //jsp cancellazione annuncio
+			req.setAttribute("message", "non puoi rimuovere un annuncio di cui non sei l'autore");
+			
+			requestDispatcher.forward(req, resp);
+		}
+		
+	}
+	
+	public static boolean autoreOK(Utente user, Annuncio annuncio) {
+		boolean res= true;
+		
+		if(!annuncio.getAutore().equals(user.getMail())) {
+			res= false;
+		}
+		
+		return res;
 	}
 
 }
