@@ -1,6 +1,8 @@
 package controller.gestioneUtenza;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import controller.gestioneAnnunci.GestioneAnnunciService;
 import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
+import model.Annuncio;
 import model.Utente;
 
 @WebServlet("/AreaPersonale")
@@ -30,19 +33,21 @@ public class AreaPersonaleServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
 		
 		HttpSession session = req.getSession(true);
 		
 		Utente user = (Utente) session.getAttribute("user");
 		
 		if(user != null) {
+			List<Annuncio> lista = serviceAnnuncio.getAllByAuthor(user.getMail());
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/user/areaPersonale.jsp");
 			req.setAttribute("link", "areaPersonale");
+			req.setAttribute("annunci", lista);
 			requestDispatcher.forward(req, resp);
 		}else {
 			resp.sendRedirect("/Comun-ity/guest/login.jsp");
 		}
+		
 	}
 
 	@Override
