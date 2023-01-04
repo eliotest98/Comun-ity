@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -89,48 +90,59 @@ public class AnnuncioDAO {
 	//Restituisce una lista con tutti i lavori 
 	public List<Annuncio> findJobs(){
 
-		List<Annuncio> lavori = new ArrayList<Annuncio>();
+		List<Annuncio> jobs = new ArrayList<>();
+		List<Document> documents = new ArrayList<>();
 		
-		try {
+		database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).into(documents);
+		jobs = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+		
+		/*
+		 * List<Annuncio> lavori = new ArrayList<Annuncio>();
+		 * 
+		 * try {
+		 * 
+		 * MongoCursor<Document> cursor =
+		 * database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta",
+		 * "nessuna")).iterator();
+		 * 
+		 * if(!cursor.hasNext()) { return null; }
+		 * 
+		 * while (cursor.hasNext()) { lavori.add(docToAnnuncio(cursor.next())); }
+		 * 
+		 * 
+		 * }catch(MongoException e) {
+		 * System.out.println("Errore durante la ricerca dei lavori disponibili"); }
+		 */
 
-			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).iterator(); 
-			
-			if(!cursor.hasNext()) {
-				return null;
-			}
-			
-			while (cursor.hasNext()) {
-				lavori.add(docToAnnuncio(cursor.next()));
-			}
-
-
-		}catch(MongoException e) {
-			System.out.println("Errore durante la ricerca dei lavori disponibili");
-		}
-
-		return lavori;
+		return jobs;
 	}
 
 	//Restituisce una lista con tutte le commissioni
 	public List<Annuncio> findErrands(){
 
-		List<Annuncio> commissioni = new ArrayList<Annuncio>();
-
-		try {
-			MongoCursor<Document> cursor = database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna")).iterator(); 
-			if(!cursor.hasNext()) {
-				return null;
-			}
-			while (cursor.hasNext()) {
-				commissioni.add(docToAnnuncio(cursor.next()));
-			}
-
-
-		}catch(MongoException e) {
-			System.out.println("Errore durante la ricerca delle commissioni disponibili");
-		}
-
-		return commissioni;
+		List<Annuncio> errands = new ArrayList<>();
+		List<Document> documents = new ArrayList<>();
+		
+		database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta","nessuna")).into(documents);
+		errands = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+		
+		return errands;
+		
+		/*
+		 * List<Annuncio> commissioni = new ArrayList<Annuncio>();
+		 * 
+		 * try { MongoCursor<Document> cursor =
+		 * database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta",
+		 * "nessuna")).iterator(); if(!cursor.hasNext()) { return null; } while
+		 * (cursor.hasNext()) { commissioni.add(docToAnnuncio(cursor.next())); }
+		 * 
+		 * 
+		 * }catch(MongoException e) {
+		 * System.out.println("Errore durante la ricerca delle commissioni disponibili"
+		 * ); }
+		 * 
+		 * return commissioni;
+		 */
 	}
 
 	//Restituisce una lista di tutti i lavori disponibili

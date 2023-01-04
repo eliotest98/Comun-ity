@@ -30,6 +30,13 @@ public interface GestioneAnnunciService {
 	boolean updateAnnuncio(Annuncio annuncio);
 	
 	/**
+	 * Get an ad with a specific id.
+	 * @param id is the Ad id that you want to get.
+	 * @return The Ad if it exists.
+	 */
+	public Annuncio findAnnuncioById(Long id); 
+	
+	/**
      * Removes all the available ads published by a User from the database.
      * @param autore is the ad author email
      * @return true if all the available ads for the given user have been eliminated.
