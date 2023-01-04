@@ -57,14 +57,14 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 		if(service.acceptAnnuncio(id, utente.getMail())) {
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
-			request.setAttribute("link", "areaPersonale");
+			request.setAttribute("link", "bacheca");
 			request.setAttribute("success", "Annuncio accettato con successo");
 			requestDispatcher.forward(request, response);
 			
 		}else {
 			
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
-			request.setAttribute("link", "areaPersonale");
+			request.setAttribute("link", "bacheca");
 			request.setAttribute("errore", "C'è stato un problema con il tuo annuncio");
 			requestDispatcher.forward(request, response);
 		}

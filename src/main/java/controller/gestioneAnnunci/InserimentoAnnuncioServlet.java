@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +14,14 @@ import javax.servlet.http.HttpSession;
 import model.Annuncio;
 import model.Utente;
 
+@WebServlet("/InserimentoAnnuncioServlet")
 public class InserimentoAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
 
 	private final String addressRegex ="^([a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$";
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -30,24 +32,27 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 		if(user == null) {
 			resp.sendRedirect("/Comun-ity/guest/login.jsp"); 
 		}else {
-			resp.sendRedirect(" ");	//jsp inserimento annuncio
+			resp.sendRedirect("ListaAnnunci");
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
-
+		
 		HttpSession session = req.getSession(true);
+				
 		Utente user = (Utente) session.getAttribute("user");
+		
+		String flag = req.getParameter("professionista");
 
 		String autore = user.getMail();
-		String abilitazioneRichiesta = req.getParameter("");	//inserire nome parametro
-		String tipologia = req.getParameter(" ");				//inserire nome parametro
+		String abilitazioneRichiesta = flag == null ? "nessuna" :req.getParameter("professione");
+		String tipologia = 	flag == null ? "commissione" : "lavoro";
 		String titolo = req.getParameter("titolo");
-		String descrizione = req.getParameter(" ");				//inserire nome parametro
+		String descrizione = req.getParameter("descrizione");		
 		String indirizzo = req.getParameter("indirizzo");
-
+		
+		System.out.println(abilitazioneRichiesta);
 
 
 		if(enablingOK(tipologia, abilitazioneRichiesta)) {
@@ -60,46 +65,41 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 
 						if(service.insertAnnuncio(new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo))) {
 							
-							
+							RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+							req.setAttribute("success", "Annuncio inserito");
+							requestDispatcher.forward(req, resp);
 							
 						}else {
-							RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunci");
+							RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
 							req.setAttribute("error", "Annuncio non inserito");
 
 							requestDispatcher.forward(req, resp);
 						}
 
 					}else {
-						RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunci");
+						RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
 						req.setAttribute("error", "Indirizzo non valido");
 
 						requestDispatcher.forward(req, resp);
 					}
 				}else {
-					RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunci"); //jsp inserimento annuncio
+					RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
 					req.setAttribute("error", "Descrizione non valida");
 
 					requestDispatcher.forward(req, resp);
 				}
 			}else {
-				RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunci"); //jsp inserimento annuncio
+				RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
 				req.setAttribute("error", "Titolo non valido");
 
 				requestDispatcher.forward(req, resp);
 			}
 		}else {
-			RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunci"); //jsp inserimento annuncio
+			RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
 			req.setAttribute("error", "Non può esserci un'abilitazione richiesta in una commissione");
 
 			requestDispatcher.forward(req, resp);
 		}
-
-
-
-
-
-
-
 	}
 
 	private static boolean patternMatches(String string, String regexPattern) {
@@ -132,7 +132,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 	private static boolean enablingOK(String tipologia ,String abilitazione) {
 		boolean res= true;
 
-		if(tipologia.equals("commissione") && !abilitazione.equals("nessuno")) {
+		if(tipologia.equals("commissione") && !abilitazione.equals("nessuna")) {
 			res= false;
 		}
 

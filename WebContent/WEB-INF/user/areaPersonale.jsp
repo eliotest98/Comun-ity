@@ -95,14 +95,6 @@
 			</div>
 		</div>
 		
-		<h1>I miei annunci</h1>
-		<div class="row main-row">
-			<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-			
-			 
-			</div>
-		</div>
-		
 		<!-- Professionista -->
 		<div class="modal fade" tabindex="-1" id="professionista">
 			<div class="modal-dialog modal-dialog-centered">
