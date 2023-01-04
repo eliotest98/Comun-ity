@@ -1,7 +1,6 @@
 package controller.gestioneAnnunci;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +51,7 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 		
 		HttpSession session= request.getSession(true);
 		Utente utente = (Utente) session.getAttribute("user");
-		Long id = (Long.parseLong((String)request.getParameter("annuncio")));
+		Long id = (Long.parseLong(request.getParameter("annuncio")));
 		
 		if(service.acceptAnnuncio(id, utente.getMail())) {
 			
