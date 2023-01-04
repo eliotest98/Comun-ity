@@ -20,7 +20,6 @@ import controller.utility.*;
 
 public class UtenteDAO {
 
-
 	//static db connection.
 	static MongoDatabase database = DbConnection.connectToDb();
 
@@ -81,7 +80,7 @@ public class UtenteDAO {
 
 	/**
 	 * Find the account given its mail.
-	 * @param email referring to the account to search for.
+	 * @param email refering to the account to search for.
 	 * @return the user Object if it exists.
 	 */
 	public Utente findUtenteByMail(String mail) {
