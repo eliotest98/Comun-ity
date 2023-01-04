@@ -53,6 +53,34 @@
 	Utente user = (Utente) session.getAttribute("user");
 	%>
 
+	<%
+	if (request.getAttribute("error") != null) {
+	%>
+	<div id="message">
+		<div class="alert alert-danger alert-dismissible fade show"
+			role="alert">
+			<strong>Errore</strong>
+			<%=request.getAttribute("error")%>.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</div>
+	<%}%>
+
+	<%
+	if (request.getAttribute("success") != null) {
+	%>
+	<div id="message">
+		<div class="alert alert-success alert-dismissible fade show"
+			role="alert">
+			<strong>Successo</strong>
+			<%=request.getAttribute("success")%>.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</div>
+	<%}%>
+
 	<div class="container-fluid" id="selector">
 		<h1 class="text-center">Area Personale</h1>
 		<div class="row main-row">
@@ -94,7 +122,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Professionista -->
 		<div class="modal fade" tabindex="-1" id="professionista">
 			<div class="modal-dialog modal-dialog-centered">
@@ -134,35 +162,39 @@
 		<div class="modal fade" tabindex="-1" id="password">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Modifica password</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<div class="container-fluid">
-							<form>
+					<form action="ModificaPasswordServlet" method="post">
+						<div class="modal-header">
+							<h5 class="modal-title">Modifica password</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="container-fluid">
+
 								<div class="row">
 									<div class="col">
-										<input type="text" class="form-control" name="oldPass"
-											id="oldPass" /> <label class="form-label" for="professione">Inserisci
-											la password precedente</label>
+										<input type="text"
+											class="form-control" name="oldPass" id="oldPass" /> <label
+											class="form-label" for="professione">Inserisci la
+											password precedente</label>
 									</div>
 									<div class="col">
-										<input type="text" class="form-control" name="newPass"
-											id="newPass" /> <label class="form-label" for="professione">Inserisci
-											la nuova password</label>
+										<input type="text" minlength="8" maxlength="20"
+											class="form-control" name="newPass" id="newPass" /> <label
+											class="form-label" for="professione">Inserisci la
+											nuova password</label>
 									</div>
 								</div>
-							</form>
+
+							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Chiudi</button>
-						<button type="button" class="btn btn-danger">Modifica
-							Password</button>
-					</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Chiudi</button>
+							<button type="submit" class="btn btn-danger">Modifica
+								Password</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
