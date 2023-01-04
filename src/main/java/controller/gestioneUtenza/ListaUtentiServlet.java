@@ -61,7 +61,7 @@ public class ListaUtentiServlet extends HttpServlet {
 				
 			}else {
 				
-				Iterator it = listaUtenti.iterator();
+				Iterator<Utente> it = listaUtenti.iterator();
 				
 				while(it.hasNext()) {
 					

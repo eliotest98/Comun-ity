@@ -8,9 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
-
 import model.Utente;
 import model.UtenteDAO;
 

@@ -3,7 +3,6 @@ package controller.gestioneAnnunci;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -73,7 +72,7 @@ public class ArchivioServlet extends HttpServlet {
 			List<Annuncio> lista = null;
 			
 			String action = request.getParameter("action");
-			Iterator it;
+			Iterator<Annuncio> it;
 			Annuncio annuncio;
 			
 			switch(action) {

@@ -1,10 +1,8 @@
 package controller.gestioneAnnunci;
 
-import java.io.IOException;
 import java.util.List;
 
 import model.Annuncio;
-import model.Utente;
 
 public interface GestioneAnnunciService {
 	
