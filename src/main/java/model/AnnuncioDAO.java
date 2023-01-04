@@ -24,16 +24,18 @@ public class AnnuncioDAO {
 
 
 	//Inserisce un annuncio nel database
-	public void saveAnnuncio(Annuncio annuncio) {
+	public boolean saveAnnuncio(Annuncio annuncio) {
 
 		try {
 			annuncio.setId(getLastId()+1);
 			database.getCollection("annuncio").insertOne(docForDb(annuncio));
 			System.out.println("Annuncio aggiunto al database con successo");
+			return true;
 
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'inserimento dell'annuncio" + e.getMessage());
 			e.printStackTrace();
+			return false;
 		}
 	}
 
