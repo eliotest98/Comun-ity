@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controller.gestioneAnnunci.GestioneAnnunciService;
+import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
 import model.Utente;
 
 @WebServlet("/AreaPersonale")
@@ -23,6 +25,8 @@ public class AreaPersonaleServlet extends HttpServlet {
 	public AreaPersonaleServlet() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	GestioneAnnunciService serviceAnnuncio = new GestioneAnnunciServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

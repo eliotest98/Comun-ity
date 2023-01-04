@@ -122,8 +122,14 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- Professionista -->
+		<h1>I tuoi annunci</h1>
+		<div class="row main-row">
+			<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+			</div>
+		</div>
+		<
+	</div>
+	<!-- Professionista -->
 		<div class="modal fade" tabindex="-1" id="professionista">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -158,7 +164,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- Password -->
+	<!-- Password -->
 		<div class="modal fade" tabindex="-1" id="password">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -197,6 +203,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>
