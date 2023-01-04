@@ -73,7 +73,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	public boolean removeAllAvailableByUser(String autore) {
 
 		List<Annuncio> availables = new ArrayList<Annuncio>();
-		availables = annuncioDAO.findAllAvailableByUser(autore);
+		availables = annuncioDAO.findAllAvailableByAuthor(autore);
 
 		//Check if the list is not empty
 		if(!availables.isEmpty()) {
@@ -102,9 +102,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	 */
 	@Override
 	public List<Annuncio> getErrands() {
-		List<Annuncio> commissioni= new ArrayList<Annuncio>();
-		commissioni= annuncioDAO.findErrands();
-		return commissioni;
+		return annuncioDAO.findErrands();
 	}
 
 	/**
@@ -113,9 +111,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	 */
 	@Override
 	public List<Annuncio> getAvailableErrands() {
-		List<Annuncio> commissioni = new ArrayList<Annuncio>();
-		commissioni = annuncioDAO.findAvailableErrands();
-		return commissioni;
+		return annuncioDAO.findAvailableErrands();
 	}
 
 	/**
@@ -124,16 +120,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	 */
 	@Override
 	public List<Annuncio> getJobs(){
-
-		List<Annuncio> lavori= new ArrayList<Annuncio>();
-
-		lavori = annuncioDAO.findJobs();
-
-		if(lavori.isEmpty()) {
-			System.out.println("Non ci sono lavori");
-		}
-
-		return lavori;
+		return annuncioDAO.findJobs();
 	}
 
 	/**
@@ -142,16 +129,27 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	 */
 	@Override
 	public List<Annuncio> getAvailableJobs(){
-
-		List<Annuncio> lavori= new ArrayList<Annuncio>();
-
-		lavori= annuncioDAO.findAvailableJobs();
-
-		if(lavori.isEmpty()) {
-			System.out.println("Non ci sono lavori");
-		}
-
-		return lavori;
+		return annuncioDAO.findAvailableJobs();
+	}
+	
+	/**
+	 * Retrieve all the Ads published from the given author from the db.
+	 * @param autore is the email of the ad's author. 
+     * @return a List of Annuncio that contains all the ads published from the given author.
+     */
+	@Override
+	public List<Annuncio> getAllByAuthor(String autore){
+		return annuncioDAO.findAllByAuthor(autore);
+	}
+	
+	/**
+	 * Retrieve all the Ads accepted from the given appointee from the db.
+	 * @param incaricato is the email of the ad's appointee. 
+     * @return a List of Annuncio that contains all the ads accepted from the given appointee.
+     */
+	@Override
+	public List<Annuncio> getAllByAppointee(String incaricato){
+		return annuncioDAO.findAllByAppointee(incaricato);
 	}
 
 	/**
