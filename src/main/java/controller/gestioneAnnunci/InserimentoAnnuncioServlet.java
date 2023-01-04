@@ -80,7 +80,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 			}
 		}else {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher("  "); //jsp inserimento annuncio
-			req.setAttribute("message", "Non può esserci un'abilitazione richiesta in una commissione");
+			req.setAttribute("message", "Non puÃ² esserci un'abilitazione richiesta in una commissione");
 			
 			requestDispatcher.forward(req, resp);
 		}

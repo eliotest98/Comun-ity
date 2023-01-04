@@ -123,5 +123,9 @@
 		</div>
 
 	</section>
+	
+	<form action="inviaMail" method="post">
+			<input type="hidden" name="mail" id="mail" value="">
+	</form>
 </body>
 </html>
