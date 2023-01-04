@@ -60,6 +60,7 @@ public class ListaLavoriServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
 		HttpSession session= request.getSession(true);
+		int cont,size;
 		
 		Utente utente = (Utente) session.getAttribute("user");
 				
@@ -74,10 +75,13 @@ public class ListaLavoriServlet extends HttpServlet {
 			}else {
 						
 				Iterator it = lavoriDisponibili.iterator();
+				size=lavoriDisponibili.size();
+				cont=0;
 				
 				while(it.hasNext()) {
 					
 					Annuncio annuncio = (Annuncio) it.next();
+					if(!annuncio.getAutore().equals(utente.getMail())&&utente.getAbilitazione().equals(annuncio.getAbilitazioneRichiesta())) {
 					Utente user = null;
 					
 					System.out.println(annuncio.getAutore());
@@ -124,6 +128,17 @@ public class ListaLavoriServlet extends HttpServlet {
 							+ "				</div>\n"
 							+ "			</div>");
 					}
+					else{
+						
+						cont++;
+					}
+					
+					}
+				if(cont==size) {
+					
+					response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
+					
+				}
 			}
 			
 		}else {
