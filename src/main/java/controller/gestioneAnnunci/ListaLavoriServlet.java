@@ -81,7 +81,7 @@ public class ListaLavoriServlet extends HttpServlet {
 				while(it.hasNext()) {
 					
 					Annuncio annuncio = (Annuncio) it.next();
-					if(!annuncio.getAutore().equals(utente.getMail())&&utente.getAbilitazione().equals(annuncio.getAbilitazioneRichiesta())) {
+					if(((!annuncio.getAutore().equals(utente.getMail()))&&utente.getAbilitazione().equals(annuncio.getAbilitazioneRichiesta()))||serviceUtenza.IsAdmin(utente)) {
 					Utente user = null;
 					
 					System.out.println(annuncio.getAutore());
