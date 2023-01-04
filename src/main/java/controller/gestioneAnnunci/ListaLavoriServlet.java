@@ -1,13 +1,10 @@
 package controller.gestioneAnnunci;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,6 +56,7 @@ public class ListaLavoriServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
+		
 		HttpSession session= request.getSession(true);
 		int cont,size;
 		
@@ -74,7 +72,7 @@ public class ListaLavoriServlet extends HttpServlet {
 				
 			}else {
 						
-				Iterator it = lavoriDisponibili.iterator();
+				Iterator<Annuncio> it = lavoriDisponibili.iterator();
 				size=lavoriDisponibili.size();
 				cont=0;
 				

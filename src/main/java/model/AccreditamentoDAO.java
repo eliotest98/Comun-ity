@@ -11,18 +11,21 @@ import controller.utility.*;
 
 public class AccreditamentoDAO {
 
-	//Connessione al database
+	//static db connection.
 	static MongoDatabase database = DbConnection.connectToDb();
 
 
-	//Inserisce un utente nel database
+	/**
+	 * Stores a new accreditation request into the database.
+	 * @param utente is the accreditation Object to store.
+	 * @return true if the accreditation datas have been saved correctly.
+	 */
 	public boolean saveAccreditamento(Accreditamento accreditamento) {
 
 		try {
 			database.getCollection("accreditamento").insertOne(docForDb(accreditamento));
 			System.out.println("Accreditamento aggiunto al database con successo");
 			return true;
-
 		}catch(MongoException e) {
 			System.out.println("Errore durante l'inserimento dell'accreditamento" + e.getMessage());
 			e.printStackTrace();
@@ -30,7 +33,13 @@ public class AccreditamentoDAO {
 		}
 	}
 
+	/**
+     * Delete the accreditation request submitted from the given applicant, from the db.
+     * @param richiedente is the email of the applicant.
+     * @return true if the accreditation entry has been deleted correctly.
+     */
 	public boolean deleteAccreditamento(String richiedente) {
+
 		try {
 			database.getCollection("accreditamento").deleteOne(Filters.eq("richiedente" , richiedente));
 			System.out.println("Accreditamento eliminato!");
@@ -41,6 +50,11 @@ public class AccreditamentoDAO {
 		}
 	}
 
+	/**
+	 * Updates a new accreditation request into the database.
+	 * @param utente is the accreditation Object already stored in the db to update.
+	 * @return true if the accreditation datas have been updated correctly.
+	 */
 	public boolean updateAccreditamento(Accreditamento accreditamento) {
 		try {
 			database.getCollection("accreditamento").replaceOne(Filters.eq("richiedente", accreditamento.getRichiedente()), docForDb(accreditamento));
@@ -52,6 +66,11 @@ public class AccreditamentoDAO {
 		}
 	}
 
+	/**
+	 * Find the accreditation request given its applicant email.
+	 * @param email is the applicant email refering to the accreditation request to search for.
+	 * @return the accreditation Object if it exists.
+	 */
 	public Accreditamento findAccreditamentoBySubmitter(String email) {
 
 		Document doc = database.getCollection("accreditamento").find(Filters.eq("richiedente" , email)).first();;
@@ -67,7 +86,11 @@ public class AccreditamentoDAO {
 
 	}
 
-	//Crea un documento per mongoDB
+	/**
+     * Converts an Accreditamento Object into a Document for MongoDB methods usage.
+     * @param accreditamento is the accreditation Object to convert.
+     * @return the newly created Document.
+     */
 	private static Document docForDb(Accreditamento accreditamento) {
 
 		//Check if it already exists
@@ -98,7 +121,11 @@ public class AccreditamentoDAO {
 
 	}
 
-	//Crea un istanza di Accreditamento da un documento mongoDB
+	/**
+     * Converts a Document into an Accreditamento Object.
+     * @param doc is the Document Object to convert.
+     * @return the newly created Accreditamento.
+     */
 	private static Accreditamento docToAccreditamento(Document doc) {
 
 		Accreditamento accreditamento = new Accreditamento(

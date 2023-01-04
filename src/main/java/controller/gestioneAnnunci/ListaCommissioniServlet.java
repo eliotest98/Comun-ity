@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +55,7 @@ public class ListaCommissioniServlet extends HttpServlet {
 			size=commissioni.size();
 			cont=0;
 		
-			Iterator it = commissioni.iterator();
+			Iterator<Annuncio> it = commissioni.iterator();
 			
 			while(it.hasNext()) {
 				

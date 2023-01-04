@@ -10,8 +10,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- jQuery -->
 <script
@@ -19,7 +18,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
 	rel="stylesheet" />
-<title>Bacheca - Comun-ity</title>
+<title>Archivio - Comun-ity</title>
 
 <script src="/Comun-ity/js/main.js"></script>
 <link rel="stylesheet"
@@ -37,8 +36,9 @@
 				$('#lavori').hide();
 
 				$.ajax({
-					url : 'ListaCommissioniServlet',
+					url : 'ArchivioServlet',
 					method : 'POST',
+					data : "&action=commissioni",
 					success : function(response) {
 						$("#commissioniRow").html(response);
 					}
@@ -88,8 +88,9 @@
 					if (this.checked) {
 
 						$.ajax({
-							url : 'ListaLavoriServlet',
+							url : 'ArchivioServlet',
 							method : 'POST',
+							data : "&action=lavori",
 							success : function(response) {
 								$("#lavoriRow").html(response);
 							}
@@ -100,8 +101,9 @@
 					} else {
 
 						$.ajax({
-							url : 'ListaCommissioniServlet',
+							url : 'ArchivioServlet',
 							method : 'POST',
+							data : "&action=commissioni",
 							success : function(response) {
 								$("#commissioniRow").html(response);
 							}
@@ -186,67 +188,5 @@
 		</div>
 
 	</section>
-	<!--  Modal annunci -->
-	<div class="modal fade" tabindex="-1" id="annunci">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<form action="InserimentoAnnuncioServlet" method="post">
-					<div class="modal-header">
-						<h5 class="modal-title">Crea annuncio</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<div class="container-fluid">
-
-							<div class="mb-3">
-								<label for="titolo" class="form-label">Titolo</label> <input
-									type="text" class="form-control" name="titolo" required>
-							</div>
-							<div class="mb-3">
-								<label for="indirizzo" class="form-label">Indirizzo</label> <input
-									type="text" class="form-control" name="indirizzo" required>
-							</div>
-							<div class="mb-3">
-								<label for="descrizione">Descrizione</label>
-								<textarea class="form-control" id="descrizione"
-									name="descrizione" rows="3" required></textarea>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox"
-									name="professionista" id="lavoroCheck"> <label
-									class="form-check-label" id="lavoroCheck"
-									for="flexSwitchCheckDefault">Annuncio di lavoro</label>
-							</div>
-							<div class="mb-3" id="professioneDiv">
-								<input type="text" class="form-control" name="professione">
-								<label for="professione" class="form-label" id="professione">Professione
-									richiesta</label>
-							</div>
-							<div class="mb-3">
-								<input type="date" id="nascita" name="data" class="form-control"
-									required /> <label class="form-label" for="nascita">Data
-									di fine</label>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">Chiudi</button>
-						<button type="submit" class="btn btn-primary">Crea
-							annuncio</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<div class="floating-container" id="modal">
-		<div class="floating-button">+</div>
-	</div>
-
-	<form action="inviaMail" method="post">
-		<input type="hidden" name="mail" id="mail" value="">
-	</form>
 </body>
 </html>

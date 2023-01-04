@@ -1,17 +1,16 @@
 package controller.gestioneAnnunci;
 
-import java.io.IOException;
 import java.util.List;
 
 import model.Annuncio;
-import model.Utente;
 
 public interface GestioneAnnunciService {
 	
 
 	/**
      * Inserts an ad into the database.
-     * @param annuncio is the ad Object
+     * @param annuncio is the ad Object.
+     * @return true if the ad has been saved correctly.
      */
 	boolean insertAnnuncio(Annuncio annuncio);
 	

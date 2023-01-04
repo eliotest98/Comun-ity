@@ -1,20 +1,13 @@
 package controller.utility;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.mongodb.client.MongoDatabase;
-
 import controller.gestioneUtenza.GestioneUtenzaService;
 import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
-import model.Utente;
-import model.UtenteDAO;
 
 /**
  * Servlet implementation class IndexServlet
