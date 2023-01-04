@@ -173,10 +173,9 @@
 
 								<div class="row">
 									<div class="col">
-										<input type="text"
-											class="form-control" name="oldPass" id="oldPass" /> <label
-											class="form-label" for="professione">Inserisci la
-											password precedente</label>
+										<input type="text" class="form-control" name="oldPass"
+											id="oldPass" /> <label class="form-label" for="professione">Inserisci
+											la password precedente</label>
 									</div>
 									<div class="col">
 										<input type="text" minlength="8" maxlength="20"

@@ -34,90 +34,89 @@
 	href="${pageContext.request.contextPath}/styles/lista_utenti.css" />
 
 <script>
+	$(document).ready(
+			function() {
 
-	$(document).ready(function () {
-
-		$('#commissioni').show();
-		$('#lavori').hide();
-		
-		$.ajax({
-			url:'ListaCommissioniServlet',
-			method:'POST',
-			success: function(response){
-				$("#commissioniRow").html(response); 
-			}
-		});
-		
-		/*Change stars*/
-		
-		$(".card-body span").each(function(){
-			var valutazione = $(this).text();
-
-			for(let i = 1; i <= 5; i++)	
-
-				if(i <= Math.round(valutazione))
-					$(this).closest('div').find('.star'+i).addClass("checked");
-				else
-					break;
-    	});
-		
-		/*On click listener per modal*/
-		
-		$('#modal').click(function () {
-			
-			$('#annunci').modal('show');
-			
-		});
-		
-		$('#professioneDiv').hide();
-		$("#professione").prop('required',false);
-		
-		/*Inserimento annuncio switch*/
-		$('#lavoroCheck').change(
-			    function(){
-			        if ($(this).is(':checked')) {
-			        	console.log("checked");
-			            $('#professioneDiv').show();
-			            $("#professione").prop('required',true);
-			        }else{
-			        	console.log("unchecked");
-						$('#professioneDiv').hide();
-						$("#professione").prop('required',false);
-					}
-			    });
-		
-		
-		/*Switch commissioni lavori*/
-		$("#check").change(function() {
-			if(this.checked) {
-				
-				$.ajax({
-					url:'ListaLavoriServlet',
-					method:'POST',
-					success: function(response){
-						$("#lavoriRow").html(response); 
-					}
-				});
-				
-				$('#commissioni').hide();
-				$('#lavori').show();
-			}else{
-				
-				$.ajax({
-					url:'ListaCommissioniServlet',
-					method:'POST',
-					success: function(response){
-						$("#commissioniRow").html(response); 
-					}
-				});
-				
-				$('#lavori').hide();
 				$('#commissioni').show();
-			}
-		});
+				$('#lavori').hide();
 
-	})
+				$.ajax({
+					url : 'ListaCommissioniServlet',
+					method : 'POST',
+					success : function(response) {
+						$("#commissioniRow").html(response);
+					}
+				});
 
+				/*Change stars*/
+
+				$(".card-body span").each(
+						function() {
+							var valutazione = $(this).text();
+
+							for (let i = 1; i <= 5; i++)
+
+								if (i <= Math.round(valutazione))
+									$(this).closest('div').find('.star' + i)
+											.addClass("checked");
+								else
+									break;
+						});
+
+				/*On click listener per modal*/
+
+				$('#modal').click(function() {
+
+					$('#annunci').modal('show');
+
+				});
+
+				$('#professioneDiv').hide();
+				$("#professione").prop('required', false);
+
+				/*Inserimento annuncio switch*/
+				$('#lavoroCheck').change(function() {
+					if ($(this).is(':checked')) {
+						console.log("checked");
+						$('#professioneDiv').show();
+						$("#professione").prop('required', true);
+					} else {
+						console.log("unchecked");
+						$('#professioneDiv').hide();
+						$("#professione").prop('required', false);
+					}
+				});
+
+				/*Switch commissioni lavori*/
+				$("#check").change(function() {
+					if (this.checked) {
+
+						$.ajax({
+							url : 'ListaLavoriServlet',
+							method : 'POST',
+							success : function(response) {
+								$("#lavoriRow").html(response);
+							}
+						});
+
+						$('#commissioni').hide();
+						$('#lavori').show();
+					} else {
+
+						$.ajax({
+							url : 'ListaCommissioniServlet',
+							method : 'POST',
+							success : function(response) {
+								$("#commissioniRow").html(response);
+							}
+						});
+
+						$('#lavori').hide();
+						$('#commissioni').show();
+					}
+				});
+
+			})
 </script>
 </head>
 
@@ -125,24 +124,28 @@
 
 	<%@ include file="../header.jsp"%>
 
-	<% if (request.getAttribute("error") != null){%>
+	<%
+	if (request.getAttribute("error") != null) {
+	%>
 	<div id="message">
 		<div class="alert alert-danger alert-dismissible fade show"
 			role="alert">
 			<strong>Errore</strong>
-			<%= request.getAttribute("error")%>.
+			<%=request.getAttribute("error")%>.
 			<button type="button" class="btn-close" data-bs-dismiss="alert"
 				aria-label="Close"></button>
 		</div>
 	</div>
 	<%}%>
 
-	<% if (request.getAttribute("success") != null){%>
+	<%
+	if (request.getAttribute("success") != null) {
+	%>
 	<div id="message">
 		<div class="alert alert-success alert-dismissible fade show"
 			role="alert">
 			<strong>Successo</strong>
-			<%= request.getAttribute("success")%>.
+			<%=request.getAttribute("success")%>.
 			<button type="button" class="btn-close" data-bs-dismiss="alert"
 				aria-label="Close"></button>
 		</div>
