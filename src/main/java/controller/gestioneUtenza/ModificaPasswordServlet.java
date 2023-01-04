@@ -2,7 +2,9 @@ package controller.gestioneUtenza;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +34,8 @@ public class ModificaPasswordServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	private final String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
@@ -49,7 +53,6 @@ public class ModificaPasswordServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 		
 		HttpSession session = request.getSession(true);
 		Utente user = (Utente) session.getAttribute("user");
@@ -59,19 +62,45 @@ public class ModificaPasswordServlet extends HttpServlet {
 		
 		try {
 			if(service.checkCredentials(user.getMail(), vecchiaPassword)) {
+				
 				if(!vecchiaPassword.equals(nuovaPassword)) {
-					if(service.changePassword(user.getMail(), nuovaPassword))
-						response.getWriter().write("<h3>Password aggiornata con successo<h3>");
-					else
-						response.getWriter().write("<h3>Errore durante l'aggiornamento della password<h3>");
+					
+					if(patternMatches(nuovaPassword,passwordRegex)) {
+						
+						if(service.changePassword(user.getMail(), nuovaPassword)) {
+							RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+							request.setAttribute("success", "Password aggiornata con successo");
+							requestDispatcher.forward(request, response);
+						}else {
+							RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+							request.setAttribute("error", "Errore nell'aggiornamento password");
+							requestDispatcher.forward(request, response);
+						}
+					}else {
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+						request.setAttribute("error", "Il formato della nuova password non è valido");
+						requestDispatcher.forward(request, response);
+					}
+				}else {
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+					request.setAttribute("error", "Le password sono uguali");
+					requestDispatcher.forward(request, response);
 				}
 			}else {
-				response.getWriter().write("<h3>La vecchia password non corrisponde<h3>");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+				request.setAttribute("error", "La vecchia password è errata");
+				requestDispatcher.forward(request, response);
 			}
 		} catch (IllegalArgumentException | InterruptedException | ExecutionException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private static boolean patternMatches(String string, String regexPattern) {
+	    return Pattern.compile(regexPattern)
+	      .matcher(string)
+	      .matches();
 	}
 
 }
