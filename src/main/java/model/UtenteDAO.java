@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -131,15 +132,17 @@ public class UtenteDAO {
 	
 	public List<Utente> getAllBlacklistedUsers(){
 		
-		List<Utente> list = new ArrayList<>();
+		List<Utente> blacklisted = new ArrayList<>();
 		List<Document> documents = new ArrayList<>();
 		
 		database.getCollection("utente").find(Filters.eq("blacklist", true)).into(documents);
-		for(Document d : documents) {
-			list.add(docToUtente(d));
-		}
+		blacklisted = documents.stream().map(UtenteDAO::docToUtente).collect(Collectors.toList());
 		
-		return list;
+		/*
+		 * for(Document d : documents) { blacklisted.add(docToUtente(d)); }
+		 */
+		
+		return blacklisted;
 		
 	}
 
