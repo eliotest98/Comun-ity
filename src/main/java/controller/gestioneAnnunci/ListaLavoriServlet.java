@@ -74,6 +74,8 @@ public class ListaLavoriServlet extends HttpServlet {
 				Annuncio annuncio = (Annuncio) it.next();
 				Utente user = null;
 				
+				System.out.println(annuncio.getAutore());
+				
 				try {
 					user = serviceUtenza.getAccountByEmail(annuncio.getAutore());
 				} catch (InterruptedException | ExecutionException | IOException e) {

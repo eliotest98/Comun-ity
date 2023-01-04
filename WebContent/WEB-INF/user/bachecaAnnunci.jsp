@@ -34,6 +34,17 @@
 				$("#commissioniRow").html(response); 
 			}
 		});
+		
+		$(".card-body span").each(function(){
+			var valutazione = $(this).text();
+
+			for(let i = 1; i <= 5; i++)	
+
+				if(i <= Math.round(valutazione))
+					$(this).closest('div').find('.star'+i).addClass("checked");
+				else
+					break;
+    	});
 
 		$("#cmn-toggle-4").change(function() {
 			if(this.checked) {
