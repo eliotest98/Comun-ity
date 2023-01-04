@@ -58,7 +58,16 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 
 					if(patternMatches(indirizzo, addressRegex)) {
 
-						service.insertAnnuncio(new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo));
+						if(service.insertAnnuncio(new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo))) {
+							
+							
+							
+						}else {
+							RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunci");
+							req.setAttribute("error", "Annuncio non inserito");
+
+							requestDispatcher.forward(req, resp);
+						}
 
 					}else {
 						RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunci");

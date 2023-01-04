@@ -13,7 +13,7 @@ public interface GestioneAnnunciService {
      * Inserts an ad into the database.
      * @param annuncio is the ad Object
      */
-	void insertAnnuncio(Annuncio annuncio);
+	boolean insertAnnuncio(Annuncio annuncio);
 	
 	/**
      * Removes an ad from the database.

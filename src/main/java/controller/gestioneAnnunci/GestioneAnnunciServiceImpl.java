@@ -26,8 +26,10 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	 * @param annuncio is the ad Object
 	 */
 	@Override
-	public void insertAnnuncio(Annuncio annuncio) {
-		annuncioDAO.saveAnnuncio(annuncio);
+	public boolean insertAnnuncio(Annuncio annuncio) {
+		if(annuncioDAO.saveAnnuncio(annuncio))
+			return true;
+		return false;
 
 	}
 
