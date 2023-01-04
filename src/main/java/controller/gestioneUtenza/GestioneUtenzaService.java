@@ -36,6 +36,22 @@ public interface GestioneUtenzaService {
 	 * @return true if the user datas have been updated correctly.
 	 */
 	boolean updateUtente(Utente utente);
+
+	/**
+	 * Checks if an account exists in the database.
+	 * @param email referring to the account to search for
+	 * @return true if the account exists, false if not
+	 */
+	boolean doesUserExist(String email)
+			throws InterruptedException, ExecutionException, IOException;
+
+	/**
+	 * Return the account given its mail.
+	 * @param email referring to the account to search for
+	 * @return the Account if it exists, null if not
+	 */
+	Utente getAccountByEmail(String email)
+			throws InterruptedException, ExecutionException, IOException;
 	
 	/**
 	 * Checks the credentials of the client before insert it into the db.
@@ -50,22 +66,6 @@ public interface GestioneUtenzaService {
 	 */
 	boolean checkCredentials(String email, String password)
 			throws IllegalArgumentException, InterruptedException, ExecutionException, IOException;
-
-	/**
-	 * Checks if an account exists in the database.
-	 * @param email referring to the account to search for
-	 * @return true if the account exists, false if not
-	 */
-	boolean searchAccountByEmail(String email)
-			throws InterruptedException, ExecutionException, IOException;
-
-	/**
-	 * Return the account given its mail.
-	 * @param email referring to the account to search for
-	 * @return the Account if it exists, null if not
-	 */
-	Utente getAccountByEmail(String email)
-			throws InterruptedException, ExecutionException, IOException;
 
 	/**
 	 * Changes the password of an account.
@@ -90,12 +90,6 @@ public interface GestioneUtenzaService {
      * a certified pro.
      */
 	boolean isPro(Utente utente);
-
-	/**
-	 * Retrieve all the Admins' email from the db.
-     * @return a List of all Admins' email.
-     */
-	List<String> getAllAdminsEmails();
 	
 	/**
 	 * Retrieve all the Users from the db.
@@ -103,7 +97,21 @@ public interface GestioneUtenzaService {
      */
 	List<Utente> getAllUsers();
 	
+	/**
+	 * Retrieve all the Admins' email from the db.
+     * @return a List of all Admins' email.
+     */
+	List<String> getAllAdminsEmails();
+	
+	/**
+	 * Implements a research filter based on the email.
+	 * As the Admin types in, the filter updates the
+	 * users' list each time a charachter is typed.
+     * @param email is the typed part of the email to base the research on.
+     * @return List of Utente that contains users with the matching email characters.
+     */
 	List<Utente> searchUser(String email);
+	
 	/**
 	 * Ban a user from accessing the system.
      * @param email is the email of the user to ban.

@@ -9,7 +9,8 @@ public interface GestioneAnnunciService {
 
 	/**
      * Inserts an ad into the database.
-     * @param annuncio is the ad Object
+     * @param annuncio is the ad Object.
+     * @return true if the ad has been saved correctly.
      */
 	boolean insertAnnuncio(Annuncio annuncio);
 	

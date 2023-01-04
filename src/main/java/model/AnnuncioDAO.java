@@ -16,11 +16,15 @@ import controller.utility.DbConnection;
 
 public class AnnuncioDAO {
 
-	//Connessione al database
+	//Static db connection
 	static MongoDatabase database = DbConnection.connectToDb();
 
 
-	//Inserisce un annuncio nel database
+	/**
+     * Inserts an ad into the database.
+     * @param annuncio is the ad Object to store.
+     * @return true if the ad has been saved correctly.
+     */
 	public boolean saveAnnuncio(Annuncio annuncio) {
 
 		try {
@@ -38,7 +42,7 @@ public class AnnuncioDAO {
 
 	/**
      * Removes an ad from the database.
-     * @param id is the ad identifier
+     * @param id is the ad identifier.
      * @return true if the ad has been eliminated correctly.
      */
 	public boolean deleteAnnuncio(Long id) {
@@ -70,7 +74,11 @@ public class AnnuncioDAO {
 		}
 	}
 
-	//Trova un annuncio specifico nel database
+	/**
+	 * Get an ad with a specific id.
+	 * @param id is the Ad id that you want to get.
+	 * @return The Ad if it exists.
+	 */
 	public Annuncio findAnnuncioById(Long id) {
 
 		Document doc = database.getCollection("annuncio").find(Filters.eq("id", id)).first();
@@ -85,7 +93,10 @@ public class AnnuncioDAO {
 		}
 	}
 
-	//this method returns the id of the last annuncio
+	/**
+	 * Get the last ad id in the database.
+	 * @return The last ad id.
+	 */
 	public Long getLastId() {
 		
 		Document myDoc = (Document)database.getCollection("annuncio").find().sort(new Document("id",-1)).first();
@@ -95,7 +106,10 @@ public class AnnuncioDAO {
 		return lastAnnuncio.getId();
 	}
 
-	//Restituisce una lista con tutti i lavori 
+	/**
+	 * Retrieve all the Jobs from the db.
+     * @return a List of Annuncio that contains all the jobs.
+     */
 	public List<Annuncio> findJobs(){
 
 		List<Annuncio> jobs = new ArrayList<>();
@@ -109,7 +123,10 @@ public class AnnuncioDAO {
 		return jobs;
 	}
 
-	//Restituisce una lista con tutte le commissioni
+	/**
+	 * Retrieves all the Errands from the db.
+     * @return a List of Annuncio that contains all the errands.
+     */
 	public List<Annuncio> findErrands(){
 
 		List<Annuncio> errands = new ArrayList<>();
@@ -123,7 +140,10 @@ public class AnnuncioDAO {
 		return errands;
 	}
 
-	//Restituisce una lista di tutti i lavori disponibili
+	/**
+	 * Retrieve all the available Jobs from the db.
+     * @return a List of Annuncio that contains all the available jobs.
+     */
 	public List<Annuncio> findAvailableJobs(){
 
 		List<Annuncio> jobs = findJobs();
@@ -140,7 +160,10 @@ public class AnnuncioDAO {
 		
 	}
 
-	//Restituisce una lista di tutte le commissioni disponibili
+	/**
+	 * Retrieves all the available Errands from the db.
+     * @return a List of Annuncio that contains all the available errands.
+     */
 	public List<Annuncio> findAvailableErrands(){
 
 		List<Annuncio> errands = findErrands();
@@ -156,7 +179,11 @@ public class AnnuncioDAO {
 		return availables;
 	}
 	
-	//Restituisce una lista di tutti gli annunci pubblicati da un utente
+	/**
+	 * Retrieve all the Ads published from the given author from the db.
+	 * @param autore is the email of the ad's author. 
+     * @return a List of Annuncio that contains all the ads published from the given author.
+     */
 	public List<Annuncio> findAllByAuthor(String autore){
 		
 		List<Annuncio> allByAuthor = new ArrayList<Annuncio>();
@@ -170,7 +197,11 @@ public class AnnuncioDAO {
 		return allByAuthor;
 	}
 
-	//Restituisce una lista di annunci ancora disponibili per autore
+	/**
+	 * Retrieve all the available Ads published from the given author from the db.
+	 * @param autore is the email of the ad's author. 
+     * @return a List of Annuncio that contains all the available ads published from the given author.
+     */
 	public List<Annuncio> findAllAvailableByAuthor(String autore){
 		
 		List<Annuncio> allByAuthor = findAllByAuthor(autore);
@@ -186,6 +217,11 @@ public class AnnuncioDAO {
 		return availables;
 	}
 	
+	/**
+	 * Retrieve all the Ads accepted from the given appointee from the db.
+	 * @param incaricato is the email of the ad's appointee. 
+     * @return a List of Annuncio that contains all the ads accepted from the given appointee.
+     */
 	public List<Annuncio> findAllByAppointee(String incaricato){
 
 		List<Annuncio> allByAppointee = new ArrayList<Annuncio>();
@@ -199,7 +235,11 @@ public class AnnuncioDAO {
 		return allByAppointee;
 	}
 
-	//Crea un documento per mongoDB
+	/**
+     * Converts an Annuncio Object into a Document for MongoDB methods usage.
+     * @param annuncio is the ad Object to convert.
+     * @return the newly created Document.
+     */
 	private static Document docForDb(Annuncio annuncio) {
 		
 		//Check if it already exists
@@ -232,9 +272,11 @@ public class AnnuncioDAO {
 		return doc;
 	}
 	
-	
-
-	//Crea un istanza di Annuncio da un documento mongoDB
+	/**
+     * Converts a Document into an Annuncio Object.
+     * @param doc is the Document Object to convert.
+     * @return the newly created Annuncio.
+     */
 	private static Annuncio docToAnnuncio(Document doc) {
 
 		Annuncio annuncio = new Annuncio(
