@@ -40,8 +40,11 @@ public class ListaCommissioniServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ArrayList<Annuncio> commissioni;
+		int cont, size;
 		
+		HttpSession session= req.getSession(true);
 		service.getAvailableErrands();
+		Utente utente = (Utente) session.getAttribute("user");
 		
 		if(service.getAvailableErrands() == null) {
 			
@@ -50,6 +53,8 @@ public class ListaCommissioniServlet extends HttpServlet {
 		}else {
 						
 			commissioni = (ArrayList<Annuncio>) service.getAvailableErrands();
+			size=commissioni.size();
+			cont=0;
 		
 			Iterator it = commissioni.iterator();
 			
@@ -58,6 +63,7 @@ public class ListaCommissioniServlet extends HttpServlet {
 				Annuncio annuncio = (Annuncio) it.next();
 				Utente user = null;
 				
+				if(!annuncio.getAutore().equals(utente.getMail())) {
 				try {
 					user = serviceUtenza.getAccountByEmail(annuncio.getAutore());
 				} catch (InterruptedException | ExecutionException | IOException e) {
@@ -99,8 +105,17 @@ public class ListaCommissioniServlet extends HttpServlet {
 						+ "					</div>\n"
 						+ "				</div>\n"
 						+ "			</div>");
+				}else{
+					
+					cont++;
+					
 				}
 			}
+			if(cont==size) {
+				
+				resp.getWriter().write("<h3>Non ci sono commissioni disponibili<h3>");
+				
+			}
+		}
 	}
-
 }
