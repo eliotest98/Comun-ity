@@ -39,7 +39,7 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		Utente user = (Utente) session.getAttribute("user");
 		
-		Long id= Long.valueOf((String) req.getAttribute("annuncioId")); //annuncioId place holder (non so come si chiama il parametro nella jsp ma serve l'id dell'annuncio sul quale è stato premuto rimuovi)
+		Long id= Long.valueOf((String) req.getAttribute("annuncioId")); //annuncioId place holder (non so come si chiama il parametro nella jsp ma serve l'id dell'annuncio sul quale Ã¨ stato premuto rimuovi)
 		
 		Annuncio annuncio= service.findAnnuncioById(id);
 		
