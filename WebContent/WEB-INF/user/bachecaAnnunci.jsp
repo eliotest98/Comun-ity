@@ -185,8 +185,8 @@
 			                <input type="text" class="form-control" name="titolo" required>
 			              </div>
 			              <div class="mb-3">
-			                <label for="titolo" class="form-label">Titolo</label>
-			                <input type="text" placeholder="name@example.com" class="form-control" name="titolo" required>
+			                <label for="indirizzo" class="form-label">Indirizzo</label>
+			                <input type="text" class="form-control" name="indirizzo" required>
 			              </div>
 			              <div class="mb-3">
 			                <label for="descrizione">Descrizione</label>
@@ -209,7 +209,7 @@
 			</div>
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-			  <button type="button" class="btn btn-danger">Crea annuncio</button>
+			  <button type="button" class="btn btn-primary">Crea annuncio</button>
 			</div>
 		  </div>
 		</div>
