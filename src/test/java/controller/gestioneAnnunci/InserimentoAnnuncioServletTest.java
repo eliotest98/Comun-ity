@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controller.gestioneAnnunci;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,13 +16,13 @@ import javax.servlet.http.HttpSession;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.NotNull;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
 import controller.utility.DbConnection;
+import model.Utente;
 
 /*
  * 
@@ -45,6 +42,7 @@ class InserimentoAnnuncioServletTest {
 	HttpServletRequest requestMock = mock(HttpServletRequest.class);
 	HttpServletResponse responseMock = mock(HttpServletResponse.class);
 	HttpSession sessionMock = mock(HttpSession.class);
+	Utente utenteMock= mock(Utente.class);
 	InserimentoAnnuncioServlet servletMock = mock(InserimentoAnnuncioServlet.class);
 	RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
 
@@ -54,7 +52,7 @@ class InserimentoAnnuncioServletTest {
 	@BeforeEach
 	public void setUp() {
 		when(requestMock.getSession()).thenReturn(sessionMock);
-		when(sessionMock.getAttribute("user")).thenReturn("1");
+		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
 	}
 	/*
 	 * After each test, the ad entry is eliminated.
@@ -175,11 +173,10 @@ class InserimentoAnnuncioServletTest {
 		when(requestMock.getParameter("descrizione")).thenReturn("Descrizione");
 		when(requestMock.getParameter("indirizzo")).thenReturn("Indirizzo");
 		
-		/*
-		 * when(requestMock.getRequestDispatcher("")).thenReturn(dispatcherMock);
-		 * InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		 * test.doPost(requestMock, responseMock);
-		 * verify(responseMock).sendRedirect(requestMock.getContextPath() + "");
-		 */
+		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
+		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
+		test.doPost(requestMock, responseMock);
+		verify(requestMock).setAttribute("success", "Annuncio inserito con successo");
+		 
 	}
 }
