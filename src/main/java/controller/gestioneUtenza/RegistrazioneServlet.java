@@ -2,21 +2,16 @@ package controller.gestioneUtenza;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
@@ -29,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import controller.utility.MailSender;
 import controller.gestioneAccreditamento.GestioneAccreditamentoService;
 import controller.gestioneAccreditamento.GestioneAccreditamentoServiceImpl;
 import model.Accreditamento;
@@ -157,9 +151,7 @@ public class RegistrazioneServlet extends HttpServlet {
 					        			
 					        			session.setAttribute("user", user);
 					        			session.setAttribute("admin", false);
-					        			
-					        			List<String> lista = service.getAllAdminsEmails();
-					        			
+					        								        			
 					        			response.sendRedirect("HomeServlet");
 					        			
 					        		}else {

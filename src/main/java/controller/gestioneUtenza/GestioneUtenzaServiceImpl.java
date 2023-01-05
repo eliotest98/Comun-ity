@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
+import java.util.stream.Collectors;
 
 import model.Utente;
 import model.UtenteDAO;
@@ -39,7 +36,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
             throws IllegalArgumentException {
 
         try {
-			if(!searchAccountByEmail(utente.getMail())) {
+			if(!doesUserExist(utente.getMail())) {
 				utenteDao.saveUtente(utente);
 				return true;
 			}else {
@@ -60,10 +57,8 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
      * @return true if the user has been removed correctly.
      */
     @Override
-	public boolean removeUtente(String email) {
-		
+	public boolean removeUtente(String email) {	
     	return utenteDao.deleteUtente(email);
-		
 	}
 	
     /**
@@ -73,11 +68,30 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 	 */
     @Override
 	public boolean updateUtente(Utente utente) {
-		
     	return utenteDao.updateUtente(utente);
-		
 	}
-	 
+
+	/**
+     * Checks if an account exists in the database.
+     * @param email referring to the account to search for
+     * @return true if the account exists, false if not
+     */
+    @Override
+    public boolean doesUserExist(String email)
+			throws InterruptedException, ExecutionException, IOException{
+    	return utenteDao.findUtenteByMail(email) == null ? true : false;
+    }
+
+    /**
+     * This method return the account given its mail.
+     * @param email referring to the account to search for
+     * @return Utente if it exists, null if not
+     */
+	@Override
+	public Utente getAccountByEmail(String email) throws InterruptedException, ExecutionException, IOException {	
+        return utenteDao.findUtenteByMail(email);
+	}
+	
 	/**
      * Checks if the credential entered are correct.
      * @param email of the user
@@ -92,97 +106,10 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 
 		Utente utente = getAccountByEmail(email);
 		
-		if(utente == null)
-			return false;
+		if(utente == null) return false;
 		
 		return utente.getPassword().equals(password);
 
-	}
-
-	/**
-     * Checks if an account exists in the database.
-     * @param email referring to the account to search for
-     * @return true if the account exists, false if not
-     */
-    @Override
-    public boolean searchAccountByEmail(String email)
-            throws InterruptedException, ExecutionException, IOException {
-
-        Utente utente = new Utente();
-        utente = utenteDao.findUtenteByMail(email);
-        
-        if(utente == null)
-        	return false;
-        
-        return true;
-    }
-
-    /**
-     * This method return the account given its mail.
-     * @param email referring to the account to search for
-     * @return Utente if it exists, null if not
-     */
-	@Override
-	public Utente getAccountByEmail(String email) throws InterruptedException, ExecutionException, IOException {
-		
-		Utente utente = new Utente();
-		
-        utente = utenteDao.findUtenteByMail(email);
-                
-        return utente == null ? null : utente;
-	}
-
-	/**
-	 * Checks if the user is an Admin.
-     * @param utente is the registred user into the DataBase.
-     * @return true if the following account is
-     * a Comun-ity Admin.
-     */
-	@Override
-	public boolean IsAdmin(Utente utente) {
-		
-		return utente.getRuolo().equals("admin");
-	}
-	
-	/**
-	 * Checks if the user is a Pro.
-     * @param utente is the registred user into the DataBase.
-     * @return true if the following account is
-     * a certified pro.
-     */
-	@Override
-	public boolean isPro(Utente utente) {
-		
-		return utente.getRuolo().equals("professionista");
-	}
-
-	/**
-	 * Retrieve all the Admins' email from the db.
-     * @return a List of all Admins' email.
-     */
-	@Override
-	public List<String> getAllAdminsEmails() {
-		
-		List<Utente> lista = utenteDao.getAllAdmins();
-	    Iterator<Utente> it = lista.iterator();
-	    
-	    List<String> emails = new ArrayList<>();
-		
-		while(it.hasNext()){
-			emails.add(it.next().getMail());
-		}
-		
-		return emails;
-	}
-
-	/**
-	 * Retrieve all the Users from the db.
-     * @return a List of Utente that contains all the users.
-     */
-	@Override
-	public List<Utente> getAllUsers() {
-		List<Utente> lista = utenteDao.getAllUsers();
-		return lista;
 	}
 	
 	/**
@@ -199,6 +126,66 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		utente.setPassword(password);
 		
 		return utenteDao.updateUtente(utente);
+	}
+
+	/**
+	 * Checks if the user is an Admin.
+     * @param utente is the registred user into the DataBase.
+     * @return true if the following account is
+     * a Comun-ity Admin.
+     */
+	@Override
+	public boolean IsAdmin(Utente utente) {
+		return utente.getRuolo().equals("admin");
+	}
+	
+	/**
+	 * Checks if the user is a Pro.
+     * @param utente is the registred user into the DataBase.
+     * @return true if the following account is
+     * a certified pro.
+     */
+	@Override
+	public boolean isPro(Utente utente) {	
+		return utente.getRuolo().equals("professionista");
+	}
+	
+	/**
+	 * Retrieve all the Users from the db.
+     * @return a List of Utente that contains all the users.
+     */
+	@Override
+	public List<Utente> getAllUsers() {
+		return utenteDao.findAllUsers();
+	}
+
+	/**
+	 * Retrieve all the Admins' email from the db.
+     * @return a List of all Admins' email.
+     */
+	@Override
+	public List<String> getAllAdminsEmails() {
+		
+		List<Utente> admins = utenteDao.findAllAdmins();
+		List<String> emails = new ArrayList<>();
+		
+		if(!admins.isEmpty()) {
+			emails = admins.stream().map(Utente::getMail).collect(Collectors.toList());
+		}
+	
+		return emails;
+	}
+	
+	/**
+	 * Implements a research filter based on the email.
+	 * As the Admin types in, the filter updates the
+	 * users' list each time a charachter is typed.
+     * @param email is the typed part of the email to base the research on.
+     * @return List of Utente that contains users with the matching email characters.
+     */
+	@Override
+	public List<Utente> searchUser(String email) {	
+		return utenteDao.searchUser(email);
 	}
 	
 	/**
@@ -235,8 +222,4 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService{
 		return utenteDao.updateUtente(utente);
 	}
 
-	@Override
-	public List<Utente> searchUser(String email) {	
-		return utenteDao.searchUtente(email);
-	}
 }

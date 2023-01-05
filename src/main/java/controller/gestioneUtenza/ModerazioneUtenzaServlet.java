@@ -1,10 +1,7 @@
 package controller.gestioneUtenza;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.gestioneAnnunci.GestioneAnnunciService;
 import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
-import model.Utente;
 
 @WebServlet("/ModerazioneUtenza")
 public class ModerazioneUtenzaServlet extends HttpServlet {
