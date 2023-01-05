@@ -51,7 +51,8 @@ class InserimentoAnnuncioServletTest {
 	 */
 	@BeforeEach
 	public void setUp() {
-		when(requestMock.getSession()).thenReturn(sessionMock);
+		servletMock = new InserimentoAnnuncioServlet();
+		when(requestMock.getSession(true)).thenReturn(sessionMock);
 		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
 	}
 	/*
@@ -69,13 +70,15 @@ class InserimentoAnnuncioServletTest {
 
 	// Test case TC_CT_7.1.1: empty field 'abilitazioneRichiesta' for 'tipologia' = "lavoro".
 	@Test
-	void testRequiredQualificationNotSet() {
+	void testRequiredQualificationNotSet() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn("professionista");
 		when(requestMock.getParameter("professione")).thenReturn("nessuna");
 		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
 		IllegalArgumentException e =
 				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
 		assertEquals("Il campo 'Professione richiesta' non può essere vuoto per un Lavoro.", e.getMessage());
+		servletMock.doPost(requestMock, responseMock);
+
 	}
 
 	// Test case TC_CT_7.1.2: field 'abilitazioneRichiesta' setted for 'tipologia' = "commissione" but not required.
