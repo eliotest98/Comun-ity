@@ -1,7 +1,6 @@
 package controller.gestioneAnnunci;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import model.Annuncio;
@@ -10,9 +9,9 @@ import model.AnnuncioDAO;
 public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 
 	/**
-	 * @exclude
+	 * exclude
 	 */
-	private AnnuncioDAO annuncioDAO= new AnnuncioDAO();
+	private final AnnuncioDAO annuncioDAO = new AnnuncioDAO();
 
 	/**
 	 * Empty Constructor.
@@ -26,10 +25,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	 */
 	@Override
 	public boolean insertAnnuncio(Annuncio annuncio) {
-		if(annuncioDAO.saveAnnuncio(annuncio))
-			return true;
-		return false;
-
+		return annuncioDAO.saveAnnuncio(annuncio);
 	}
 
 	/**
@@ -71,18 +67,11 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	@Override
 	public boolean removeAllAvailableByUser(String autore) {
 
-		List<Annuncio> availables = new ArrayList<Annuncio>();
-		availables = annuncioDAO.findAllAvailableByAuthor(autore);
+		List<Annuncio> availables = annuncioDAO.findAllAvailableByAuthor(autore);
 
 		//Check if the list is not empty
 		if(!availables.isEmpty()) {
-			for(Annuncio available : availables) {
-				//Check if the ads are being removed correctly
-				if(removeAnnuncio(available.getId())) {
-					//If they are actually removed, they can be also removed from the list
-					availables.remove(available);
-				}
-			}
+			availables.removeIf(available -> removeAnnuncio(available.getId()));
 		}
 
 		if(availables.isEmpty()) {
@@ -154,19 +143,10 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
 	/**
      * Establish that the ad identified by the given id has been taken on by the specified user.
      * @param id is the ad identifier.
-     * @param incaricato is the the email of the user that accepts the ad.
+     * @param mail is the the email of the user that accepts the ad.
      * @return true if the ad has been accepted correctly.
      */
-//	@Override
-//	public boolean acceptAnnuncio(Long id, String mail) {
-//
-//		Annuncio annuncio = annuncioDAO.findAnnuncioById(id);
-//
-//		annuncio.setIncaricato(mail);
-//		annuncio.setDataFine(LocalDate.now());
-//
-//		return annuncioDAO.updateAnnuncio(annuncio);
-//	}
+
 	@Override
 	public boolean acceptAnnuncio(Long id, String mail) {
 		Annuncio annuncio = annuncioDAO.findAnnuncioById(id);
