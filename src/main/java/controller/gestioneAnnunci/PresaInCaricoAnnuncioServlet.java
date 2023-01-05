@@ -36,9 +36,11 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 			Utente utente = (Utente) session.getAttribute("user");
 			
 			if(utente == null) {
-				response.sendRedirect("/Comun-ity/guest/login.jsp"); 
+				response.sendRedirect("/Comun-ity/guest/login.jsp");
+				System.out.println("Utente non loggato");
 			}else {
 				response.sendRedirect("ListaCommissionServlet");
+				System.out.println("Utente loggato");
 			}
 		
 	}
