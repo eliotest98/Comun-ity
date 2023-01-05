@@ -77,7 +77,7 @@ class InserimentoAnnuncioServletTest {
 		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
 		IllegalArgumentException e =
 				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Professione richiesta' non può essere vuoto per un Lavoro.", e.getMessage());
+		assertEquals("Il campo 'Professione richiesta' non puï¿½ essere vuoto per un Lavoro.", e.getMessage());
 	}
 
 	// Test case TC_CT_7.1.2: field 'abilitazioneRichiesta' setted for 'tipologia' = "commissione" but not required.
@@ -88,7 +88,7 @@ class InserimentoAnnuncioServletTest {
 		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
 		IllegalArgumentException e =
 				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Professione richiesta' non può essere settato per una commissione.", e.getMessage());
+		assertEquals("Il campo 'Professione richiesta' non puï¿½ essere settato per una commissione.", e.getMessage());
 	}
 
 	// Test case TC_CT_7.1.3: empty field 'titolo'.
@@ -99,7 +99,7 @@ class InserimentoAnnuncioServletTest {
 		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
 		IllegalArgumentException e =
 				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Titolo' non può essere vuoto.", e.getMessage());
+		assertEquals("Il campo 'Titolo' non puï¿½ essere vuoto.", e.getMessage());
 	}
 	
 	// Test case TC_CT_7.1.4: field 'titolo' out of bound (30 chars).
@@ -122,7 +122,7 @@ class InserimentoAnnuncioServletTest {
 		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
 		IllegalArgumentException e =
 				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Descrizione' non può essere vuoto.", e.getMessage());
+		assertEquals("Il campo 'Descrizione' non puï¿½ essere vuoto.", e.getMessage());
 	}
 	
 	// Test case TC_CT_7.1.6: field 'descrizione' out of bound (280 chars).
@@ -150,7 +150,7 @@ class InserimentoAnnuncioServletTest {
 		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
 		IllegalArgumentException e =
 				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Indirizzo' non può essere vuoto.", e.getMessage());
+		assertEquals("Il campo 'Indirizzo' non puï¿½ essere vuoto.", e.getMessage());
 	}
 	
 	// Test case TC_CT_7.1.8: field 'indirizzo' out of bound (100 chars).
