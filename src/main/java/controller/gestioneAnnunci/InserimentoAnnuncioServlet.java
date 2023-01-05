@@ -19,8 +19,6 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
-
-	private final String addressRegex ="^([a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$";
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
