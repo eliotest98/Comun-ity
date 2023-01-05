@@ -61,7 +61,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 
 				if(descriptionOK(descrizione)) {
 
-					if(patternMatches(indirizzo, addressRegex)) {
+					if(addressOK(indirizzo)) {
 
 						if(service.insertAnnuncio(new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo))) {
 							
@@ -102,10 +102,14 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 		}
 	}
 
-	private static boolean patternMatches(String string, String regexPattern) {
-		return Pattern.compile(regexPattern)
-				.matcher(string)
-				.matches();
+	private static boolean addressOK(String address) {
+		boolean res= true;
+
+		if(address.length()<1 || address.length()>100) {
+			res=false;
+		}
+
+		return res;
 	}
 
 	private static boolean titleOK(String titolo) {
