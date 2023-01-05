@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import model.Annuncio;
 import model.AnnuncioDAO;
 import model.Utente;
+import org.mockito.Mockito;
 
 /**
  * @author miche
@@ -38,6 +39,7 @@ class PresaInCaricoAnnuncioServletTest {
 	RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
 	Utente utenteMock= mock(Utente.class);
 	PresaInCaricoAnnuncioServlet presaInCaricoMock= mock(PresaInCaricoAnnuncioServlet.class);
+	GestioneAnnunciService serviceMock = mock(GestioneAnnunciServiceImpl.class);
 	
 	
 	//Prima di ogni test creo una nuova istanza della servlet e una sessione
@@ -58,16 +60,45 @@ class PresaInCaricoAnnuncioServletTest {
 	
 	//Test che verifica la corretta presa in carico dell'annuncio
 	@Test
-	void utenteLoggatoCorrettamente() throws ServletException, IOException {
+	public void annuncioAccettatoCorrettamente() throws ServletException, IOException {
 		 when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
 		 when(requestMock.getParameter("annuncio")).thenReturn("7");
 		 when(utenteMock.getMail()).thenReturn("alefaster25@gmail.com");
 		 when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
-		 
 		 presaInCaricoMock.doPost(requestMock, responseMock);
-		 
+		 verify(dispatcherMock).forward(requestMock, responseMock);
 		 verify(requestMock).setAttribute("success", "Annuncio accettato con successo");
-		 
+	}
+
+	//Test che verifica la mancata presa in carico dell'annuncio
+	@Test
+	public void annuncioNonAccettatoCorrettamente() throws ServletException, IOException {
+		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
+		when(requestMock.getParameter("annuncio")).thenReturn("7");
+		when(utenteMock.getMail()).thenReturn(null);
+		when(serviceMock.acceptAnnuncio(7L, null)).thenReturn(false);
+		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
+		presaInCaricoMock.doPost(requestMock, responseMock);
+		verify(dispatcherMock).forward(requestMock, responseMock);
+		verify(requestMock).setAttribute("errore", "C'è stato un problema con il tuo annuncio");
+	}
+
+	// Test che verifica se l'utente non è loggato
+	@Test
+	public void utenteNonLoggatoCorrettamente() throws ServletException, IOException {
+		when(requestMock.getSession(true)).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("user")).thenReturn(null);
+		presaInCaricoMock.doGet(requestMock, responseMock);
+		verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp");
+	}
+
+	// Test che verifica se l'utente è loggato
+	@Test
+	public void utenteLoggatoCorrettamente() throws Exception {
+		when(requestMock.getSession(true)).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("user")).thenReturn(new Utente());
+		presaInCaricoMock.doGet(requestMock, responseMock);
+		verify(responseMock).sendRedirect("ListaCommissionServlet");
 	}
 
 	

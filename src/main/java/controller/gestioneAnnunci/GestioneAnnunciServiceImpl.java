@@ -157,14 +157,25 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService{
      * @param incaricato is the the email of the user that accepts the ad.
      * @return true if the ad has been accepted correctly.
      */
+//	@Override
+//	public boolean acceptAnnuncio(Long id, String mail) {
+//
+//		Annuncio annuncio = annuncioDAO.findAnnuncioById(id);
+//
+//		annuncio.setIncaricato(mail);
+//		annuncio.setDataFine(LocalDate.now());
+//
+//		return annuncioDAO.updateAnnuncio(annuncio);
+//	}
 	@Override
 	public boolean acceptAnnuncio(Long id, String mail) {
-		
 		Annuncio annuncio = annuncioDAO.findAnnuncioById(id);
-		
+		if (mail == null || mail.isEmpty()) {
+			return false;
+		}
 		annuncio.setIncaricato(mail);
 		annuncio.setDataFine(LocalDate.now());
-		
 		return annuncioDAO.updateAnnuncio(annuncio);
 	}
+
 }
