@@ -53,7 +53,6 @@ class InserimentoAnnuncioServletTest {
 		servletMock = new InserimentoAnnuncioServlet();
 		when(requestMock.getSession(true)).thenReturn(sessionMock);
 		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
-		servletMock= new InserimentoAnnuncioServlet();
 		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
 	}
 	/*
