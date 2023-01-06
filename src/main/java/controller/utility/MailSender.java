@@ -1,45 +1,48 @@
 package controller.utility;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class MailSender {
 
-  private final Properties properties = System.getProperties();
+  public static void MailSender(String from, String text) {
+	  String to = from;
+      String host = "smtp.gmail.com";
 
-  private final Session session = Session.getDefaultInstance(properties);
+      Properties properties = System.getProperties();
+      properties.put("mail.smtp.host", host);
+      properties.put("mail.smtp.port", "465");
+      properties.put("mail.smtp.ssl.enable", "true");
+      properties.put("mail.smtp.auth", "true");
 
-  private final MimeMessage message = new MimeMessage(session);
+      Session session = Session.getInstance(properties, new javax.mail.Authenticator(){
+        protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+          return new javax.mail.PasswordAuthentication("comunity.unisa@gmail.com", "uslzhowdfvoknjum");
+        }
+      });
 
-  public MailSender(List<String> list, String from, String host, String text, String subject)
-      throws MessagingException {
-
-    properties.setProperty("mail.smtp.host", "smtp.comun-ity.com");
-
-    list.forEach((to) -> {
       try {
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-      } catch (MessagingException e) {
-        e.printStackTrace();
+        message.setSubject("eiiiii");
+        message.setText(text);
+
+        Transport.send(message);
+      } catch (MessagingException mex) {
+        mex.printStackTrace();
       }
-    });
-
-    message.addHeader("Content-type", "text/HTML; charset=UTF-8");
-    message.addHeader("format", "flowed");
-    message.addHeader("Content-Transfer-Encoding", "8bit");
-
-    message.setSubject(subject);
-    message.setFrom(new InternetAddress(from));
-    message.setText(text);
-  }
-
-  public void sendMail() throws MessagingException {
-    Transport.send(this.message);
-  }
+   }
 }
