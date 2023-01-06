@@ -29,6 +29,8 @@ public class ListaAnnunciServlet extends HttpServlet {
   /**
    * doGet method implementation.
    *
+   * @throws IOException //
+   * @throws ServletException //
    *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,6 +55,8 @@ public class ListaAnnunciServlet extends HttpServlet {
   /**
    * doPost method implementation.
    *
+   * @throws IOException //
+   * @throws ServletException //
    *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)

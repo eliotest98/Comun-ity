@@ -36,6 +36,8 @@ public class ListaCommissioniServlet extends HttpServlet {
   /**
    * doGet method implementation.
    *
+   * @throws IOException //
+   * @throws ServletException //
    *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   @Override
@@ -55,6 +57,8 @@ public class ListaCommissioniServlet extends HttpServlet {
   /**
    * doPost method implementation.
    *
+   * @throws IOException //
+   * @throws ServletException //
    *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   @Override

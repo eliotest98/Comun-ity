@@ -1,46 +1,58 @@
 package controller.utility;
 
+import controller.gestioneUtenza.GestioneUtenzaService;
+import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import controller.gestioneUtenza.GestioneUtenzaService;
-import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class IndexServlet.
  */
 @WebServlet("/IndexServlet")
 public class IndexServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public IndexServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
-	GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("/Comun-ity/index.jsp");
-				
-	}
+  /**
+   * Default constructor.
+   *
+   * @see HttpServlet#HttpServlet()
+   */
+  public IndexServlet() {
+    super();
+  }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-		
-	}
+  GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
+
+  /**
+   * doGet method implementation.
+   *
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    response.sendRedirect("/Comun-ity/index.jsp");
+
+  }
+
+  /**
+   * doPost method implementation.
+   *
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    doGet(request, response);
+
+  }
 
 }

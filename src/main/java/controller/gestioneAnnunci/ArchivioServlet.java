@@ -37,8 +37,11 @@ public class ArchivioServlet extends HttpServlet {
   /**
    * doGet method implementation.
    *
+   * @throws IOException //
+   * @throws ServletException //
    *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
+  @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
@@ -58,15 +61,18 @@ public class ArchivioServlet extends HttpServlet {
     }
   }
 
-  /**
-   * doPost method implementation.
-   *
-   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-   */
 
   final String commissioni = "commissioni";
   final String lavori = "lavori";
 
+  /**
+   * doPost method implementation.
+   *
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 

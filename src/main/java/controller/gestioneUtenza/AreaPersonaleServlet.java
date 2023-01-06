@@ -33,9 +33,11 @@ public class AreaPersonaleServlet extends HttpServlet {
   GestioneAnnunciService serviceAnnuncio = new GestioneAnnunciServiceImpl();
 
   /**
-   * Default constructor.
+   * doGet method implementation.
    *
-   *@see HttpServlet#HttpServlet()
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -59,9 +61,11 @@ public class AreaPersonaleServlet extends HttpServlet {
   }
 
   /**
-   * doGet method implementation.
+   * doPost method implementation.
    *
-   *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
