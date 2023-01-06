@@ -35,8 +35,6 @@ import model.Utente;
  */
 class InserimentoAnnuncioServletTest {
 
-	//MongoDB connection
-	MongoDatabase database = DbConnection.connectToDb();
 
 	//Mock creation
 	HttpServletRequest requestMock = mock(HttpServletRequest.class);
@@ -45,6 +43,7 @@ class InserimentoAnnuncioServletTest {
 	Utente utenteMock= mock(Utente.class);
 	InserimentoAnnuncioServlet servletMock = mock(InserimentoAnnuncioServlet.class);
 	RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
+	GestioneAnnunciService serviceMock= mock(GestioneAnnunciServiceImpl.class);
 
 	/*
 	 * Before each test a "Bacheca Annunci" session is simulated (1).
@@ -54,132 +53,156 @@ class InserimentoAnnuncioServletTest {
 		servletMock = new InserimentoAnnuncioServlet();
 		when(requestMock.getSession(true)).thenReturn(sessionMock);
 		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
+		servletMock= new InserimentoAnnuncioServlet();
+		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
 	}
 	/*
 	 * After each test, the ad entry is eliminated.
 	 */
 	@AfterEach
 	void tearDown() {
-		try {
-			database.getCollection("annuncio").deleteOne(Filters.eq("autore", "InserimentoAnnuncioServlet@test.com"));
-			System.out.println("Annuncio eliminato!");
-		}catch(MongoException e) {
-			System.out.println("Errore durante l'eliminazione dell'annuncio" + e.getMessage());
-		}
+		GestioneAnnunciServiceImpl service = new GestioneAnnunciServiceImpl();
+		service.removeAllAvailableByUser("testServlet@biagio.com");
 	}
+	
+	// Test che verifica se l'utente non è loggato
+		@Test
+		public void utenteNonLoggatoCorrettamente() throws ServletException, IOException {
+			when(requestMock.getSession(true)).thenReturn(sessionMock);
+			when(sessionMock.getAttribute("user")).thenReturn(null);
+			servletMock.doGet(requestMock, responseMock);
+			verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp");
+		}
+
+		// Test che verifica se l'utente è loggato
+		@Test
+		public void utenteLoggatoCorrettamente() throws Exception {
+			when(requestMock.getSession(true)).thenReturn(sessionMock);
+			when(sessionMock.getAttribute("user")).thenReturn(new Utente());
+			servletMock.doGet(requestMock, responseMock);
+			verify(responseMock).sendRedirect("ListaAnnunci");
+		}
 
 	// Test case TC_CT_7.1.1: empty field 'abilitazioneRichiesta' for 'tipologia' = "lavoro".
 	@Test
 	void testRequiredQualificationNotSet() throws ServletException, IOException {
-		when(requestMock.getParameter("professionista")).thenReturn("professionista");
+		when(requestMock.getParameter("professionista")).thenReturn(" ");
 		when(requestMock.getParameter("professione")).thenReturn("nessuna");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Professione richiesta' non può essere vuoto per un Lavoro.", e.getMessage());
+		
 		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("error", "Controllare abilitazione richiesta rispetto alla tipologia");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 
 	}
 
-	// Test case TC_CT_7.1.2: field 'abilitazioneRichiesta' setted for 'tipologia' = "commissione" but not required.
-	@Test
-	void testNonRequiredQualificationSet() {
-		when(requestMock.getParameter("professionista")).thenReturn("");
-		when(requestMock.getParameter("professione")).thenReturn("idraulico");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Professione richiesta' non può essere settato per una commissione.", e.getMessage());
-	}
+	/*
+	 * // Test case TC_CT_7.1.2: field 'abilitazioneRichiesta' setted for
+	 * 'tipologia' = "commissione" but not required.
+	 * 
+	 * @Test void testNonRequiredQualificationSet() throws ServletException,
+	 * IOException {
+	 * when(requestMock.getParameter("professionista")).thenReturn(null);
+	 * when(requestMock.getParameter("professione")).thenReturn("idraulico");
+	 * 
+	 * servletMock.doPost(requestMock, responseMock);
+	 * 
+	 * verify(requestMock).setAttribute("error",
+	 * "Controllare abilitazione richiesta rispetto alla tipologia");
+	 * verify(dispatcherMock).forward(requestMock, responseMock); }
+	 */
 
 	// Test case TC_CT_7.1.3: empty field 'titolo'.
 	@Test
-	void testEmptyTitle() {
-		when(requestMock.getParameter("professionista")).thenReturn("");
+	void testEmptyTitle() throws ServletException, IOException {
+		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(requestMock.getParameter("titolo")).thenReturn("");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Titolo' non può essere vuoto.", e.getMessage());
+		
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("error", "Titolo non valido");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
 	
 	// Test case TC_CT_7.1.4: field 'titolo' out of bound (30 chars).
 	@Test
-	void testTitleLength() {
-		when(requestMock.getParameter("professionista")).thenReturn("");
-		when(requestMock.getParameter("titolo")).thenReturn("Lorem ipsum dolor sit amet, con");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Titolo' supera la lunghezza consentita.", e.getMessage());
+	void testTitleLength() throws ServletException, IOException {
+		when(requestMock.getParameter("professionista")).thenReturn(null);
+		when(requestMock.getParameter("titolo")).thenReturn("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("error", "Titolo non valido");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
 	
 	// Test case TC_CT_7.1.5: field 'descrizione' empty.
 	@Test
-	void testDescriptionEmpty() {
-		when(requestMock.getParameter("professionista")).thenReturn("");
-		when(requestMock.getParameter("titolo")).thenReturn("Titolo");
+	void testDescriptionEmpty() throws ServletException, IOException {
+		when(requestMock.getParameter("professionista")).thenReturn(null);
+		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Descrizione' non può essere vuoto.", e.getMessage());
+		
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("error", "Descrizione non valida");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
 	
 	// Test case TC_CT_7.1.6: field 'descrizione' out of bound (280 chars).
 	@Test
-	void testDescriptionLength() {
-		when(requestMock.getParameter("professionista")).thenReturn("");
-		when(requestMock.getParameter("titolo")).thenReturn("Titolo");
-		when(requestMock.getParameter("descrizione")).thenReturn("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. "
-				+ "Aenean commodo ligula eget dolor. "
-				+ "Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "
-				+ "Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat mass");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Descrizione' supera la lunghezza consentita.", e.getMessage());
+	void testDescriptionLength() throws ServletException, IOException {
+		when(requestMock.getParameter("professionista")).thenReturn(null);
+		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
+		when(requestMock.getParameter("descrizione")).thenReturn("wefwf4w4fefqergeqrgqegrqerfeqrvqegrgeqgetgeqvqeveqgeqrgeqtveqtvqegteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+		
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("error", "Descrizione non valida");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
 	
 	// Test case TC_CT_7.1.7: field 'indirizzo' empty.
 	@Test
-	void testAddressEmpty() {
-		when(requestMock.getParameter("professionista")).thenReturn("");
-		when(requestMock.getParameter("titolo")).thenReturn("--Titolo--");
-		when(requestMock.getParameter("descrizione")).thenReturn("--Descrizione--");
+	void testAddressEmpty() throws ServletException, IOException {
+		when(requestMock.getParameter("professionista")).thenReturn(null);
+		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
+		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
 		when(requestMock.getParameter("indirizzo")).thenReturn("");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Indirizzo' non può essere vuoto.", e.getMessage());
+		
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("error", "Indirizzo non valido");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
 	
 	// Test case TC_CT_7.1.8: field 'indirizzo' out of bound (100 chars).
 	@Test
-	void testAddressLength() {
-		when(requestMock.getParameter("professionista")).thenReturn("");
-		when(requestMock.getParameter("titolo")).thenReturn("--Titolo--");
-		when(requestMock.getParameter("descrizione")).thenReturn("--Descrizione--");
-		when(requestMock.getParameter("indirizzo")).thenReturn("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. "
-				+ "Aenean commodo ligula eget dolor. Aenean ma");
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		IllegalArgumentException e =
-				assertThrows(IllegalArgumentException.class, () -> test.doPost(requestMock, responseMock));
-		assertEquals("Il campo 'Indirizzo' supera la lunghezza consentita.", e.getMessage());
+	void testAddressLength() throws ServletException, IOException {
+		when(requestMock.getParameter("professionista")).thenReturn(null);
+		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
+		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
+		when(requestMock.getParameter("indirizzo")).thenReturn("\"wefwf4w4fefqergeqrgqegrqerfeqrvqegrgeqgetgeqvqeveqgeqrgeqtveqtvqegteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\"");
+		
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("error", "Indirizzo non valido");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
 	
 	// Test case TC_CT_7.1.9: Successful new insert
 	@Test
 	void testInsertSuccess() throws ServletException, IOException {
-		when(requestMock.getParameter("professionista")).thenReturn("");
-		when(requestMock.getParameter("titolo")).thenReturn("Titolo");
-		when(requestMock.getParameter("descrizione")).thenReturn("Descrizione");
-		when(requestMock.getParameter("indirizzo")).thenReturn("Indirizzo");
+		when(requestMock.getParameter("professionista")).thenReturn(null);
+		when(utenteMock.getMail()).thenReturn("testServlet@biagio.com");
+		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
+		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
+		when(requestMock.getParameter("indirizzo")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtr");
 		
-		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
-		InserimentoAnnuncioServlet test = new InserimentoAnnuncioServlet();
-		test.doPost(requestMock, responseMock);
-		verify(requestMock).setAttribute("success", "Annuncio inserito con successo");
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("success", "Annuncio inserito");
+		verify(dispatcherMock).forward(requestMock, responseMock);
 		 
 	}
 }

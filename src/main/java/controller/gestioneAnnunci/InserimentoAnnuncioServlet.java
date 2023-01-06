@@ -94,13 +94,13 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 			}
 		}else {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-			req.setAttribute("error", "Non può esserci un'abilitazione richiesta in una commissione");
+			req.setAttribute("error", "Controllare abilitazione richiesta rispetto alla tipologia");
 
 			requestDispatcher.forward(req, resp);
 		}
 	}
 
-	private static boolean addressOK(String address) {
+	public static boolean addressOK(String address) {
 		boolean res= true;
 
 		if(address.length()<1 || address.length()>100) {
@@ -110,7 +110,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 		return res;
 	}
 
-	private static boolean titleOK(String titolo) {
+	public static boolean titleOK(String titolo) {
 		boolean res= true;
 
 		if(titolo.length()<1 || titolo.length()>30) {
@@ -121,7 +121,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 	}
 
 
-	private static boolean descriptionOK(String descrizione) {
+	public static boolean descriptionOK(String descrizione) {
 		boolean res= true;
 
 		if(descrizione.length()<1 || descrizione.length()>280) {
@@ -131,10 +131,15 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 		return res;
 	}
 
-	private static boolean enablingOK(String tipologia ,String abilitazione) {
+	public static boolean enablingOK(String tipologia ,String abilitazione) {
 		boolean res= true;
 
-		if(tipologia.equals("commissione") && !abilitazione.equals("nessuna")) {
+		/*
+		 * if(tipologia.equals("commissione") && !abilitazione.equals("nessuna")) { res=
+		 * false; }
+		 */
+		
+		if(tipologia.equals("lavoro") && abilitazione.equals("nessuna")) {
 			res= false;
 		}
 
