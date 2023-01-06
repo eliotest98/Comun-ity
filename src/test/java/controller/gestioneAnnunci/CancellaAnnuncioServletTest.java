@@ -57,7 +57,7 @@ class CancellaAnnuncioServletTest {
 			GestioneAnnunciServiceImpl service = new GestioneAnnunciServiceImpl();
 			Annuncio annuncio= new Annuncio("nessuna", "e.testa7@studenti.unisa.it" , "tghrthr" , "tebrth" , "etrrtgert");
 			annuncio.setId((long) 2);
-			service.insertAnnuncio(annuncio);
+			//service.insertAnnuncio(annuncio);
 		}
 		
 		// Test che verifica se l'utente non è loggato
@@ -78,28 +78,56 @@ class CancellaAnnuncioServletTest {
 			verify(responseMock).sendRedirect("AreaPersonale");
 		}
 		
+
 		// Autore e utente non corrispondono test
-		public void autoreUtenteNonCorrispondono() throws ServletException, IOException {
+ 
+		@Test public void autoreUtenteNonCorrispondono() throws ServletException,
+		IOException { 
+			when(requestMock.getParameter("annuncio")).thenReturn("2");
 			when(serviceMock.findAnnuncioById((long) 2)).thenReturn(annuncioMock);
 			when(annuncioMock.getAutore()).thenReturn("e.testa7@studenti.unisa.it");
 			when(utenteMock.getMail()).thenReturn("alefaster25@gmail.com");
 			
 			servletMock.doPost(requestMock, responseMock);
+ 
+			assertEquals(false, CancellaAnnuncioServlet.autoreOk(utenteMock, annuncioMock));
 			
-			verify(requestMock).setAttribute("error", "Non puoi rimuovere un annuncio di cui non sei l'autore");
-			verify(dispatcherMock).forward(requestMock, responseMock);
+			verify(requestMock).setAttribute("error","Non puoi rimuovere un annuncio di cui non sei l'autore");
+			verify(dispatcherMock).forward(requestMock, responseMock); 
+			}
+
+		
+		// Autore e utente non corrispondono test
+		@Test
+		public void autoreNonOkTest() {
+			when(annuncioMock.getAutore()).thenReturn("e.testa7@studenti.unisa.it");
+			when(utenteMock.getMail()).thenReturn("alefaster25@gmail.com");
+			
+			assertEquals(false, CancellaAnnuncioServlet.autoreOk(utenteMock, annuncioMock));
 		}
 		
-		// Cancellazione effettuata
-		public void cancellazioneEffettuata() throws ServletException, IOException {
-			when(serviceMock.findAnnuncioById((long) 2)).thenReturn(annuncioMock);
+		// Autore e utente non corrispondono test
+		@Test
+		public void autoreOkTest() {
 			when(annuncioMock.getAutore()).thenReturn("e.testa7@studenti.unisa.it");
 			when(utenteMock.getMail()).thenReturn("e.testa7@studenti.unisa.it");
 					
-			servletMock.doPost(requestMock, responseMock);
-					
-			verify(requestMock).setAttribute("success", "Annuncio rimosso con successo");
-			verify(dispatcherMock).forward(requestMock, responseMock);
+			assertEquals(true, CancellaAnnuncioServlet.autoreOk(utenteMock, annuncioMock));
 		}
+		
+		/*
+		 * // Cancellazione effettuata
+		 * 
+		 * @Test public void cancellazioneEffettuata() throws ServletException,
+		 * IOException { when(serviceMock.findAnnuncioById((long)
+		 * 2)).thenReturn(annuncioMock);
+		 * when(annuncioMock.getAutore()).thenReturn("e.testa7@studenti.unisa.it");
+		 * when(utenteMock.getMail()).thenReturn("e.testa7@studenti.unisa.it");
+		 * 
+		 * servletMock.doPost(requestMock, responseMock);
+		 * 
+		 * verify(requestMock).setAttribute("success", "Annuncio rimosso con successo");
+		 * verify(dispatcherMock).forward(requestMock, responseMock); }
+		 */
 
 }
