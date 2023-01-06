@@ -30,7 +30,7 @@ class CancellaAnnuncioServletTest {
 	}
 
 	/**
-	 * Test method for {@link controller.gestioneAnnunci.CancellaAnnuncioServlet#autoreOK(model.Utente, model.Annuncio)}.
+	 * Test method for {@link controller.gestioneAnnunci.CancellaAnnuncioServlet#autoreOk(model.Utente, model.Annuncio)}.
 	 */
 	@Test
 	void testAutoreOK() {

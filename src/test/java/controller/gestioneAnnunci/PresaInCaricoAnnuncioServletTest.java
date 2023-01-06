@@ -57,8 +57,9 @@ class PresaInCaricoAnnuncioServletTest {
 		 annuncio.setIncaricato("nessuno");
 		 annuncioDAO.updateAnnuncio(annuncio);
 	}
-	
-	//Test che verifica la corretta presa in carico dell'annuncio
+
+
+//	TC_CT_8: Presa in carico di una commissione
 	@Test
 	public void annuncioAccettatoCorrettamente() throws ServletException, IOException {
 		 when(sessionMock.getAttribute("user")).thenReturn(utenteMock);

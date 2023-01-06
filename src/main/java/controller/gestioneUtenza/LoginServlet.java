@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 				
 				session.setAttribute("user", user);
 				
-				if(service.IsAdmin(user))
+				if(service.isAdmin(user))
 					session.setAttribute("admin", true);
 				else
 					session.setAttribute("admin", false);
