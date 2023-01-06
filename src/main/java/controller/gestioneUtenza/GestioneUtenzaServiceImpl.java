@@ -226,7 +226,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService {
     utente.setBlacklist(true);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     String until = formatter.format(duration);
-    utente.setDurataBL(until);
+    utente.setDurataBl(until);
 
     return utenteDao.updateUtente(utente);
   }

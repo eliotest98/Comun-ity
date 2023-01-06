@@ -15,8 +15,8 @@ public interface GestioneUtenzaService {
    * Registers a new user into the system.
    *
    * @param utente user into the db
-   * @return true if is possible to insert the account after check of the credentials, false when fails the check of the credentials or the email is just registered.
-   * @throws IOException              //
+   * @return true if account can be added, false if not or the email is just registered.
+   * @throws IOException //
    * @throws IllegalArgumentException //
    */
   boolean registerAccount(Utente utente)
@@ -60,7 +60,7 @@ public interface GestioneUtenzaService {
    *
    * @param email       is the email of the client
    * @param password is the password to update
-   * @return true if the credentials follow the regular-expression, false when something is typed wrong.
+   * @return true ifc regex check is valid, false if not.
    * @throws IllegalArgumentException //
    * @throws IOException //
    * @throws ExecutionException //
