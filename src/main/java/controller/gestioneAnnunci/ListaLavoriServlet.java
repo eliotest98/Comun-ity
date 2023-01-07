@@ -65,8 +65,8 @@ public class ListaLavoriServlet extends HttpServlet {
       throws ServletException, IOException {
 
     HttpSession session = request.getSession(true);
-    int cont;
-    int size;
+    
+    int cont = 0;
 
     Utente utente = (Utente) session.getAttribute("user");
 
@@ -74,32 +74,26 @@ public class ListaLavoriServlet extends HttpServlet {
 
       List<Annuncio> lavoriDisponibili = serviceAnnuncio.getAvailableJobs();
 
-      if (lavoriDisponibili.isEmpty()) {
-
-        response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
-
-      } else {
+      if (!lavoriDisponibili.isEmpty()) {
 
         Iterator<Annuncio> it = lavoriDisponibili.iterator();
-        size = lavoriDisponibili.size();
-        cont = 0;
-
+        
         while (it.hasNext()) {
 
           Annuncio annuncio = (Annuncio) it.next();
-          if ((!annuncio.getAutore().equals(utente.getMail())) && utente.getAbilitazione()
-              .equals(annuncio.getAbilitazioneRichiesta())) {
-            Utente user = null;
-
-            System.out.println(annuncio.getAutore());
+          
+          if ((!annuncio.getAutore().equals(utente.getMail())) && utente.getAbilitazione().equals(annuncio.getAbilitazioneRichiesta())) {
+            
+        	Utente user = null;
 
             try {
               user = serviceUtenza.getAccountByEmail(annuncio.getAutore());
             } catch (InterruptedException | ExecutionException | IOException e) {
               e.printStackTrace();
             }
+            
+            cont++;
 
-            assert user != null;
             response.getWriter().write("<div class=\"col\">\n"
                 + "<div class=\"card center\">\n"
                 + "<div class=\"additional\">\n"
@@ -138,17 +132,15 @@ public class ListaLavoriServlet extends HttpServlet {
                 + "</div>\n"
                 + "</div>\n"
                 + "</div>");
-          } else {
-
-            cont++;
           }
 
         }
-        if (cont == size) {
-
-          response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
-
-        }
+      }else {
+    	  response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
+      }
+      
+      if(cont == 0) {
+    	  response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
       }
 
     } else {
