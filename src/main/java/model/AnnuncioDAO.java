@@ -304,7 +304,8 @@ public class AnnuncioDAO {
           .append("indirizzo", annuncio.getIndirizzo())
           .append("dataPubblicazione", annuncio.getDataPubblicazione())
           .append("incaricato", annuncio.getIncaricato())
-          .append("dataFine", annuncio.getDataFine());
+          .append("dataFine", annuncio.getDataFine())
+          .append("recensione", annuncio.getRecensione());
     } else {
       doc.replace("id", annuncio.getId());
       doc.replace("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta());
@@ -315,6 +316,7 @@ public class AnnuncioDAO {
       doc.replace("dataPubblicazione", annuncio.getDataPubblicazione());
       doc.replace("incaricato", annuncio.getIncaricato());
       doc.replace("dataFine", annuncio.getDataFine());
+      doc.replace("recensione", annuncio.getRecensione());
     }
 
     return doc;
@@ -340,6 +342,7 @@ public class AnnuncioDAO {
     annuncio.setDataFine(
         (LocalDate) doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault())
             .toLocalDate());
+    annuncio.setRecensione(doc.getDouble("recensione"));
 
     return annuncio;
   }

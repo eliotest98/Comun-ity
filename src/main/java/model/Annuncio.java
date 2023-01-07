@@ -19,6 +19,7 @@ public class Annuncio {
   private LocalDate dataPubblicazione;
   private String incaricato;
   private LocalDate dataFine;
+  private Double recensione;
 
   /**
    * Empty constructor.
@@ -46,8 +47,9 @@ public class Annuncio {
     this.descrizione = descrizione;
     this.indirizzo = indirizzo;
     this.dataPubblicazione = LocalDate.now();
-    this.incaricato = "nessuno";
+    this.incaricato = "nessuno"; //default unassigned ad
     this.dataFine = dataPubblicazione.plusDays(30); //default expire date
+    this.recensione = -1.0; //default not reviewed
   }
 
   /**
@@ -197,7 +199,7 @@ public class Annuncio {
   /**
    * Expire date getter.
    *
-   * @return the date on which the ad expire OR has been accepted
+   * @return the date on which the ad expire OR has been completed
    */
   public LocalDate getDataFine() {
     return dataFine;
@@ -206,20 +208,36 @@ public class Annuncio {
   /**
    * Expire date setter.
    *
-   * @param dataFine is the date of removal from the available job list to set
+   * @param dataFine is the date of removal from the available ads list to set
    */
   public void setDataFine(LocalDate dataFine) {
     this.dataFine = dataFine;
   }
 
-  @Override
+  /**
+   * Review rating getter.
+   * 
+   * @return the review rating assigned
+   */
+  public Double getRecensione() {
+	  return recensione;
+  }
+
+  /**
+   * Review rating setter.
+   * 
+   * @param recensione is the review rating to set
+   */
+  public void setRecensione(Double recensione) {
+	  this.recensione = recensione;
+  }
+
+@Override
   public String toString() {
     return "Annuncio [id=" + id + ", abilitazioneRichiesta=" + abilitazioneRichiesta
-        + ", autore=" + autore + ", titolo="
-        + titolo + ", descrizione=" + descrizione
-        + ", indirizzo=" + indirizzo + ", dataPubblicazione="
-        + dataPubblicazione + ", incaricato="
-        + incaricato + ", dataFine=" + dataFine + "]";
+        + ", autore=" + autore + ", titolo=" + titolo + ", descrizione=" + descrizione
+        + ", indirizzo=" + indirizzo + ", dataPubblicazione=" + dataPubblicazione + ", incaricato="
+        + incaricato + ", dataFine=" + dataFine + ", recensione=" + recensione +"]";
   }
 
 }
