@@ -64,7 +64,7 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
 		ArrayList<Annuncio> lavori= (ArrayList<Annuncio>) serviceA.getJobs();
 		ArrayList<Annuncio> annunci= (ArrayList<Annuncio>) Stream.concat(commissioni.stream(), lavori.stream()).collect(Collectors.toList());
 		
-		Long id= Long.valueOf(request.getParameter(" ")); 
+		Long id = Long.valueOf(request.getParameter(" ")); 
 		
 		if(!annunci.isEmpty()) {
 			serviceA.removeAnnuncio(id);
