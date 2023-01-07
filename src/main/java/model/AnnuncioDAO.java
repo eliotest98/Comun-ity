@@ -261,6 +261,27 @@ public class AnnuncioDAO {
 
     return allByAppointee;
   }
+  
+  /**
+   * Mark an ad as done.
+   *
+   * @param ad's id.
+   * @return true if the ad is marked as done.
+   */
+  public boolean markAsDone(Long id) {
+	  boolean res= true;
+	  
+	  Annuncio annuncio= findAnnuncioById(id);
+	  
+	  if(annuncio!=null) {
+		  annuncio.setDataFine(LocalDate.now());
+		  updateAnnuncio(annuncio);
+	  }else {
+		  res=false;
+	  }
+	  
+	  return res;
+  }
 
   /**
    * Converts an Annuncio Object into a Document for MongoDB methods usage.
