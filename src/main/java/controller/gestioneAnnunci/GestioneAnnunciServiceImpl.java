@@ -168,7 +168,6 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
       return false;
     }
     annuncio.setIncaricato(mail);
-    annuncio.setDataFine(LocalDate.now());
     return annuncioDAO.updateAnnuncio(annuncio);
   }
   
