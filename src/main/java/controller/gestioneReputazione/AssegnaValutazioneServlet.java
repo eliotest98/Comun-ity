@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controller.gestioneAnnunci.GestioneAnnunciService;
+import controller.gestioneAnnunci.GestioneAnnunciServiceImpl;
 import controller.gestioneUtenza.GestioneUtenzaService;
 import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
+import model.Annuncio;
 import model.Utente;
 
 /**
@@ -33,6 +36,7 @@ public class AssegnaValutazioneServlet extends HttpServlet {
 
   GestioneReputazioneService service = new GestioneReputazioneServiceImpl();
   GestioneUtenzaService serviceU= new GestioneUtenzaServiceImpl();
+  GestioneAnnunciService serviceA= new GestioneAnnunciServiceImpl();
 
   /**
    * doGet method implementation.
@@ -67,6 +71,7 @@ public class AssegnaValutazioneServlet extends HttpServlet {
 
     String utenteMail = request.getParameter("utenteMail"); //mail dell'utente a cui asseganre una valutazione
     Double valutazione = Double.valueOf(request.getParameter("valutazione")); //valutazione da asseganre
+    Long id= Long.valueOf(request.getParameter("annuncioId")); //id dell'annuncio fatto
     Utente utente= new Utente();
 	try {
 		utente = serviceU.getAccountByEmail(utenteMail);
@@ -75,18 +80,26 @@ public class AssegnaValutazioneServlet extends HttpServlet {
 		e.printStackTrace();
 	}
 	
-    if(utente!=null) {
-    	service.assignRating(utente, valutazione);
+	Annuncio annuncio= serviceA.findAnnuncioById(id);
+	
+	if(!annuncio.getDataFine().equals(annuncio.getDataPubblicazione().plusDays(30))) {
+		if(utente!=null) {
+			service.assignRating(utente, valutazione);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+			request.setAttribute("success", "Valutazione assegnata con successo");
+			requestDispatcher.forward(request, response);
+		}else {
+
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+			request.setAttribute("errore", "Assegnazione della valutazione fallita");
+			requestDispatcher.forward(request, response);
+		}
+
+	}else {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
-	    request.setAttribute("success", "Valutazione assegnata con successo");
-	    requestDispatcher.forward(request, response);
-	  }else {
-
-	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
-	    request.setAttribute("errore", "Assegnazione della valutazione fallita");
-	    requestDispatcher.forward(request, response);
-	  }
-
+		request.setAttribute("errore", "Annuncio non completato");
+		requestDispatcher.forward(request, response);
+	}
   }
 
 }

@@ -101,6 +101,14 @@ public interface GestioneAnnunciService {
    * @return true if the ad has been accepted correctly.
    */
   boolean acceptAnnuncio(Long id, String incaricato);
+  
+  /**
+   * Mark an ad as done.
+   *
+   * @param ad's id.
+   * @return true if the ad is marked as done.
+   */
+  public boolean markAsDone(Long id);
 
 
 }

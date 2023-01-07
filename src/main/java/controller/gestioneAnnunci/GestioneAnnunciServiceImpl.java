@@ -171,5 +171,16 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
     annuncio.setDataFine(LocalDate.now());
     return annuncioDAO.updateAnnuncio(annuncio);
   }
+  
+  /**
+   * Mark an ad as done.
+   *
+   * @param ad's id.
+   * @return true if the ad is marked as done.
+   */
+  @Override
+  public boolean markAsDone(Long id) {
+	  return annuncioDAO.markAsDone(id);
+  }
 
 }
