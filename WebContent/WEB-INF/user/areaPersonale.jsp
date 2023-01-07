@@ -82,8 +82,8 @@
 	</div>
 	<%}%>
 
-	<div class="container-fluid" id="selector">
-		<h1 class="text-center">Area Personale</h1>
+	<div class="container-fluid">
+		<h1>Area Personale</h1>
 		<div class="row main-row">
 			<div class="col">
 				<div class="shadow p-3 mb-5 bg-body-tertiary rounded" id="card1">
@@ -128,11 +128,11 @@
 
 		<h1>I tuoi annunci</h1>
 		<div class="row">
-			<div class="container-fluid">
+			<div class="container-fluid" class="main">
 				<div class="row">
 					<%	
-					if(request.getAttribute("annunci") != null){
-						List<Annuncio> annunci = (List<Annuncio>) request.getAttribute("annunci");
+					List<Annuncio> annunci = (List<Annuncio>) request.getAttribute("annunci");
+					if(!annunci.isEmpty()){
 						Iterator<Annuncio> it = annunci.iterator();
 							
 						Date date = new Date();
@@ -169,14 +169,9 @@
 									<%=annuncio.getAutore()%><br> Descrizione:
 									<%=annuncio.getDescrizione()%><br> Indirizzo:
 									<%=annuncio.getIndirizzo()%><br> Data Fine:
-									<%=annuncio.getDataFine()%><br> Valutazione Utente: <span
-										class="heading" id="val"><%=user.getReputazione()%></span> <i
-										class='bx bxs-star' id="star1"></i> <i class='bx bxs-star'
-										id="star2"></i> <i class='bx bxs-star' id="star3"></i> <i
-										class='bx bxs-star' id="star4"></i> <i class='bx bxs-star'
-										id="star5"></i>
+									<%=annuncio.getDataFine()%><br>
 								</p>
-								<span class="more">Muovi il mouse per accettare</span>
+								<span class="more">Muovi il mouse per rimuovere</span>
 							</div>
 						</div>
 					</div>
@@ -185,7 +180,9 @@
 			</div>
 		</div>
 	</div>
-	<%}%>
+	<%}else {%>
+	<h2>Non hai annunci attivi</h2>
+	<%} %>
 	<!-- Professionista -->
 	<div class="modal fade" tabindex="-1" id="professionista">
 		<div class="modal-dialog modal-dialog-centered">

@@ -87,6 +87,10 @@ public class ArchivioServlet extends HttpServlet {
       String action = request.getParameter("action");
       Iterator<Annuncio> it;
       Annuncio annuncio;
+      
+      if(action == null) {
+    	  action = "";
+      }
 
       switch (action) {
         case commissioni:
@@ -108,7 +112,7 @@ public class ArchivioServlet extends HttpServlet {
                     + "<div class=\"more-info\">\n"
                     + "<h3 class=\"text-center\">" + annuncio.getTitolo() + "</h3>\n"
                     + "<div class=\"row justify-content-center\">\n"
-                    + "<form action=\"\" "
+                    + "<form action=\"RimuoviAnnuncioServlet\" "
                     + "method=\"post\" style=\"width:auto;\">"
                     + "<input type=\"hidden\"  name=\"annuncio\" "
                     + "id=\"annuncio\" value=" + annuncio.getId() + ">"
@@ -133,7 +137,7 @@ public class ArchivioServlet extends HttpServlet {
                     + "<i class='bx bxs-star' id=\"star4\"></i>\n"
                     + "<i class='bx bxs-star' id=\"star5\"></i></p>"
                     + "</p>\n"
-                    + "<span class=\"more\">Muovi il mouse per accettare</span>\n"
+                    + "<span class=\"more\">Muovi il mouse per rimuovere</span>\n"
                     + "</div>\n"
                     + "</div>\n"
                     + "</div>");
@@ -161,7 +165,7 @@ public class ArchivioServlet extends HttpServlet {
                     + "<div class=\"more-info\">\n"
                     + "<h3 class=\"text-center\">" + annuncio.getTitolo() + "</h3>\n"
                     + "<div class=\"row justify-content-center\">\n"
-                    + "<form action=\"\" method=\"post\" style=\"width:auto;\">"
+                    + "<form action=\"RimuoviAnnuncioServlet\" method=\"post\" style=\"width:auto;\">"
                     + "<input type=\"hidden\"  name=\"annuncio\" id=\"annuncio\" value="
                     + annuncio.getId() + ">"
                     + "<button type=\"submit\"class=\"btn btn-danger\" "
@@ -181,11 +185,14 @@ public class ArchivioServlet extends HttpServlet {
                     + "<i class='bx bxs-star' id=\"star3\"></i>\n"
                     + "<i class='bx bxs-star' id=\"star4\"></i>\n"
                     + "<i class='bx bxs-star' id=\"star5\"></i></p>"
-                    + "</p>\n" + "<span class=\"more\">Muovi il mouse per accettare</span>\n"
+                    + "</p>\n" + "<span class=\"more\">Muovi il mouse per rimuovere</span>\n"
                     + "</div>\n" + "</div>\n" + "</div>");
           }
           break;
-        default:;
+        default:
+  			  RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/archivio.jsp");
+  		      requestDispatcher.forward(request, response);
+  		      break;
       }
 
     }

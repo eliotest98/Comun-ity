@@ -53,6 +53,8 @@ public class AreaPersonaleServlet extends HttpServlet {
           req.getRequestDispatcher("/WEB-INF/user/areaPersonale.jsp");
       req.setAttribute("link", "areaPersonale");
       req.setAttribute("annunci", lista);
+      
+      System.out.println(lista);
       requestDispatcher.forward(req, resp);
     } else {
       resp.sendRedirect("/Comun-ity/guest/login.jsp");

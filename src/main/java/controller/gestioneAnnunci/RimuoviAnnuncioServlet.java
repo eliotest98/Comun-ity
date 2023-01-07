@@ -52,9 +52,9 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
 
     if(utente!= null) {
     	if (serviceU.isAdmin(utente)) {
-    	      response.sendRedirect("areaPersonale.jsp"); 
+    	      response.sendRedirect("ArchivioServlet"); 
     	    } else {
-    	      response.sendRedirect("/Comun-ity/guest/login.jsp");
+    	      response.sendRedirect("AreaPersonale");
     	    }
     }else {
 	      response.sendRedirect("/Comun-ity/guest/login.jsp");
@@ -74,16 +74,23 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
 	  
 	  Long id = (Long.parseLong(request.getParameter("annuncio")));
 	  
-	  if(serviceA.removeAnnuncio(id)) {
-		  RequestDispatcher requestDispatcher = request.getRequestDispatcher("areaPersonale.jsp");
-	      request.setAttribute("success", "Annuncio rimosso con successo");
-	      requestDispatcher.forward(request, response);
-	  }else {
-
-	      RequestDispatcher requestDispatcher = request.getRequestDispatcher("areaPersonale.jsp");
-	      request.setAttribute("errore", "Rimozione dell'annuncio fallita");
-	      requestDispatcher.forward(request, response);
-	    }
+	  HttpSession session = request.getSession(true);
+	  Utente utente = (Utente) session.getAttribute("user");
+	  
+	  if(serviceU.isAdmin(utente)) {
+		  
+		  if(serviceA.removeAnnuncio(id)) {
+			  RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArchivioServlet");
+		      request.setAttribute("success", "Annuncio rimosso con successo");
+		      requestDispatcher.forward(request, response);
+		  }else {
+	
+		      RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArchivioServlet");
+		      request.setAttribute("errore", "Rimozione dell'annuncio fallita");
+		      requestDispatcher.forward(request, response);
+		    }
+		  
+	  }
 	  
 	  
 

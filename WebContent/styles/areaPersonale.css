@@ -3,7 +3,6 @@ form{
 }
 
 .main-row{
-  width: 70%;
   margin: 50px auto;
 }
 
@@ -13,4 +12,12 @@ form{
 
 .checked{
   color: orange;
+}
+
+body{
+	min-width:650px;
+}
+
+.main{
+	width:70%;
 }
