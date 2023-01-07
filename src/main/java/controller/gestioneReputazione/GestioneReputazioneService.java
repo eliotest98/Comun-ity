@@ -1,5 +1,6 @@
 package controller.gestioneReputazione;
 
+import model.Annuncio;
 import model.Utente;
 
 /**
@@ -8,11 +9,12 @@ import model.Utente;
 public interface GestioneReputazioneService {
 
   /**
-   * Assign a rating to a user.
+   * Review a completed ad and assign a rating to a user.
    *
+   * @param annuncio   is the completed ad 
    * @param utente     is the user to assign the rating to.
    * @param recensione is the rating to assign.
-   * @return true if the rating is assigned correctly.
+   * @return true if the rating is assigned correctly for both Annuncio and Utente.
    */
-   boolean assignRating(Utente utente, Double recensione);
+   boolean assignRating(Annuncio annuncio, Utente utente, Double recensione);
 }

@@ -1,5 +1,7 @@
 package controller.gestioneReputazione;
 
+import model.Annuncio;
+import model.AnnuncioDAO;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -12,6 +14,7 @@ public class GestioneReputazioneServiceImpl implements GestioneReputazioneServic
    * exclude.
    */
   private final UtenteDAO utenteDao = new UtenteDAO();
+  private final AnnuncioDAO annuncioDao = new AnnuncioDAO();
 
   /**
    * Empty Constructor.
@@ -20,13 +23,18 @@ public class GestioneReputazioneServiceImpl implements GestioneReputazioneServic
   }
 
   /**
-   * Assign a rating to a user.
+   * Review a completed ad and assign a rating to a user.
    *
+   * @param annuncio   is the completed ad 
    * @param utente     is the user to assign the rating to.
    * @param recensione is the rating to assign.
-   * @return true if the rating is assigned correctly.
+   * @return true if the rating is assigned correctly for both Annuncio and Utente.
    */
-  public boolean assignRating(Utente utente, Double recensione) {
-    return utenteDao.assignRating(utente, recensione);
+  @Override
+  public boolean assignRating(Annuncio annuncio, Utente utente, Double recensione) {
+    
+	  annuncio.setRecensione(recensione);
+	  
+	  return (utenteDao.assignRating(utente, recensione) && annuncioDao.updateAnnuncio(annuncio));
   }
 }
