@@ -6,6 +6,10 @@ import com.mongodb.client.model.Filters;
 import controller.utility.DbConnection;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -87,7 +91,6 @@ public class AccreditamentoDAO {
 
     Document doc =
         database.getCollection("accreditamento").find(Filters.eq("richiedente", email)).first();
-    ;
 
     if (doc == null) {
       System.out.println("Richiesta di accreditamento non trovata!");
@@ -97,6 +100,25 @@ public class AccreditamentoDAO {
       return docToAccreditamento(doc);
     }
 
+  }
+  
+  /**
+   * Retrieves all the submitted and yet to examine accreditation requests.
+   * 
+   * @return a List of Accreditamento that contains all the accreditation requests
+   * pending to be accepted or declined. 
+   */
+  public List<Accreditamento> findAllUnexamined() {
+	
+	List<Accreditamento> submitted = new ArrayList<>();
+	List<Document> documents = new ArrayList<>();
+
+	database.getCollection("accreditamento").find(Filters.eq("stato", "sottomessa")).into(documents);
+	if (!documents.isEmpty()) {
+		submitted = documents.stream().map(AccreditamentoDAO::docToAccreditamento).collect(Collectors.toList());
+	}
+
+	return submitted;
   }
 
   /**

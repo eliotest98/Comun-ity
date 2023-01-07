@@ -84,7 +84,7 @@ public class AssegnaValutazioneServlet extends HttpServlet {
 	
 	if(!annuncio.getDataFine().equals(annuncio.getDataPubblicazione().plusDays(30))) {
 		if(utente!=null) {
-			service.assignRating(utente, valutazione);
+			service.assignRating(annuncio, utente, valutazione);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
 			request.setAttribute("success", "Valutazione assegnata con successo");
 			requestDispatcher.forward(request, response);
