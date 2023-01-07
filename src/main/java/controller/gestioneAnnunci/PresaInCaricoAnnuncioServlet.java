@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import controller.utility.MailSender;
+import model.Annuncio;
 import model.Utente;
 
 /**
@@ -63,12 +66,15 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
     HttpSession session = request.getSession(true);
     Utente utente = (Utente) session.getAttribute("user");
     Long id = (Long.parseLong(request.getParameter("annuncio")));
+    Annuncio annuncio= service.findAnnuncioById(id);
 
     if (service.acceptAnnuncio(id, utente.getMail())) {
 
       RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
       request.setAttribute("link", "bacheca");
       request.setAttribute("success", "Annuncio accettato con successo");
+      
+      MailSender.MailSender(utente, annuncio, annuncio.getAutore(), "Annuncio "+annuncio.getId()+" preso in carico");
       requestDispatcher.forward(request, response);
 
     } else {
