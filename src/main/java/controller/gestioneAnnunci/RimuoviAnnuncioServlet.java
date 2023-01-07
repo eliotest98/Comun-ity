@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,11 +50,15 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
     HttpSession session = request.getSession(true);
     Utente utente = (Utente) session.getAttribute("user");
 
-    if (serviceU.isAdmin(utente)) {
-      response.sendRedirect(" "); //jsp rimozione annunci
-    } else {
-      response.sendRedirect("/Comun-ity/guest/login.jsp");
-    }
+    if(utente!= null) {
+    	if (serviceU.isAdmin(utente)) {
+    	      response.sendRedirect("areaPersonale.jsp"); 
+    	    } else {
+    	      response.sendRedirect("/Comun-ity/guest/login.jsp");
+    	    }
+    }else {
+	      response.sendRedirect("/Comun-ity/guest/login.jsp");
+	    }
 
   }
 
@@ -65,21 +71,23 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    HttpSession session = request.getSession(true);
+	  
+	  Long id = (Long.parseLong(request.getParameter("annuncio")));
+	  
+	  if(serviceA.removeAnnuncio(id)) {
+		  RequestDispatcher requestDispatcher = request.getRequestDispatcher("areaPersonale.jsp");
+	      request.setAttribute("success", "Annuncio rimosso con successo");
+	      requestDispatcher.forward(request, response);
+	  }else {
 
-    ArrayList<Annuncio> commissioni = (ArrayList<Annuncio>) serviceA.getErrands();
-    ArrayList<Annuncio> lavori = (ArrayList<Annuncio>) serviceA.getJobs();
-    ArrayList<Annuncio> annunci =
-        (ArrayList<Annuncio>) Stream.concat(commissioni.stream(), lavori.stream())
-            .collect(Collectors.toList());
+	      RequestDispatcher requestDispatcher = request.getRequestDispatcher("areaPersonale.jsp");
+	      request.setAttribute("errore", "Rimozione dell'annuncio fallita");
+	      requestDispatcher.forward(request, response);
+	    }
+	  
+	  
 
-    Long id = Long.valueOf(request.getParameter(" "));
-
-    if (!annunci.isEmpty()) {
-      serviceA.removeAnnuncio(id);
-    } else {
-      response.getWriter().write("<h3>Non ci sono annunci<h3>");
-    }
+    
   }
 
 
