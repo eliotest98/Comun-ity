@@ -1,12 +1,18 @@
 package controller.gestioneReputazione;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import controller.gestioneUtenza.GestioneUtenzaService;
+import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import model.Utente;
 
 /**
@@ -26,6 +32,7 @@ public class AssegnaValutazioneServlet extends HttpServlet {
   }
 
   GestioneReputazioneService service = new GestioneReputazioneServiceImpl();
+  GestioneUtenzaService serviceU= new GestioneUtenzaServiceImpl();
 
   /**
    * doGet method implementation.
@@ -43,7 +50,7 @@ public class AssegnaValutazioneServlet extends HttpServlet {
     if (utente == null) {
       response.sendRedirect("/Comun-ity/guest/login.jsp");
     } else {
-      response.sendRedirect(" "); //jsp per assegnare la valutazione (da fare)
+      response.sendRedirect("AreaPersonale"); 
     }
 
   }
@@ -57,14 +64,28 @@ public class AssegnaValutazioneServlet extends HttpServlet {
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    doGet(request, response);
 
-    HttpSession session = request.getSession(true);
-    Utente utente = (Utente) session.getAttribute("user");
-    Double valutazione = Double.valueOf(request.getParameter(" ")); //Inserire nome parametro
+    String utenteMail = request.getParameter("utenteMail"); //mail dell'utente a cui asseganre una valutazione
+    Double valutazione = Double.valueOf(request.getParameter("valutazione")); //valutazione da asseganre
+    Utente utente= new Utente();
+	try {
+		utente = serviceU.getAccountByEmail(utenteMail);
+	} catch (InterruptedException | ExecutionException | IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+    if(utente!=null) {
+    	service.assignRating(utente, valutazione);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+	    request.setAttribute("success", "Valutazione assegnata con successo");
+	    requestDispatcher.forward(request, response);
+	  }else {
 
-    service.assignRating(utente, valutazione);
-    response.sendRedirect("HomeServlet");
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+	    request.setAttribute("errore", "Assegnazione della valutazione fallita");
+	    requestDispatcher.forward(request, response);
+	  }
 
   }
 
