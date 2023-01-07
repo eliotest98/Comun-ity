@@ -1,255 +1,326 @@
 package model;
 
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import controller.utility.DbConnection;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import com.mongodb.MongoException;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 
-import controller.utility.DbConnection;
-
+/**
+ * Class AnnuncioDAO for database queries.
+ */
 public class AnnuncioDAO {
 
-	//Connessione al database
-	static MongoDatabase database = DbConnection.connectToDb();
+  //Static db connection
+  static MongoDatabase database = DbConnection.connectToDb();
 
 
-	//Inserisce un annuncio nel database
-	public boolean saveAnnuncio(Annuncio annuncio) {
+  /**
+   * Inserts an ad into the database.
+   *
+   * @param annuncio is the ad Object to store.
+   * @return true if the ad has been saved correctly.
+   */
+  public boolean saveAnnuncio(Annuncio annuncio) {
 
-		try {
-			annuncio.setId(getLastId()+1);
-			database.getCollection("annuncio").insertOne(docForDb(annuncio));
-			System.out.println("Annuncio aggiunto al database con successo");
-			return true;
+    try {
+      annuncio.setId(getLastId() + 1);
+      database.getCollection("annuncio").insertOne(docForDb(annuncio));
+      System.out.println("Annuncio aggiunto al database con successo");
+      return true;
 
-		}catch(MongoException e) {
-			System.out.println("Errore durante l'inserimento dell'annuncio" + e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
-	}
+    } catch (MongoException e) {
+      System.out.println("Errore durante l'inserimento dell'annuncio" + e.getMessage());
+      e.printStackTrace();
+      return false;
+    }
+  }
 
-	/**
-     * Removes an ad from the database.
-     * @param id is the ad identifier
-     * @return true if the ad has been eliminated correctly.
-     */
-	public boolean deleteAnnuncio(Long id) {
-		
-		try {
-			database.getCollection("annuncio").deleteOne(Filters.eq("id", id));
-			System.out.println("Annuncio eliminato!");
-			return true;
-		}catch(MongoException e) {
-			System.out.println("Errore durante l'eliminazione dell'annuncio" + e.getMessage());
-			return false;
-		}
-	}
-	
-	/**
-	 * Update ad datas in the db.
-	 * @param annuncio is the Ad Object already stored in the db to update.
-	 * @return true if the ad datas have been updated correctly.
-	 */
-	public boolean updateAnnuncio(Annuncio annuncio) {
-		
-		try {
-			database.getCollection("annuncio").replaceOne(Filters.eq("id", annuncio.getId()), docForDb(annuncio));
-			System.out.println("Dati dell'annuncio " + annuncio.getId() + " aggiornati.");
-			return true;
-		}catch(MongoException e) {
-			System.out.println("Errore durante l'update dell'annuncio" + e.getMessage());
-			return false;
-		}
-	}
+  /**
+   * Removes an ad from the database.
+   *
+   * @param id is the ad identifier.
+   * @return true if the ad has been eliminated correctly.
+   */
+  public boolean deleteAnnuncio(Long id) {
 
-	//Trova un annuncio specifico nel database
-	public Annuncio findAnnuncioById(Long id) {
+    try {
+      database.getCollection("annuncio").deleteOne(Filters.eq("id", id));
+      System.out.println("Annuncio eliminato!");
+      return true;
+    } catch (MongoException e) {
+      System.out.println("Errore durante l'eliminazione dell'annuncio" + e.getMessage());
+      return false;
+    }
+  }
 
-		Document doc = database.getCollection("annuncio").find(Filters.eq("id", id)).first();
-		
-		if(doc == null) {
-			System.out.println("Annuncio non trovato!");
-			return null;
-		}else {
-			System.out.println("Annuncio trovato!");
-			Annuncio annuncio = docToAnnuncio(doc);
-			return annuncio;
-		}
-	}
+  /**
+   * Update ad datas in the db.
+   *
+   * @param annuncio is the Ad Object already stored in the db to update.
+   * @return true if the ad datas have been updated correctly.
+   */
+  public boolean updateAnnuncio(Annuncio annuncio) {
 
-	//this method returns the id of the last annuncio
-	public Long getLastId() {
-		
-		Document myDoc = (Document)database.getCollection("annuncio").find().sort(new Document("id",-1)).first();
-		
-		Annuncio lastAnnuncio=docToAnnuncio(myDoc);
-		
-		return lastAnnuncio.getId();
-	}
+    try {
+      database.getCollection("annuncio")
+          .replaceOne(Filters.eq("id", annuncio.getId()), docForDb(annuncio));
+      System.out.println("Dati dell'annuncio " + annuncio.getId() + " aggiornati.");
+      return true;
+    } catch (MongoException e) {
+      System.out.println("Errore durante l'update dell'annuncio" + e.getMessage());
+      return false;
+    }
+  }
 
-	//Restituisce una lista con tutti i lavori 
-	public List<Annuncio> findJobs(){
+  /**
+   * Get an ad with a specific id.
+   *
+   * @param id is the Ad id that you want to get.
+   * @return The Ad if it exists.
+   */
+  public Annuncio findAnnuncioById(Long id) {
 
-		List<Annuncio> jobs = new ArrayList<>();
-		List<Document> documents = new ArrayList<>();
-		
-		database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).into(documents);
-		if(!documents.isEmpty()) {
-			jobs = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
-		}
-		
-		return jobs;
-	}
+    Document doc = database.getCollection("annuncio").find(Filters.eq("id", id)).first();
 
-	//Restituisce una lista con tutte le commissioni
-	public List<Annuncio> findErrands(){
+    if (doc == null) {
+      System.out.println("Annuncio non trovato!");
+      return null;
+    } else {
+      System.out.println("Annuncio trovato!");
+      return docToAnnuncio(doc);
+    }
+  }
 
-		List<Annuncio> errands = new ArrayList<>();
-		List<Document> documents = new ArrayList<>();
-		
-		database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta","nessuna")).into(documents);
-		if(!documents.isEmpty()) {
-			errands = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
-		}
-		
-		return errands;
-	}
+  /**
+   * Get the last ad id in the database.
+   *
+   * @return The last ad id.
+   */
+  public Long getLastId() {
 
-	//Restituisce una lista di tutti i lavori disponibili
-	public List<Annuncio> findAvailableJobs(){
+    Document myDoc =
+        (Document) database.getCollection("annuncio").find().sort(new Document("id", -1)).first();
 
-		List<Annuncio> jobs = findJobs();
-		List<Annuncio> availables = new ArrayList<Annuncio>();
+    assert myDoc != null;
+    Annuncio lastAnnuncio = docToAnnuncio(myDoc);
 
-		if(!jobs.isEmpty()) {
-			availables = jobs.stream().filter(job -> job.getIncaricato().equals("nessuno")).collect(Collectors.toList());
-		}
-		
-		String s = availables.isEmpty() ? "Nessun lavoro disponibile trovato." : "Trovato/i lavoro/i disponibile/i.";
-		System.out.println(s);
-		
-		return availables;
-		
-	}
+    return lastAnnuncio.getId();
+  }
 
-	//Restituisce una lista di tutte le commissioni disponibili
-	public List<Annuncio> findAvailableErrands(){
+  /**
+   * Retrieve all the Jobs from the db.
+   *
+   * @return a List of Annuncio that contains all the jobs.
+   */
+  public List<Annuncio> findJobs() {
 
-		List<Annuncio> errands = findErrands();
-		List<Annuncio> availables = new ArrayList<Annuncio>();
+    List<Annuncio> jobs = new ArrayList<>();
+    List<Document> documents = new ArrayList<>();
 
-		if(!errands.isEmpty()) {
-			availables = errands.stream().filter(errand -> errand.getIncaricato().equals("nessuno")).collect(Collectors.toList());
-		}
-		
-		String s = availables.isEmpty() ? "Nessuna commissione disponibile trovata." : "Trovata/e commissione/i disponibile/i.";
-		System.out.println(s);
-		
-		return availables;
-	}
-	
-	//Restituisce una lista di tutti gli annunci pubblicati da un utente
-	public List<Annuncio> findAllByAuthor(String autore){
-		
-		List<Annuncio> allByAuthor = new ArrayList<Annuncio>();
-		List<Document> documents = new ArrayList<>();
-		
-		database.getCollection("annuncio").find(Filters.eq("autore", autore)).into(documents);
-		if(!documents.isEmpty()) {
-			allByAuthor = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
-		}
-		
-		return allByAuthor;
-	}
+    database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna"))
+        .into(documents);
+    if (!documents.isEmpty()) {
+      jobs = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+    }
 
-	//Restituisce una lista di annunci ancora disponibili per autore
-	public List<Annuncio> findAllAvailableByAuthor(String autore){
-		
-		List<Annuncio> allByAuthor = findAllByAuthor(autore);
-		List<Annuncio> availables = new ArrayList<Annuncio>();
+    return jobs;
+  }
 
-		if(!allByAuthor.isEmpty()) {
-			availables = allByAuthor.stream().filter(ad -> ad.getIncaricato().equals("nessuno")).collect(Collectors.toList());
-		}
-		
-		String s = availables.isEmpty() ? "Nessun annuncio disponibile trovato" : "Trovato/i annuncio/i disponibile/i";
-		System.out.println(s + "per l'utente: " + autore + ".");
-		
-		return availables;
-	}
-	
-	public List<Annuncio> findAllByAppointee(String incaricato){
+  /**
+   * Retrieves all the Errands from the db.
+   *
+   * @return a List of Annuncio that contains all the errands.
+   */
+  public List<Annuncio> findErrands() {
 
-		List<Annuncio> allByAppointee = new ArrayList<Annuncio>();
-		List<Document> documents = new ArrayList<>();
+    List<Annuncio> errands = new ArrayList<>();
+    List<Document> documents = new ArrayList<>();
 
-		database.getCollection("annuncio").find(Filters.eq("incaricato", incaricato)).into(documents);
-		if(!documents.isEmpty()) {
-			allByAppointee = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
-		}
+    database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna"))
+        .into(documents);
+    if (!documents.isEmpty()) {
+      errands = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+    }
 
-		return allByAppointee;
-	}
+    return errands;
+  }
 
-	//Crea un documento per mongoDB
-	private static Document docForDb(Annuncio annuncio) {
-		
-		//Check if it already exists
-		Document doc = database.getCollection("annuncio").find(Filters.eq("id", annuncio.getId())).first();
-		
-		//If it doesn't, create a new document
-		if(doc == null) {
-			doc = new Document("_id", new ObjectId())
-					.append("id", annuncio.getId())
-					.append("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta())
-					.append("autore" , annuncio.getAutore())
-					.append("titolo", annuncio.getTitolo())
-					.append("descrizione" , annuncio.getDescrizione())
-					.append("indirizzo", annuncio.getIndirizzo())
-					.append("dataPubblicazione", annuncio.getDataPubblicazione())
-					.append("incaricato", annuncio.getIncaricato())
-					.append("dataFine", annuncio.getDataFine());
-		} else {
-			doc.replace("id", annuncio.getId());
-			doc.replace("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta());
-			doc.replace("autore" , annuncio.getAutore());
-			doc.replace("titolo", annuncio.getTitolo());
-			doc.replace("descrizione" , annuncio.getDescrizione());
-			doc.replace("indirizzo", annuncio.getIndirizzo());
-			doc.replace("dataPubblicazione", annuncio.getDataPubblicazione());
-			doc.replace("incaricato", annuncio.getIncaricato());
-			doc.replace("dataFine", annuncio.getDataFine());
-		}
+  /**
+   * Retrieve all the available Jobs from the db.
+   *
+   * @return a List of Annuncio that contains all the available jobs.
+   */
+  public List<Annuncio> findAvailableJobs() {
 
-		return doc;
-	}
-	
-	
+    List<Annuncio> jobs = findJobs();
+    List<Annuncio> availables = new ArrayList<Annuncio>();
 
-	//Crea un istanza di Annuncio da un documento mongoDB
-	private static Annuncio docToAnnuncio(Document doc) {
+    if (!jobs.isEmpty()) {
+      availables = jobs.stream().filter(job -> job.getIncaricato().equals("nessuno"))
+          .collect(Collectors.toList());
+    }
 
-		Annuncio annuncio = new Annuncio(
-				doc.getString("abilitazioneRichiesta"),
-				doc.getString("autore"),
-				doc.getString("titolo"),
-				doc.getString("descrizione"),
-				doc.getString("indirizzo"));
+    String s = availables.isEmpty()
+        ? "Nessun lavoro disponibile trovato."
+        : "Trovato/i lavoro/i disponibile/i.";
+    System.out.println(s);
 
-		annuncio.setId(doc.getLong("id"));
-		annuncio.setDataPubblicazione((LocalDate)doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-		annuncio.setIncaricato(doc.getString("incaricato"));
-		annuncio.setDataFine((LocalDate)doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-		
-		return annuncio;
-	}
+    return availables;
+
+  }
+
+  /**
+   * Retrieves all the available Errands from the db.
+   *
+   * @return a List of Annuncio that contains all the available errands.
+   */
+  public List<Annuncio> findAvailableErrands() {
+
+    List<Annuncio> errands = findErrands();
+    List<Annuncio> availables = new ArrayList<Annuncio>();
+
+    if (!errands.isEmpty()) {
+      availables = errands.stream().filter(errand -> errand.getIncaricato().equals("nessuno"))
+          .collect(Collectors.toList());
+    }
+
+    String s = availables.isEmpty()
+        ? "Nessuna commissione disponibile trovata."
+        : "Trovata/e commissione/i disponibile/i.";
+    System.out.println(s);
+
+    return availables;
+  }
+
+  /**
+   * Retrieve all the Ads published from the given author from the db.
+   *
+   * @param autore is the email of the ad's author.
+   * @return a List of Annuncio that contains all the ads published from the given author.
+   */
+  public List<Annuncio> findAllByAuthor(String autore) {
+
+    List<Annuncio> allByAuthor = new ArrayList<Annuncio>();
+    List<Document> documents = new ArrayList<>();
+
+    database.getCollection("annuncio").find(Filters.eq("autore", autore)).into(documents);
+    if (!documents.isEmpty()) {
+      allByAuthor = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+    }
+
+    return allByAuthor;
+  }
+
+  /**
+   * Retrieve all the available Ads published from the given author from the db.
+   *
+   * @param autore is the email of the ad's author.
+   * @return a List of Annuncio that contains all the available ads published from the given author.
+   */
+  public List<Annuncio> findAllAvailableByAuthor(String autore) {
+
+    List<Annuncio> allByAuthor = findAllByAuthor(autore);
+    List<Annuncio> availables = new ArrayList<Annuncio>();
+
+    if (!allByAuthor.isEmpty()) {
+      availables = allByAuthor.stream().filter(ad -> ad.getIncaricato().equals("nessuno"))
+          .collect(Collectors.toList());
+    }
+
+    String s = availables.isEmpty()
+        ? "Nessun annuncio disponibile trovato"
+        : "Trovato/i annuncio/i disponibile/i";
+    System.out.println(s + "per l'utente: " + autore + ".");
+
+    return availables;
+  }
+
+  /**
+   * Retrieve all the Ads accepted from the given appointee from the db.
+   *
+   * @param incaricato is the email of the ad's appointee.
+   * @return a List of Annuncio that contains all the ads accepted from the given appointee.
+   */
+  public List<Annuncio> findAllByAppointee(String incaricato) {
+
+    List<Annuncio> allByAppointee = new ArrayList<Annuncio>();
+    List<Document> documents = new ArrayList<>();
+
+    database.getCollection("annuncio").find(Filters.eq("incaricato", incaricato)).into(documents);
+    if (!documents.isEmpty()) {
+      allByAppointee =
+          documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+    }
+
+    return allByAppointee;
+  }
+
+  /**
+   * Converts an Annuncio Object into a Document for MongoDB methods usage.
+   *
+   * @param annuncio is the ad Object to convert.
+   * @return the newly created Document.
+   */
+  private static Document docForDb(Annuncio annuncio) {
+
+    //Check if it already exists
+    Document doc =
+        database.getCollection("annuncio").find(Filters.eq("id", annuncio.getId())).first();
+
+    //If it doesn't, create a new document
+    if (doc == null) {
+      doc = new Document("_id", new ObjectId()).append("id", annuncio.getId())
+          .append("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta())
+          .append("autore", annuncio.getAutore()).append("titolo", annuncio.getTitolo())
+          .append("descrizione", annuncio.getDescrizione())
+          .append("indirizzo", annuncio.getIndirizzo())
+          .append("dataPubblicazione", annuncio.getDataPubblicazione())
+          .append("incaricato", annuncio.getIncaricato())
+          .append("dataFine", annuncio.getDataFine());
+    } else {
+      doc.replace("id", annuncio.getId());
+      doc.replace("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta());
+      doc.replace("autore", annuncio.getAutore());
+      doc.replace("titolo", annuncio.getTitolo());
+      doc.replace("descrizione", annuncio.getDescrizione());
+      doc.replace("indirizzo", annuncio.getIndirizzo());
+      doc.replace("dataPubblicazione", annuncio.getDataPubblicazione());
+      doc.replace("incaricato", annuncio.getIncaricato());
+      doc.replace("dataFine", annuncio.getDataFine());
+    }
+
+    return doc;
+  }
+
+  /**
+   * Converts a Document into an Annuncio Object.
+   *
+   * @param doc is the Document Object to convert.
+   * @return the newly created Annuncio.
+   */
+  private static Annuncio docToAnnuncio(Document doc) {
+
+    Annuncio annuncio =
+        new Annuncio(doc.getString("abilitazioneRichiesta"), doc.getString("autore"),
+            doc.getString("titolo"), doc.getString("descrizione"), doc.getString("indirizzo"));
+
+    annuncio.setId(doc.getLong("id"));
+    annuncio.setDataPubblicazione(
+        (LocalDate) doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault())
+            .toLocalDate());
+    annuncio.setIncaricato(doc.getString("incaricato"));
+    annuncio.setDataFine(
+        (LocalDate) doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault())
+            .toLocalDate());
+
+    return annuncio;
+  }
 
 }

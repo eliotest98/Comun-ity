@@ -1,8 +1,6 @@
 package controller.gestioneAnnunci;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,134 +8,162 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import model.Annuncio;
 import model.Utente;
 
+/**
+ * Servlet implementation class InserimentoAnnuncioServlet.
+ */
 @WebServlet("/InserimentoAnnuncioServlet")
 public class InserimentoAnnuncioServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
+  GestioneAnnunciService service = new GestioneAnnunciServiceImpl();
 
-	private final String addressRegex ="^([a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$";
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  /**
+   * doGet method implementation.
+   *
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
 
-		HttpSession session = req.getSession(true);
+    HttpSession session = req.getSession(true);
 
-		Utente user = (Utente) session.getAttribute("user");
+    Utente user = (Utente) session.getAttribute("user");
 
-		if(user == null) {
-			resp.sendRedirect("/Comun-ity/guest/login.jsp"); 
-		}else {
-			resp.sendRedirect("ListaAnnunci");
-		}
-	}
+    if (user == null) {
+      resp.sendRedirect("/Comun-ity/guest/login.jsp");
+    } else {
+      resp.sendRedirect("ListaAnnunci");
+    }
+  }
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		HttpSession session = req.getSession(true);
-				
-		Utente user = (Utente) session.getAttribute("user");
-		
-		String flag = req.getParameter("professionista");
+  /**
+   * doPost method implementation.
+   *
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
 
-		String autore = user.getMail();
-		String abilitazioneRichiesta = flag == null ? "nessuna" :req.getParameter("professione");
-		String tipologia = 	flag == null ? "commissione" : "lavoro";
-		String titolo = req.getParameter("titolo");
-		String descrizione = req.getParameter("descrizione");		
-		String indirizzo = req.getParameter("indirizzo");
-		
-		System.out.println(abilitazioneRichiesta);
+    HttpSession session = req.getSession(true);
 
+    Utente user = (Utente) session.getAttribute("user");
 
-		if(enablingOK(tipologia, abilitazioneRichiesta)) {
+    String flag = req.getParameter("professionista");
 
-			if(titleOK(titolo)) {
+    String autore = user.getMail();
+    String abilitazioneRichiesta = flag == null ? "nessuna" : req.getParameter("professione");
+    String tipologia = flag == null ? "commissione" : "lavoro";
+    String titolo = req.getParameter("titolo");
+    String descrizione = req.getParameter("descrizione");
+    String indirizzo = req.getParameter("indirizzo");
 
-				if(descriptionOK(descrizione)) {
-
-					if(patternMatches(indirizzo, addressRegex)) {
-
-						if(service.insertAnnuncio(new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo))) {
-							
-							RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-							req.setAttribute("success", "Annuncio inserito");
-							requestDispatcher.forward(req, resp);
-							
-						}else {
-							RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-							req.setAttribute("error", "Annuncio non inserito");
-
-							requestDispatcher.forward(req, resp);
-						}
-
-					}else {
-						RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-						req.setAttribute("error", "Indirizzo non valido");
-
-						requestDispatcher.forward(req, resp);
-					}
-				}else {
-					RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-					req.setAttribute("error", "Descrizione non valida");
-
-					requestDispatcher.forward(req, resp);
-				}
-			}else {
-				RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-				req.setAttribute("error", "Titolo non valido");
-
-				requestDispatcher.forward(req, resp);
-			}
-		}else {
-			RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-			req.setAttribute("error", "Non può esserci un'abilitazione richiesta in una commissione");
-
-			requestDispatcher.forward(req, resp);
-		}
-	}
-
-	private static boolean patternMatches(String string, String regexPattern) {
-		return Pattern.compile(regexPattern)
-				.matcher(string)
-				.matches();
-	}
-
-	private static boolean titleOK(String titolo) {
-		boolean res= true;
-
-		if(titolo.length()<1 || titolo.length()>30) {
-			res=false;
-		}
-
-		return res;
-	}
+    System.out.println(abilitazioneRichiesta);
 
 
-	private static boolean descriptionOK(String descrizione) {
-		boolean res= true;
+    if (enablingOk(tipologia, abilitazioneRichiesta)) {
 
-		if(descrizione.length()<1 || descrizione.length()>280) {
-			res=false;
-		}
+      if (titleOk(titolo)) {
 
-		return res;
-	}
+        if (descriptionOk(descrizione)) {
 
-	private static boolean enablingOK(String tipologia ,String abilitazione) {
-		boolean res= true;
+          if (addressOk(indirizzo)) {
 
-		if(tipologia.equals("commissione") && !abilitazione.equals("nessuna")) {
-			res= false;
-		}
+            if (service.insertAnnuncio(
+                new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo))) {
 
-		return res;
-	}
+              RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+              req.setAttribute("success", "Annuncio inserito");
+              requestDispatcher.forward(req, resp);
+
+            } else {
+              RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+              req.setAttribute("error", "Annuncio non inserito");
+
+              requestDispatcher.forward(req, resp);
+            }
+
+          } else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+            req.setAttribute("error", "Indirizzo non valido");
+
+            requestDispatcher.forward(req, resp);
+          }
+        } else {
+          RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+          req.setAttribute("error", "Descrizione non valida");
+
+          requestDispatcher.forward(req, resp);
+        }
+      } else {
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+        req.setAttribute("error", "Titolo non valido");
+
+        requestDispatcher.forward(req, resp);
+      }
+    } else {
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+      req.setAttribute("error", "Controllare abilitazione richiesta rispetto alla tipologia");
+
+      requestDispatcher.forward(req, resp);
+    }
+  }
+
+  /**
+   * Checks if address is valid.
+   *
+   * @param address to check
+   * @return true if valid
+   */
+  public static boolean addressOk(String address) {
+    return address.length() >= 1 && address.length() <= 100;
+  }
+
+  /**
+   * Checks if title is valid.
+   *
+   * @param titolo to check
+   * @return true if valid
+   */
+  public static boolean titleOk(String titolo) {
+    boolean res = true;
+
+    if (titolo.length() < 1 || titolo.length() > 30) {
+      res = false;
+    }
+
+    return res;
+  }
+
+
+  /**
+   * Checks if descrizione is valid.
+   *
+   * @param descrizione to check
+   * @return true if valid
+   */
+  public static boolean descriptionOk(String descrizione) {
+    return descrizione.length() >= 1 && descrizione.length() <= 280;
+  }
+
+  /**
+   * Checks id tipologia and abilitazione can be matched.
+   *
+   * @param tipologia to check
+   * @param abilitazione to check
+   * @return true if match is possible
+   */
+  public static boolean enablingOk(String tipologia, String abilitazione) {
+    return !tipologia.equals("lavoro") || !abilitazione.equals("nessuna");
+  }
 
 
 }

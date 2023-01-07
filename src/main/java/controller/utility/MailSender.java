@@ -1,52 +1,48 @@
 package controller.utility;
 
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.PasswordAuthentication;
+import java.util.List;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
-public class MailSender {		
-	
-	private static String user = "comunity.unisa@gmail.com";
-	private static String password = "Comun-ity_2023";
-	
-	public static void sendMail (String text, String subject) throws AddressException, MessagingException {
-		
-		System.out.println("ao");
-		
-		Properties props = new Properties();
+public class MailSender {
 
-	    props.put("mail.smtp.host", "smtp.gmail.com");
-	    props.put("mail.smtp.port", "587");
-	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
-	    
-	    System.out.println("create props");
+  public static void MailSender(String from, String text) {
+	  String to = from;
+      String host = "smtp.gmail.com";
 
-	    Session session = Session.getInstance(props, new Authenticator() {
-	      protected PasswordAuthentication getPasswordAuthentication() {
-	    	  System.out.println(new PasswordAuthentication(user, password));
-	        return new PasswordAuthentication(user, password);
-	      }
-	    });
+      Properties properties = System.getProperties();
+      properties.put("mail.smtp.host", host);
+      properties.put("mail.smtp.port", "465");
+      properties.put("mail.smtp.ssl.enable", "true");
+      properties.put("mail.smtp.auth", "true");
 
-	    try {
-	    	
-	      MimeMessage message = new MimeMessage(session);
-	      message.setFrom(new InternetAddress(user));
-	      message.addRecipient(Message.RecipientType.TO, new InternetAddress("gabrielesantoro46@gmail.com"));
-	      message.setSubject(subject);
-	      message.setText(text);
-	      message.setContent(text, "text/html; charset=utf-8");
-	      
-	      System.out.println("invio della mail");
-	      
-	      Transport.send(message);
+      Session session = Session.getInstance(properties, new javax.mail.Authenticator(){
+        protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+          return new javax.mail.PasswordAuthentication("comunity.unisa@gmail.com", "uslzhowdfvoknjum");
+        }
+      });
 
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	      System.out.println("mail non inviata");
-	    }
-	}
-	
-	
+      try {
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(from));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        message.setSubject("eiiiii");
+        message.setText(text);
+
+        Transport.send(message);
+      } catch (MessagingException mex) {
+        mex.printStackTrace();
+      }
+   }
 }
