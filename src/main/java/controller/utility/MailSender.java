@@ -15,12 +15,15 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import model.Annuncio;
+import model.Utente;
+
 public class MailSender {
 
-  public static void MailSender(String from, String text) {
+  public static boolean MailSender(Utente utente, Annuncio annuncio,String from,String subject) {
 	  String to = from;
       String host = "smtp.gmail.com";
-
+      
       Properties properties = System.getProperties();
       properties.put("mail.smtp.host", host);
       properties.put("mail.smtp.port", "465");
@@ -37,12 +40,21 @@ public class MailSender {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-        message.setSubject("eiiiii");
-        message.setText(text);
-
+        message.setSubject(subject);
+        message.setText(CreaText(utente,annuncio));
         Transport.send(message);
+        return true;
       } catch (MessagingException mex) {
         mex.printStackTrace();
+        return false;
       }
    }
+  
+  private static String CreaText(Utente utente, Annuncio annuncio) {
+	  String text;
+	  
+	  text="L'annuncio"+annuncio.getTitolo()+"\n"+"è stato preso in carico da"+utente.getNome()+" "+utente.getCognome();
+	  return text;
+  }
+  
 }

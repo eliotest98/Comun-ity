@@ -66,7 +66,7 @@ public class ListaLavoriServlet extends HttpServlet {
 
     HttpSession session = request.getSession(true);
     
-    int cont = 0;
+    int cont = 0, stop=1;
 
     Utente utente = (Utente) session.getAttribute("user");
 
@@ -137,9 +137,10 @@ public class ListaLavoriServlet extends HttpServlet {
         }
       }else {
     	  response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
+    	  stop=0;
       }
       
-      if(cont == 0) {
+      if(cont == 0 && stop==1) {
     	  response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
       }
 

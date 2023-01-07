@@ -37,7 +37,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService {
   public boolean registerAccount(Utente utente) throws IllegalArgumentException {
 
     try {
-      if (!doesUserExist(utente.getMail())) {
+      if (doesUserExist(utente.getMail())) {
         utenteDao.saveUtente(utente);
         return true;
       } else {
