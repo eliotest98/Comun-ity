@@ -24,8 +24,9 @@ public class GestioneReputazioneServiceImpl implements GestioneReputazioneServic
    *
    * @param utente     is the user to assign the rating to.
    * @param recensione is the rating to assign.
+   * @return true if the rating is assigned correctly.
    */
-  public void assignRating(Utente utente, Double recensione) {
-    utenteDao.assignRating(utente, recensione);
+  public boolean assignRating(Utente utente, Double recensione) {
+    return utenteDao.assignRating(utente, recensione);
   }
 }

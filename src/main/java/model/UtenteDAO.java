@@ -164,12 +164,13 @@ public class UtenteDAO {
    * @param utente     is the user to assign the rating to.
    * @param recensione is the rating to assign.
    */
-  public void assignRating(Utente utente, Double recensione) {
+  public boolean assignRating(Utente utente, Double recensione) {
 
     Utente utente1 = findUtenteByMail(utente.getMail());
 
     if (utente1 == null) {
       System.out.println("L'utente a cui si vuole assegnare una valutazione non esiste.");
+      return false;
     } else {
       utente1.getRecensioni().add(recensione);
       List<Double> recensioni = utente1.getRecensioni();
@@ -178,6 +179,7 @@ public class UtenteDAO {
           .updateOne(Filters.eq("mail", utente.getMail()), Updates.set("recensioni", recensioni));
 
       System.out.println("valutazione assegnata");
+      return true;
     }
 
   }

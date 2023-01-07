@@ -12,6 +12,7 @@ public interface GestioneReputazioneService {
    *
    * @param utente     is the user to assign the rating to.
    * @param recensione is the rating to assign.
+   * @return true if the rating is assigned correctly.
    */
-  public void assignRating(Utente utente, Double recensione);
+   boolean assignRating(Utente utente, Double recensione);
 }
