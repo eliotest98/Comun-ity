@@ -42,6 +42,14 @@
 				break;
 			}
 		}
+		
+		$('.valutazione').on('click', function () {
+			
+			var value = $(this).attr("annuncioId");
+			
+			console.log(value);
+			
+		});
 	});
 </script>
 
@@ -138,6 +146,8 @@
 						Date date = new Date();
 						ZoneId defaultZoneId = ZoneId.systemDefault();
 						
+						int cont = 0;
+						
 						while(it.hasNext()){
 							Annuncio annuncio = it.next();%>
 					<div class="col">
@@ -150,14 +160,18 @@
 								<div class="more-info">
 									<h3 class="text-center"><%=annuncio.getTitolo()%></h3>
 									<div class="row justify-content-center">
+										<%if(!date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))) {%>
 										<form action="CancellaAnnuncioServlet" method="post"
 											style="width: auto;">
 											<input type="hidden" name="annuncio" id="annuncio"
 												value="<%=annuncio.getId() %>">
-											<%if(!date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))) {%>
 											<button type="submit" class="btn btn-danger" id="bottone">Rimuovi</button>
-											<% }else {%><h5>L'annuncio non è rimuovibile</h5><%} %>
 										</form>
+										<% }else if(annuncio.getRecensione() == -1){%>
+										<div style="width: auto;">
+											<button class="btn btn-success valutazione" data-bs-toggle="modal"
+											data-bs-target="#valutazione" data-annuncioId="<%=annuncio.getId() %>">Assegna valutazione</button><%} %>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -175,7 +189,7 @@
 							</div>
 						</div>
 					</div>
-					<%}%>
+					<%cont++;}%>
 				</div>
 			</div>
 		</div>
@@ -218,6 +232,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- Password -->
 	<div class="modal fade" tabindex="-1" id="password">
 		<div class="modal-dialog modal-dialog-centered">
@@ -230,7 +245,6 @@
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
-
 							<div class="row">
 								<div class="col">
 									<input type="text" class="form-control" name="oldPass"
@@ -244,7 +258,6 @@
 										nuova password</label>
 								</div>
 							</div>
-
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -252,6 +265,40 @@
 							data-bs-dismiss="modal">Chiudi</button>
 						<button type="submit" class="btn btn-danger">Modifica
 							Password</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Valutazione -->
+	<div class="modal fade" tabindex="-1" id="valutazione">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form action="AssegnaValutazioneServlet" method="post">
+					<div class="modal-header">
+						<h5 class="modal-title">Aggiungi valutazione</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+
+							<div class="row">
+								<div class="col">
+									<input type="number" required class="form-control" name="valutazione"
+										id="valutazione" /> <label class="form-label" for="valutazione" min="1" max="5">Inserisci una valutazione</label>
+								</div>
+								<input type="hidden" name="utenteMail" value="" />
+								<input type="hidden" name="annuncioId" value="" />
+							</div>
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Chiudi</button>
+						<button type="submit" class="btn btn-danger">Assegna valutazione</button>
 					</div>
 				</form>
 			</div>

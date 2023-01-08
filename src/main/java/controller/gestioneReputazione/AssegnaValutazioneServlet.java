@@ -71,7 +71,7 @@ public class AssegnaValutazioneServlet extends HttpServlet {
 
     String utenteMail = request.getParameter("utenteMail"); //mail dell'utente a cui asseganre una valutazione
     Double valutazione = Double.valueOf(request.getParameter("valutazione")); //valutazione da asseganre
-    Long id= Long.valueOf(request.getParameter("annuncioId")); //id dell'annuncio fatto
+    Long id = Long.valueOf(request.getParameter("annuncioId")); //id dell'annuncio fatto
     Utente utente= new Utente();
 	try {
 		utente = serviceU.getAccountByEmail(utenteMail);

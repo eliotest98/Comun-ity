@@ -58,7 +58,7 @@ public class AnnuncioCompletato extends HttpServlet {
 		    requestDispatcher.forward(request, response);
 		}else {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomeServlet");
-		    request.setAttribute("success", "Non è stato possibile marcare l'annuncio come completato");
+		    request.setAttribute("error", "Non Ã¨ stato possibile marcare l'annuncio come completato");
 		    requestDispatcher.forward(request, response);
 		}
 	}
