@@ -66,8 +66,6 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
     String descrizione = req.getParameter("descrizione");
     String indirizzo = req.getParameter("indirizzo");
 
-    System.out.println(abilitazioneRichiesta);
-
 
     if (enablingOk(tipologia, abilitazioneRichiesta)) {
 

@@ -223,11 +223,6 @@
 								<label for="professione" class="form-label" id="professione">Professione
 									richiesta</label>
 							</div>
-							<div class="mb-3">
-								<input type="date" id="nascita" name="data" class="form-control"
-									required /> <label class="form-label" for="nascita">Data
-									di fine</label>
-							</div>
 						</div>
 					</div>
 					<div class="modal-footer">

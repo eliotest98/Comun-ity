@@ -160,7 +160,9 @@
 								<div class="more-info">
 									<h3 class="text-center"><%=annuncio.getTitolo()%></h3>
 									<div class="row justify-content-center">
-										<%if(!date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))) {%>
+										<%
+											System.out.println("data attuale " + date.toString() + " " + Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()));
+										if(!date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))) {%>
 										<form action="CancellaAnnuncioServlet" method="post"
 											style="width: auto;">
 											<input type="hidden" name="annuncio" id="annuncio"
@@ -170,8 +172,8 @@
 										<% }else if(annuncio.getRecensione() == -1){%>
 										<div style="width: auto;">
 											<button class="btn btn-success valutazione" data-bs-toggle="modal"
-											data-bs-target="#valutazione" data-annuncioId="<%=annuncio.getId() %>">Assegna valutazione</button><%} %>
-										</div>
+											data-bs-target="#valutazione" data-annuncioId="<%=annuncio.getId() %>">Assegna valutazione</button>
+										</div><%} %>
 									</div>
 								</div>
 							</div>
