@@ -275,6 +275,7 @@ public class AnnuncioDAO {
 	  
 	  if(annuncio!=null) {
 		  annuncio.setDataFine(LocalDate.now());
+		  annuncio.setIncaricato("nessuno");
 		  updateAnnuncio(annuncio);
 	  }else {
 		  res=false;
