@@ -56,15 +56,11 @@ public class AnnuncioCompletato extends HttpServlet {
 		Long id = (Long.parseLong(request.getParameter("annuncio")));
 		
 		if(serviceA.markAsDone(id)) {
-			Annuncio annuncio= serviceA.findAnnuncioById(id);
-			List<Annuncio> annunci= serviceA.getAllByAppointee(utente.getMail());
-			if(annunci.remove(annuncio)) {
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");
-			    request.setAttribute("success", "Annuncio marcato come completato con successo");
-			    request.setAttribute("annunci", annunci);
-		        request.setAttribute("link", "dashboard");	
-			    requestDispatcher.forward(request, response);
-			}
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomeServlet");
+			request.setAttribute("success", "Annuncio marcato come completato con successo");
+			requestDispatcher.forward(request, response);
+			
 		}else {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomeServlet");
 		    request.setAttribute("error", "Non è stato possibile marcare l'annuncio come completato");
