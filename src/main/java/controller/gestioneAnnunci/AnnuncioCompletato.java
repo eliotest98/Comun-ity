@@ -1,6 +1,7 @@
 package controller.gestioneAnnunci;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Annuncio;
 import model.Utente;
 
 /**
@@ -49,13 +51,19 @@ public class AnnuncioCompletato extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		HttpSession session = request.getSession(true);
+	    Utente utente = (Utente) session.getAttribute("user");
 		Long id = (Long.parseLong(request.getParameter("annuncio")));
 		
 		if(serviceA.markAsDone(id)) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomeServlet");
-		    request.setAttribute("success", "Annuncio marcato come completato con successo");
-		    requestDispatcher.forward(request, response);
+			Annuncio annuncio= serviceA.findAnnuncioById(id);
+			List<Annuncio> annunci= serviceA.getAllByAppointee(utente.getMail());
+			if(annunci.remove(annuncio)) {
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomeServlet");
+			    request.setAttribute("success", "Annuncio marcato come completato con successo");
+			    request.setAttribute("annunci", annunci);
+			    requestDispatcher.forward(request, response);
+			}
 		}else {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("HomeServlet");
 		    request.setAttribute("error", "Non è stato possibile marcare l'annuncio come completato");
