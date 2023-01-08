@@ -170,7 +170,8 @@ public class AccreditamentoDAO {
         doc.getString("allegato"),
         (LocalDate) doc.getDate("dataSottomissione").toInstant().atZone(ZoneId.systemDefault())
             .toLocalDate(),
-        (LocalDate) doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault())
-            .toLocalDate(), doc.getString("stato"));
+            doc.getDate("dataVisione") != null ? (LocalDate) doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault())
+            .toLocalDate() : null
+            , doc.getString("stato"));
   }
 }

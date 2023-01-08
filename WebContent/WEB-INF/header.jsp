@@ -27,15 +27,9 @@
 					class="bx bx-box nav_icon"></i> <span class="nav_name">Archivio
 						Annunci</span>
 				</a>
-				<div class="nav_link" id="accreditamenti">
-					<div class="icon-badge-container nav_icon">
-						<a href="#" style="color:#afa5d9;">
-							<span class="badge badge-light icon-badge text-center">9</span> 
-							<i class="bx bxs-edit nav_icon"></i>
-						</a>
-					</div> 
-					<span class="nav_name">Accreditamenti</span>
-				</div>
+				<a href="AccreditamentoServlet" class="nav_link" id="accreditamenti"> <i
+					class="bx bxs-edit nav_icon"></i> <span class="nav_name">Accreditamenti</span>
+				</a>
 				
 				<%} %>
 			</div>

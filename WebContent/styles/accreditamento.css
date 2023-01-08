@@ -1,0 +1,37 @@
+#info{
+  border: 2px solid #ffc107;
+}
+
+#info:hover{
+  background-color: #ffc107;
+}
+
+#del{
+  border: 2px solid red;
+}
+
+#del:hover{
+  background-color: red;
+}
+
+#accept{
+  border: 2px solid green;
+}
+
+#accept:hover{
+  background-color: green;
+}
+
+.button{
+  border-radius: 10px;
+  border: 1px solid;
+  background-color: aliceblue;
+  margin: 5px;
+}
+
+.col{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+

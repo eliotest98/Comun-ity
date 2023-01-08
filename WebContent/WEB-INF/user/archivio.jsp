@@ -41,30 +41,32 @@
 					data : "&action=commissioni",
 					success : function(response) {
 						$("#commissioniRow").html(response);
+						
+						
+						/*Stars*/
+						$('.heading').each(
+								function() {
+									var valutazione = $(this).text();
+									
+									console.log(valutazione);
+									
+									for (let i = 1; i <= 5; i++){
+
+										if (i <= Math.round(valutazione))
+											$(this).closest('div').find('.star' + i)
+													.addClass("checked");
+										else
+											break;
+									}
+								});
 					}
 				});
-
-				/*Change stars*/
-
-				$(".card-body span").each(
-						function() {
-							var valutazione = $(this).text();
-
-							for (let i = 1; i <= 5; i++)
-
-								if (i <= Math.round(valutazione))
-									$(this).closest('div').find('.star' + i)
-											.addClass("checked");
-								else
-									break;
-						});
+				
 
 				/*On click listener per modal*/
 
 				$('#modal').click(function() {
-
 					$('#annunci').modal('show');
-
 				});
 
 				$('#professioneDiv').hide();
@@ -93,6 +95,23 @@
 							data : "&action=lavori",
 							success : function(response) {
 								$("#lavoriRow").html(response);
+								
+								/*Stars*/
+								$('.heading').each(
+										function() {
+											var valutazione = $(this).text();
+											
+											console.log(valutazione);
+											
+											for (let i = 1; i <= 5; i++){
+
+												if (i <= Math.round(valutazione))
+													$(this).closest('div').find('.star' + i)
+															.addClass("checked");
+												else
+													break;
+											}
+										});
 							}
 						});
 
@@ -106,6 +125,23 @@
 							data : "&action=commissioni",
 							success : function(response) {
 								$("#commissioniRow").html(response);
+								
+								/*Stars*/
+								$('.heading').each(
+										function() {
+											var valutazione = $(this).text();
+											
+											console.log(valutazione);
+											
+											for (let i = 1; i <= 5; i++){
+
+												if (i <= Math.round(valutazione))
+													$(this).closest('div').find('.star' + i)
+															.addClass("checked");
+												else
+													break;
+											}
+										});
 							}
 						});
 

@@ -15,6 +15,7 @@ $(document).ready(function () {
           if (toggle && nav && bodypd && headerpd) {
             
             toggle.addEventListener("click", () => {
+				console.log("clicked");
               // show navbar
               nav.classList.toggle("show-nav");
               // change icon

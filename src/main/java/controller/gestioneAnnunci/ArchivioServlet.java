@@ -5,6 +5,8 @@ import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -102,6 +104,15 @@ public class ArchivioServlet extends HttpServlet {
           while (it.hasNext()) {
 
             annuncio = (Annuncio) it.next();
+            
+            Utente utente = null;
+            
+            try {
+				utente = serviceUtenza.getAccountByEmail(annuncio.getAutore());
+			} catch (InterruptedException | ExecutionException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
             response.getWriter().write("<div class=\"col\">\n"
                     + "<div class=\"card center\">\n"
@@ -130,12 +141,12 @@ public class ArchivioServlet extends HttpServlet {
                     + "Indirizzo: " + annuncio.getIndirizzo() + "<br>\n"
                     + "Data Fine: " + annuncio.getDataFine() + "<br>\n"
                     + "Valutazione Utente: <span class=\"heading\" "
-                    + "id=\"val\">" + user.getReputazione() + "</span>\n"
-                    + "<i class='bx bxs-star' id=\"star1\"></i>\n"
-                    + "<i class='bx bxs-star' id=\"star2\"></i>\n"
-                    + "<i class='bx bxs-star' id=\"star3\"></i>\n"
-                    + "<i class='bx bxs-star' id=\"star4\"></i>\n"
-                    + "<i class='bx bxs-star' id=\"star5\"></i></p>"
+                    + "id=\"val\">" + utente.getReputazione() + "</span>\n"
+                    + "<i class='bx bxs-star star1'></i>\n"
+                    + "<i class='bx bxs-star star2'></i>\n"
+                    + "<i class='bx bxs-star star3'></i>\n"
+                    + "<i class='bx bxs-star star4'></i>\n"
+                    + "<i class='bx bxs-star star5'></i></p>"
                     + "</p>\n"
                     + "<span class=\"more\">Muovi il mouse per rimuovere</span>\n"
                     + "</div>\n"
