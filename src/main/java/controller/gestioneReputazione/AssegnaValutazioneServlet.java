@@ -69,19 +69,23 @@ public class AssegnaValutazioneServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    String utenteMail = request.getParameter("utenteMail"); //mail dell'utente a cui asseganre una valutazione
-    Double valutazione = Double.valueOf(request.getParameter("valutazione")); //valutazione da asseganre
-    Long id = Long.valueOf(request.getParameter("annuncioId")); //id dell'annuncio fatto
-    Utente utente= new Utente();
+	  System.out.println(request.getParameter("valutazione") + " " + request.getParameter("annuncioId"));
+	  
+    Double valutazione = Double.valueOf(request.getParameter("valutazione"));
+    Long id = Long.valueOf(request.getParameter("annuncioId"));
+    
+    Annuncio annuncio = serviceA.findAnnuncioById(id);
+    
+    String utenteMail = annuncio.getIncaricato();
+    
+    Utente utente = new Utente();
 	try {
 		utente = serviceU.getAccountByEmail(utenteMail);
 	} catch (InterruptedException | ExecutionException | IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	
-	Annuncio annuncio= serviceA.findAnnuncioById(id);
-	
+		
 	if(!annuncio.getDataFine().equals(annuncio.getDataPubblicazione().plusDays(30))) {
 		if(utente!=null) {
 			service.assignRating(annuncio, utente, valutazione);

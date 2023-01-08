@@ -43,13 +43,27 @@
 			}
 		}
 		
+		var value = null;
+		
 		$('.valutazione').on('click', function () {
 			
-			var value = $(this).attr("annuncioId");
+			value = $(this).attr("data-annuncioId");
 			
 			console.log(value);
 			
 		});
+		
+		$('#sendForm').on('click', function () {
+		
+			var input = $("<input>")
+	            .attr("type", "hidden")
+	            .attr("name", "annuncioId").val(value);
+						
+			$('#valutazioneForm').append(input);
+			$('#valutazioneForm').submit();
+			
+		});
+		
 	});
 </script>
 
@@ -161,7 +175,6 @@
 									<h3 class="text-center"><%=annuncio.getTitolo()%></h3>
 									<div class="row justify-content-center">
 										<%
-											System.out.println("data attuale " + date.toString() + " " + Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()));
 										if(!date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))) {%>
 										<form action="CancellaAnnuncioServlet" method="post"
 											style="width: auto;">
@@ -277,7 +290,7 @@
 	<div class="modal fade" tabindex="-1" id="valutazione">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
-				<form action="AssegnaValutazioneServlet" method="post">
+				<form action="AssegnaValutazioneServlet" method="post" id="valutazioneForm">
 					<div class="modal-header">
 						<h5 class="modal-title">Aggiungi valutazione</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -288,11 +301,9 @@
 
 							<div class="row">
 								<div class="col">
-									<input type="number" required class="form-control" name="valutazione"
-										id="valutazione" /> <label class="form-label" for="valutazione" min="1" max="5">Inserisci una valutazione</label>
+									<input type="number" required class="form-control" name="valutazione" value="1" min="1" max="5"
+										id="valutazione" /> <label class="form-label" for="valutazione">Inserisci una valutazione</label>
 								</div>
-								<input type="hidden" name="utenteMail" value="" />
-								<input type="hidden" name="annuncioId" value="" />
 							</div>
 
 						</div>
@@ -300,7 +311,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">Chiudi</button>
-						<button type="submit" class="btn btn-danger">Assegna valutazione</button>
+						<button type=button id="sendForm" class="btn btn-success">Assegna valutazione</button>
 					</div>
 				</form>
 			</div>
