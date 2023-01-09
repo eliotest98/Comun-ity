@@ -51,7 +51,8 @@ public class HomeServlet extends HttpServlet {
     	
     	Utente user = (Utente) session.getAttribute("user");
     	
-        List<Annuncio> lista = serviceA.getAllByAppointee(user.getMail());
+        List<Annuncio> lista = serviceA.getAllByAppointeeNotDone(user.getMail());
+       
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/main.jsp");
         request.setAttribute("annunci", lista);

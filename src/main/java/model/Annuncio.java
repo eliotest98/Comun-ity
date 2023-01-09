@@ -20,6 +20,7 @@ public class Annuncio {
   private String incaricato;
   private LocalDate dataFine;
   private Double recensione;
+  private boolean terminato;
 
   /**
    * Empty constructor.
@@ -50,9 +51,30 @@ public class Annuncio {
     this.incaricato = "nessuno"; //default unassigned ad
     this.dataFine = dataPubblicazione.plusDays(30); //default expire date
     this.recensione = -1.0; //default not reviewed
+    this.terminato= false; //default not done
   }
+  
+  
 
-  /**
+/**
+ * Terminato getter.
+ * 
+ * @return the terminato
+ */
+  public boolean isTerminato() {
+	return terminato;
+}
+
+/**
+ * Terminato setter.
+ * 
+ * @param terminato the terminato to set
+ */
+  public void setTerminato(boolean terminato) {
+	this.terminato = terminato;
+}
+
+/**
    * Id setter.
    *
    * @param id the annuncioId

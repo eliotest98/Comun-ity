@@ -7,6 +7,7 @@ import controller.utility.DbConnection;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bson.Document;
@@ -30,7 +31,11 @@ public class AnnuncioDAO {
   public boolean saveAnnuncio(Annuncio annuncio) {
 
     try {
-      annuncio.setId(getLastId() + 1);
+      if(database.getCollection("annuncio").countDocuments()==0) { //se non ci sono annunci l'id sarà 1
+    	  annuncio.setId((long) 1);
+      }else {
+    	  annuncio.setId(getLastId() + 1);
+      }
       database.getCollection("annuncio").insertOne(docForDb(annuncio));
       System.out.println("Annuncio aggiunto al database con successo");
       return true;
@@ -274,13 +279,39 @@ public class AnnuncioDAO {
 	  Annuncio annuncio= findAnnuncioById(id);
 	  
 	  if(annuncio!=null) {
-		  annuncio.setDataFine(LocalDate.now());
+		  annuncio.setTerminato(true);;
 		  updateAnnuncio(annuncio);
 	  }else {
 		  res=false;
 	  }
 	  
 	  return res;
+  }
+  
+  
+  /**
+   * Retrieve all the Ads, not marked as done, accepted from the given appointee from the db.
+   *
+   * @param incaricato is the email of the ad's appointee.
+   * @return a List of Annuncio that contains all the ads, not marked as done, accepted from the given appointee.
+   */
+  public List<Annuncio> findAllByAppointeeNotDone(String incaricato) {
+
+    List<Annuncio> allByAppointee = findAllByAppointee(incaricato);
+    List<Annuncio> allByAppointeeNotDone = new ArrayList<Annuncio>();
+    
+    for(Annuncio a : allByAppointee) {
+    	if(!a.isTerminato()) {
+    		allByAppointeeNotDone.add(a);
+    	}
+    }
+    
+    if(allByAppointeeNotDone.isEmpty()) {
+    	System.out.println("Non ci sono annunci relativi all'utente non svolti");
+    }
+    
+    return allByAppointeeNotDone;
+    
   }
 
   /**
@@ -305,7 +336,8 @@ public class AnnuncioDAO {
           .append("dataPubblicazione", annuncio.getDataPubblicazione())
           .append("incaricato", annuncio.getIncaricato())
           .append("dataFine", annuncio.getDataFine())
-          .append("recensione", annuncio.getRecensione());
+          .append("recensione", annuncio.getRecensione())
+          .append("terminato", annuncio.isTerminato());
     } else {
       doc.replace("id", annuncio.getId());
       doc.replace("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta());
@@ -317,6 +349,7 @@ public class AnnuncioDAO {
       doc.replace("incaricato", annuncio.getIncaricato());
       doc.replace("dataFine", annuncio.getDataFine());
       doc.replace("recensione", annuncio.getRecensione());
+      doc.replace("terminato", annuncio.isTerminato());
     }
 
     return doc;
@@ -343,6 +376,7 @@ public class AnnuncioDAO {
         (LocalDate) doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault())
             .toLocalDate());
     annuncio.setRecensione(doc.getDouble("recensione"));
+    annuncio.setTerminato(doc.getBoolean("terminato"));
 
     return annuncio;
   }
