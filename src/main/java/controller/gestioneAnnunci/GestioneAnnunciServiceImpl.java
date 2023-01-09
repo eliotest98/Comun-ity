@@ -181,5 +181,16 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
   public boolean markAsDone(Long id) {
 	  return annuncioDAO.markAsDone(id);
   }
+  
+  /**
+   * Retrieve all the Ads, not marked as done, accepted from the given appointee from the db.
+   *
+   * @param incaricato is the email of the ad's appointee.
+   * @return a List of Annuncio that contains all the ads, not marked as done, accepted from the given appointee.
+   */
+  @Override
+  public List<Annuncio> getAllByAppointeeNotDone(String incaricato) {
+    return annuncioDAO.findAllByAppointeeNotDone(incaricato);
+  }
 
 }
