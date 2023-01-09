@@ -75,21 +75,13 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 
           if (addressOk(indirizzo)) {
 
-            if (service.insertAnnuncio(
-                new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo))) {
+            service.insertAnnuncio(new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo));
 
-              RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-              req.setAttribute("success", "Annuncio inserito");
-              requestDispatcher.forward(req, resp);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+            req.setAttribute("success", "Annuncio inserito");
+            requestDispatcher.forward(req, resp);
 
-            } else {
-              RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-              req.setAttribute("error", "Annuncio non inserito");
-
-              requestDispatcher.forward(req, resp);
-            }
-
-          } else {
+            }else {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
             req.setAttribute("error", "Indirizzo non valido");
 

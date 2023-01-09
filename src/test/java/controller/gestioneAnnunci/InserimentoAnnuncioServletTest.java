@@ -85,7 +85,7 @@ class InserimentoAnnuncioServletTest {
 	// Test case TC_CT_7.1.1: empty field 'abilitazioneRichiesta' for 'tipologia' = "lavoro".
 	@Test
 	void testRequiredQualificationNotSet() throws ServletException, IOException {
-		when(requestMock.getParameter("professionista")).thenReturn(" ");
+		when(requestMock.getParameter("professionista")).thenReturn("1");
 		when(requestMock.getParameter("professione")).thenReturn("nessuna");
 		
 		servletMock.doPost(requestMock, responseMock);
@@ -94,22 +94,6 @@ class InserimentoAnnuncioServletTest {
 		verify(dispatcherMock).forward(requestMock, responseMock);
 
 	}
-
-	/*
-	 * // Test case TC_CT_7.1.2: field 'abilitazioneRichiesta' setted for
-	 * 'tipologia' = "commissione" but not required.
-	 * 
-	 * @Test void testNonRequiredQualificationSet() throws ServletException,
-	 * IOException {
-	 * when(requestMock.getParameter("professionista")).thenReturn(null);
-	 * when(requestMock.getParameter("professione")).thenReturn("idraulico");
-	 * 
-	 * servletMock.doPost(requestMock, responseMock);
-	 * 
-	 * verify(requestMock).setAttribute("error",
-	 * "Controllare abilitazione richiesta rispetto alla tipologia");
-	 * verify(dispatcherMock).forward(requestMock, responseMock); }
-	 */
 
 	// Test case TC_CT_7.1.3: empty field 'titolo'.
 	@Test
@@ -188,11 +172,28 @@ class InserimentoAnnuncioServletTest {
 		verify(requestMock).setAttribute("error", "Indirizzo non valido");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
-	
-	// Test case TC_CT_7.1.9: Successful new insert
+
+	// Test case TC_CT_7.1.9: Successful new Errand insert
 	@Test
-	void testInsertSuccess() throws ServletException, IOException {
+	void testErrandInsertSuccess() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
+		when(utenteMock.getMail()).thenReturn("testServlet@biagio.com");
+		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
+		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
+		when(requestMock.getParameter("indirizzo")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtr");
+		
+		servletMock.doPost(requestMock, responseMock);
+		
+		verify(requestMock).setAttribute("success", "Annuncio inserito");
+		verify(dispatcherMock).forward(requestMock, responseMock);
+		 
+	}
+	
+	// Test case TC_CT_7.1.9: Successful new Job insert
+	@Test
+	void testJobInsertSuccess() throws ServletException, IOException {
+		when(requestMock.getParameter("professionista")).thenReturn("1");
+		when(requestMock.getParameter("professione")).thenReturn("idraulico");
 		when(utenteMock.getMail()).thenReturn("testServlet@biagio.com");
 		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
