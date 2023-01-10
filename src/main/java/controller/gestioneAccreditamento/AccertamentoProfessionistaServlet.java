@@ -18,14 +18,14 @@ import model.Utente;
 /**
  * Servlet implementation class AccertamentoProfessionista
  */
-@WebServlet("/AccertamentoProfessionista")
-public class AccertamentoProfessionista extends HttpServlet {
+@WebServlet("/AccertamentoProfessionistaServlet")
+public class AccertamentoProfessionistaServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
    * @see HttpServlet#HttpServlet()
    */
-  public AccertamentoProfessionista() {
+  public AccertamentoProfessionistaServlet() {
     super();
     // TODO Auto-generated constructor stub
   }

@@ -20,14 +20,14 @@ import model.Utente;
 /**
  * Servlet implementation class InserimentoCertificazione
  */
-@WebServlet("/InserimentoCertificazione")
-public class InserimentoCertificazione extends HttpServlet {
+@WebServlet("/InserimentoCertificazioneServlet")
+public class InserimentoCertificazioneServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
    * @see HttpServlet#HttpServlet()
    */
-  public InserimentoCertificazione() {
+  public InserimentoCertificazioneServlet() {
     super();
     // TODO Auto-generated constructor stub
   }
@@ -47,7 +47,7 @@ public class InserimentoCertificazione extends HttpServlet {
     if (user == null) {
       response.sendRedirect("/Comun-ity/guest/login.jsp");
     } else {
-      response.sendRedirect(" "); //jsp inserimento certificazione
+      response.sendRedirect(" "); //Aggiungere JSP
     }
   }
 
@@ -75,7 +75,7 @@ public class InserimentoCertificazione extends HttpServlet {
 
           serviceA.saveAccreditamento(accreditamento);
 
-          RequestDispatcher requestDispatcher = request.getRequestDispatcher("");	//jsp inserimento certificazione
+          RequestDispatcher requestDispatcher = request.getRequestDispatcher(" ");	//Aggiungere JSP
           request.setAttribute("success",
               "Richiesta sottomessa con successo, verra' controllata il prima possibile");
 
@@ -83,7 +83,7 @@ public class InserimentoCertificazione extends HttpServlet {
 
         } else {
 
-          RequestDispatcher requestDispatcher = request.getRequestDispatcher("");	//jsp inserimento certificazione
+          RequestDispatcher requestDispatcher = request.getRequestDispatcher(" ");	//Aggiungere JSP
           request.setAttribute("error",
               "Errore nell'inserimento dell'allegato, deve essere un pdf da massimo 50MB");
 
@@ -93,8 +93,8 @@ public class InserimentoCertificazione extends HttpServlet {
 
       } else {
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("");	//jsp inserimento certificazione
-        request.setAttribute("error", "Formato abilitazione non corretto");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(" ");	//Aggiungere JSP
+        request.setAttribute("error", "Abilitazione non valida");
 
         requestDispatcher.forward(request, response);
 
@@ -113,25 +113,14 @@ public class InserimentoCertificazione extends HttpServlet {
   }
 
   public static boolean abilitazioneOK(String abilitazione) {
-
-    boolean res = true;
-
-    if (abilitazione.length() < 1 || abilitazione.length() > 30) {
-      res = false;
-    }
-
-    return res;
+    return abilitazione.length() >= 1 && abilitazione.length() <= 30;
   }
 
   public static boolean allegatoOK(String allegato) {
-    boolean res = true;
+
     byte[] data = DatatypeConverter.parseBase64Binary(allegato);
 
-    if (data.length < 0 || data.length > 52428800) {
-      res = false;
-    }
+    return data.length >= 1 && data.length <= 26214400;
 
-    return res;
   }
-
 }
