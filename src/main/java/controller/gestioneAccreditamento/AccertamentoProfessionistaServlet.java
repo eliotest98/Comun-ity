@@ -47,7 +47,12 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
       if (!service.isAdmin(user)) {
         response.sendRedirect("/Comun-ity/guest/login.jsp");
       } else {
+<<<<<<< Updated upstream:src/main/java/controller/gestioneAccreditamento/AccertamentoProfessionistaServlet.java
         response.sendRedirect("/WEB-INF/user/accreditamenti.jsp"); //jsp verifica accreditamento
+=======
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");
+        requestDispatcher.forward(request, response);
+>>>>>>> Stashed changes:src/main/java/controller/gestioneAccreditamento/AccertamentoProfessionista.java
       }
 
     } else {

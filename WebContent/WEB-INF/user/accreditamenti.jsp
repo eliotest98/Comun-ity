@@ -30,10 +30,56 @@
 		href="${pageContext.request.contextPath}/styles/lista_utenti.css" />
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/styles/accreditamento.css" />
+		
+		<script>
+		
+		$(document).ready(function (){
+			
+			
+			$('.button').click(function(){
+				
+				var image = $(this).val();
+			
+				$('#file').attr("src","data:image/jpeg;base64,"+image);
+				
+			})
+			
+		})
+		
+		
+		</script>
 </head>
 <body id="body-pd">
 
 	<%@ include file="../header.jsp"%>
+	
+	<%
+	if (request.getAttribute("error") != null) {
+	%>
+	<div id="message">
+		<div class="alert alert-danger alert-dismissible fade show"
+			role="alert">
+			<strong>Errore</strong>
+			<%=request.getAttribute("error")%>.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</div>
+	<%}%>
+
+	<%
+	if (request.getAttribute("success") != null) {
+	%>
+	<div id="message">
+		<div class="alert alert-success alert-dismissible fade show"
+			role="alert">
+			<strong>Successo</strong>
+			<%=request.getAttribute("success")%>.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</div>
+	<%}%>
 	
 	<div class="container-fluid">
 	
@@ -44,6 +90,8 @@
 		if(!lista.isEmpty()){
 		
 			Iterator it = lista.iterator();
+			
+			List<String> files = new ArrayList<>();
 			
 			while(it.hasNext()){
 			
@@ -60,8 +108,8 @@
 						</div>
 						<div class="col">
 							<div style="margin: 0 auto;">
-								<button class="button" id="info" 
-								data-bs-toggle="modal" data-bs-target="#info">
+								<button class="button" id="info"
+								data-bs-toggle="modal" data-bs-target="#infoModal" value="<%=accr.getAllegato()%>">
 									<i class='bx bx-info-circle'></i>
 								</button>
 								<form action="AccertamentoProfessionistaServlet" method="post">
@@ -82,37 +130,31 @@
 			}else{%>
 			<h4>Non ci sono accreditamenti in sospeso</h4>
 		<%}%>
-		
+	</div>
+	
 		<!-- Valutazione -->
-		<div class="modal fade" tabindex="-1" id="info">
+		<div class="modal fade" tabindex="-1" id="infoModal">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<form action="AssegnaValutazioneServlet" method="post" id="valutazioneForm">
 						<div class="modal-header">
-							<h5 class="modal-title">Aggiungi valutazione</h5>
+							<h5 class="modal-title">Visualizza certificazione</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"
 								aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							<div class="container-fluid">
-								<div class="row">
-									<div class="col">
-										<input type="number" required class="form-control" name="valutazione" value="1" min="1" max="5"
-											id="valutazione" /> <label class="form-label" for="valutazione">Inserisci una valutazione</label>
-									</div>
-								</div>
+								<img src="" id="file"/>
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
+							<button type="button" class="btn btn-primary"
 								data-bs-dismiss="modal">Chiudi</button>
-							<button type=button id="sendForm" class="btn btn-success">Assegna valutazione</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-	</div>
 
 </body>
 </html>
