@@ -51,7 +51,6 @@ class PresaInCaricoAnnuncioServletTest {
 	public void setUp() {
 		presaInCaricoMock= new PresaInCaricoAnnuncioServlet();
 		when(requestMock.getSession(true)).thenReturn(sessionMock);
-		when(requestMock.getParameter("from")).thenReturn("comunity.unisa@gmail.com");
 		Annuncio test = new Annuncio("nessuna", "biagiusMagno@gmail.com", "Test", "This is only for test purpose", "Via Vulture 1 Rapolla Potenza 85027");
 		AnnuncioDAO annuncioDAO = new AnnuncioDAO();
 		annuncioDAO.saveAnnuncio(test);
@@ -90,16 +89,16 @@ class PresaInCaricoAnnuncioServletTest {
 		verify(requestMock).setAttribute("errore", "C'è stato un problema con il tuo annuncio");
 	}
 
-	@Test
-	public void mailSenderError() throws ServletException, IOException {
-		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
-		when(requestMock.getParameter("from")).thenReturn("test@test.com");
-		when(utenteMock.getMail()).thenReturn("eliotesting@gmail.com");
-		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
-		presaInCaricoMock.doPost(requestMock, responseMock);
-		verify(dispatcherMock).forward(requestMock, responseMock);
-		verify(requestMock).setAttribute("success", "Annuncio accettato con successo");
-	}
+//	@Test
+//	public void mailSenderError() throws ServletException, IOException {
+//		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
+//		when(requestMock.getParameter("from")).thenReturn("test@test.com");
+//		when(utenteMock.getMail()).thenReturn("eliotesting@gmail.com");
+//		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
+//		presaInCaricoMock.doPost(requestMock, responseMock);
+//		verify(dispatcherMock).forward(requestMock, responseMock);
+//		verify(requestMock).setAttribute("success", "Annuncio accettato con successo");
+//	}
 	
 	//Test che verifica se l'utente non è loggato
 	@Test

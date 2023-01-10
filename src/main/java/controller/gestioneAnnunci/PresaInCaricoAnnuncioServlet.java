@@ -66,7 +66,6 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
     HttpSession session = request.getSession(true);
     Utente utente = (Utente) session.getAttribute("user");
     Long id = (Long.parseLong(request.getParameter("annuncio")));
-    String from = request.getParameter("from");
     Annuncio annuncio= service.findAnnuncioById(id);
 
     if (service.acceptAnnuncio(id, utente.getMail())) {
@@ -74,9 +73,9 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
       RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
       request.setAttribute("link", "bacheca");
       request.setAttribute("success", "Annuncio accettato con successo");
-      MailSender mailSender = new MailSender();
-      if(!mailSender.sendMail(utente, annuncio, from)) System.out.println("Email NOT SEND");
-      else System.out.println("Email OK");
+      
+      MailSender.sendMail(utente, annuncio);
+      
       requestDispatcher.forward(request, response);
 
     } else {

@@ -25,7 +25,7 @@ public class MailSender {
 	 */
 	public MailSender() {}
 
-	public boolean sendMail(Utente utente, Annuncio annuncio, String email) {
+	public static void sendMail(Utente utente, Annuncio annuncio) {
 
 		String host = "smtp.gmail.com";
 
@@ -37,7 +37,7 @@ public class MailSender {
 
 		Session session = Session.getInstance(properties, new javax.mail.Authenticator(){
 			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-				return new javax.mail.PasswordAuthentication(email, "uslzhowdfvoknjum");
+				return new javax.mail.PasswordAuthentication("comunity.unisa@gmail.com", "uslzhowdfvoknjum");
 			}
 		});
 
@@ -51,10 +51,8 @@ public class MailSender {
 			message.setSubject(subject);
 			message.setText(CreaText(utente,annuncio));
 			Transport.send(message);
-			return true;
-		} catch (Exception e) {
+		} catch (MessagingException|NullPointerException e) {
 			e.printStackTrace();
-			return false;
 		}
 	}
 
