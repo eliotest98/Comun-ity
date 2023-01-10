@@ -23,13 +23,13 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
   /**
    * doGet method implementation.
    *
-   * @throws IOException //
+   * @throws IOException      //
    * @throws ServletException //
-   *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+      IOException {
 
     HttpSession session = req.getSession(true);
 
@@ -45,13 +45,13 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
   /**
    * doPost method implementation.
    *
-   * @throws IOException //
+   * @throws IOException      //
    * @throws ServletException //
-   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+      IOException {
 
     HttpSession session = req.getSession(true);
 
@@ -75,13 +75,20 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
 
           if (addressOk(indirizzo)) {
 
-            service.insertAnnuncio(new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo));
-
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
-            req.setAttribute("success", "Annuncio inserito");
-            requestDispatcher.forward(req, resp);
-
-            }else {
+            if (service.insertAnnuncio(
+                new Annuncio(abilitazioneRichiesta, autore, titolo,descrizione, indirizzo))) {
+              
+              RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+              req.setAttribute("success", "Annuncio inserito");
+              
+              requestDispatcher.forward(req, resp);
+            } else {
+              RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
+              req.setAttribute("error", "Annuncio non inserito");
+              
+              requestDispatcher.forward(req, resp);
+            }
+          } else {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
             req.setAttribute("error", "Indirizzo non valido");
 
@@ -124,13 +131,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
    * @return true if valid
    */
   public static boolean titleOk(String titolo) {
-    boolean res = true;
-
-    if (titolo.length() < 1 || titolo.length() > 30) {
-      res = false;
-    }
-
-    return res;
+    return titolo.length() >= 1 && titolo.length() <= 30;
   }
 
 
@@ -147,7 +148,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
   /**
    * Checks id tipologia and abilitazione can be matched.
    *
-   * @param tipologia to check
+   * @param tipologia    to check
    * @param abilitazione to check
    * @return true if match is possible
    */

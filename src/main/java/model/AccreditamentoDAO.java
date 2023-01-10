@@ -35,7 +35,7 @@ public class AccreditamentoDAO {
       System.out.println("Accreditamento aggiunto al database con successo");
       return true;
     } catch (MongoException e) {
-      System.out.println("Errore durante l'inserimento dell'accreditamento" + e.getMessage());
+      System.out.println("Errore durante l'inserimento della richiesta di accreditamento" + e.getMessage());
       e.printStackTrace();
       return false;
     }
@@ -54,7 +54,7 @@ public class AccreditamentoDAO {
       System.out.println("Accreditamento eliminato!");
       return true;
     } catch (MongoException e) {
-      System.out.println("Errore durante l'eliminazione dell'utente" + e.getMessage());
+      System.out.println("Errore durante l'eliminazione della richiesta di accreditamento" + e.getMessage());
       return false;
     }
   }

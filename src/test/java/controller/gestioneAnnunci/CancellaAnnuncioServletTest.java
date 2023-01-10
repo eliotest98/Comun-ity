@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  * 
  * 
  */
-class CancellaAnnuncioServletTest {
+public class CancellaAnnuncioServletTest {
 
   //Mock creation
   HttpServletRequest requestMock = mock(HttpServletRequest.class);
