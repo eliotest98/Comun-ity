@@ -96,6 +96,7 @@
 			while(it.hasNext()){
 			
 				Accreditamento accr = (Accreditamento) it.next();
+				
 			%>
 				
 				<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
@@ -113,14 +114,18 @@
 									<i class='bx bx-info-circle'></i>
 								</button>
 								<form action="AccertamentoProfessionistaServlet" method="post">
-									<button class="button" id="del" name="accettato" value="false">
+									<button type="submit" class="button" id="del">
 										<i class='bx bx-x-circle' ></i>
 									</button>
+									<input type="hidden" name="emailAccreditato" value="<%=accr.getRichiedente() %>">
+									<input type="hidden" name="accettato" value="false">
 								</form>
 								<form action="AccertamentoProfessionistaServlet" method="post">
-									<button class="button" id="accept" name="accettato" value="true">
+									<button type="submit" class="button" id="accept">
 										<i class='bx bx-check-circle' ></i>
 									</button>
+									<input type="hidden" name="emailAccreditato" value="<%=accr.getRichiedente() %>">
+									<input type="hidden" name="accettato" value="true">
 								</form>
 							</div>
 						</div>

@@ -68,7 +68,7 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
 
     Accreditamento accreditamento = accreditamentoDao.findAccreditamentoBySubmitter(richiedente);
     Utente utente = utenteDao.findUtenteByMail(richiedente);
-
+    
     accreditamento.setStato("accettata");
     utente.setRuolo("professionista");
     utente.setAbilitazione(accreditamento.getAbilitazione());

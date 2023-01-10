@@ -47,12 +47,9 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
       if (!service.isAdmin(user)) {
         response.sendRedirect("/Comun-ity/guest/login.jsp");
       } else {
-<<<<<<< Updated upstream:src/main/java/controller/gestioneAccreditamento/AccertamentoProfessionistaServlet.java
-        response.sendRedirect("/WEB-INF/user/accreditamenti.jsp"); //jsp verifica accreditamento
-=======
+        response.sendRedirect("/WEB-INF/user/accreditamenti.jsp");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");
         requestDispatcher.forward(request, response);
->>>>>>> Stashed changes:src/main/java/controller/gestioneAccreditamento/AccertamentoProfessionista.java
       }
 
     } else {
@@ -67,29 +64,32 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
       throws ServletException, IOException {
     // TODO Auto-generated method stub
 
-    boolean accettato = (boolean) request.getAttribute("accettato");
-    Accreditamento accreditamento = (Accreditamento) request.getAttribute("accreditamento");
-
+    boolean accettato = Boolean.parseBoolean(request.getParameter("accettato"));
+    
+    String email = (String) request.getParameter("emailAccreditato");
+    
+    Accreditamento accreditamento = serviceA.getByApplicant(email);
+        
     if (accreditamento.getStato().equals("sottomessa")) {
 
       if (accettato) {
-        serviceA.approveRequest(accreditamento.getRichiedente());
+        
+        serviceA.approveRequest(email);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");   //jsp verifica accreditamento
-        request.setAttribute("success", "La richiesta e' stata approvata");
-
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("AccreditamentoServlet");
+        request.setAttribute("success", "La richiesta e' stata accettata");
         requestDispatcher.forward(request, response);
       } else {
         serviceA.declineRequest(accreditamento.getRichiedente());
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");   //jsp verifica accreditamento
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("AccreditamentoServlet");
         request.setAttribute("success", "La richiesta e' stata declinata");
 
         requestDispatcher.forward(request, response);
       }
     } else {
 
-      RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");   //jsp verifica accreditamento
+      RequestDispatcher requestDispatcher = request.getRequestDispatcher("AccreditamentoServlet");
       request.setAttribute("error", "La richiesta non e' in stato sottomessa");
 
       requestDispatcher.forward(request, response);
