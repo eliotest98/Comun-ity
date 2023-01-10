@@ -9,7 +9,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -35,7 +34,8 @@ public class AccreditamentoDAO {
       System.out.println("Accreditamento aggiunto al database con successo");
       return true;
     } catch (MongoException e) {
-      System.out.println("Errore durante l'inserimento della richiesta di accreditamento" + e.getMessage());
+      System.out.println("Errore durante l'inserimento della richiesta di accreditamento" + e
+          .getMessage());
       e.printStackTrace();
       return false;
     }
@@ -54,7 +54,8 @@ public class AccreditamentoDAO {
       System.out.println("Accreditamento eliminato!");
       return true;
     } catch (MongoException e) {
-      System.out.println("Errore durante l'eliminazione della richiesta di accreditamento" + e.getMessage());
+      System.out.println("Errore durante l'eliminazione della richiesta di accreditamento" + e
+          .getMessage());
       return false;
     }
   }
@@ -67,13 +68,10 @@ public class AccreditamentoDAO {
    */
   public boolean updateAccreditamento(Accreditamento accreditamento) {
     try {
-      database.getCollection("accreditamento")
-          .replaceOne(Filters.eq("richiedente", accreditamento.getRichiedente()),
-              docForDb(accreditamento));
-      System.out.println(
-          "Dati dell'accreditamento dell'utente "
-              + accreditamento.getRichiedente()
-              + " aggiornati.");
+      database.getCollection("accreditamento").replaceOne(Filters.eq("richiedente", accreditamento
+          .getRichiedente()), docForDb(accreditamento));
+      System.out.println("Dati dell'accreditamento dell'utente " + accreditamento
+          .getRichiedente() + " aggiornati.");
       return true;
     } catch (MongoException e) {
       System.out.println("Errore durante l'update dell'utente" + e.getMessage());
@@ -82,15 +80,17 @@ public class AccreditamentoDAO {
   }
 
   /**
-   * Find the accreditation request given its applicant email.
+   * Find the accreditation request pending for examination
+   * given its applicant email.
    *
    * @param email is the applicant email refering to the accreditation request to search for.
    * @return the accreditation Object if it exists.
    */
   public Accreditamento findAccreditamentoBySubmitter(String email) {
 
-    Document doc =
-        database.getCollection("accreditamento").find(Filters.eq("richiedente", email)).first();
+    Document doc = database.getCollection("accreditamento")
+        .find(Filters.and(Filters.eq("richiedente", email), Filters.eq("stato", "sottomessa")))
+          .first();
 
     if (doc == null) {
       System.out.println("Richiesta di accreditamento non trovata!");
@@ -101,24 +101,26 @@ public class AccreditamentoDAO {
     }
 
   }
-  
+
   /**
    * Retrieves all the submitted and yet to examine accreditation requests.
-   * 
+   *
    * @return a List of Accreditamento that contains all the accreditation requests
-   * pending to be accepted or declined. 
+   *         pending to be accepted or declined.
    */
   public List<Accreditamento> findAllUnexamined() {
-	
-	List<Accreditamento> submitted = new ArrayList<>();
-	List<Document> documents = new ArrayList<>();
 
-	database.getCollection("accreditamento").find(Filters.eq("stato", "sottomessa")).into(documents);
-	if (!documents.isEmpty()) {
-		submitted = documents.stream().map(AccreditamentoDAO::docToAccreditamento).collect(Collectors.toList());
-	}
+    List<Accreditamento> submitted = new ArrayList<>();
+    List<Document> documents = new ArrayList<>();
 
-	return submitted;
+    database.getCollection("accreditamento").find(Filters.eq("stato", "sottomessa")).into(
+        documents);
+    if (!documents.isEmpty()) {
+      submitted = documents.stream().map(AccreditamentoDAO::docToAccreditamento).collect(Collectors
+          .toList());
+    }
+
+    return submitted;
   }
 
   /**
@@ -130,19 +132,17 @@ public class AccreditamentoDAO {
   private static Document docForDb(Accreditamento accreditamento) {
 
     //Check if it already exists
-    Document doc = database.getCollection("accreditamento")
-        .find(Filters.eq("richiedente", accreditamento.getRichiedente())).first();
+    Document doc = database.getCollection("accreditamento").find(Filters.eq("richiedente",
+        accreditamento.getRichiedente())).first();
 
     //If it doesn't, create a new document
     if (doc == null) {
 
-      doc =
-          new Document("_id", new ObjectId()).append("richiedente", accreditamento.getRichiedente())
-              .append("abilitazione", accreditamento.getAbilitazione())
-              .append("allegato", accreditamento.getAllegato())
-              .append("dataSottomissione", accreditamento.getDataSottomissione())
-              .append("dataVisione", accreditamento.getDataVisione())
-              .append("stato", accreditamento.getStato());
+      doc = new Document("_id", new ObjectId()).append("richiedente", accreditamento
+          .getRichiedente()).append("abilitazione", accreditamento.getAbilitazione()).append(
+              "allegato", accreditamento.getAllegato()).append("dataSottomissione", accreditamento
+                  .getDataSottomissione()).append("dataVisione", accreditamento.getDataVisione())
+          .append("stato", accreditamento.getStato());
 
     } else {
       doc.replace("richiedente", accreditamento.getRichiedente());
@@ -166,12 +166,11 @@ public class AccreditamentoDAO {
    */
   private static Accreditamento docToAccreditamento(Document doc) {
 
-    return new Accreditamento(doc.getString("richiedente"), doc.getString("abilitazione"),
-        doc.getString("allegato"),
-        (LocalDate) doc.getDate("dataSottomissione").toInstant().atZone(ZoneId.systemDefault())
-            .toLocalDate(),
-            doc.getDate("dataVisione") != null ? (LocalDate) doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault())
-            .toLocalDate() : null
-            , doc.getString("stato"));
+    return new Accreditamento(doc.getString("richiedente"), doc.getString("abilitazione"), doc
+        .getString("allegato"), (LocalDate) doc.getDate("dataSottomissione").toInstant().atZone(
+            ZoneId.systemDefault()).toLocalDate(), doc.getDate("dataVisione") != null ?
+                (LocalDate) doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault())
+                    .toLocalDate() :
+                null, doc.getString("stato"));
   }
 }
