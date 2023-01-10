@@ -47,7 +47,7 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
       if (!service.isAdmin(user)) {
         response.sendRedirect("/Comun-ity/guest/login.jsp");
       } else {
-        response.sendRedirect(" "); //jsp verifica accreditamento
+        response.sendRedirect("/WEB-INF/user/accreditamenti.jsp"); //jsp verifica accreditamento
       }
 
     } else {
@@ -70,21 +70,21 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
       if (accettato) {
         serviceA.approveRequest(accreditamento.getRichiedente());
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("");   //jsp verifica accreditamento
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");   //jsp verifica accreditamento
         request.setAttribute("success", "La richiesta e' stata approvata");
 
         requestDispatcher.forward(request, response);
       } else {
         serviceA.declineRequest(accreditamento.getRichiedente());
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("");   //jsp verifica accreditamento
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");   //jsp verifica accreditamento
         request.setAttribute("success", "La richiesta e' stata declinata");
 
         requestDispatcher.forward(request, response);
       }
     } else {
 
-      RequestDispatcher requestDispatcher = request.getRequestDispatcher("");   //jsp verifica accreditamento
+      RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");   //jsp verifica accreditamento
       request.setAttribute("error", "La richiesta non e' in stato sottomessa");
 
       requestDispatcher.forward(request, response);

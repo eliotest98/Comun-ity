@@ -43,7 +43,6 @@
 		
 		if(!lista.isEmpty()){
 		
-		
 			Iterator it = lista.iterator();
 			
 			while(it.hasNext()){
@@ -65,15 +64,16 @@
 								data-bs-toggle="modal" data-bs-target="#info">
 									<i class='bx bx-info-circle'></i>
 								</button>
-		
-								<button class="button" id="del">
-									<i class='bx bx-x-circle' ></i>
-								</button>
-		
-								<button class="button" id="accept">
-									<i class='bx bx-check-circle' ></i>
-								</button>
-		
+								<form action="AccertamentoProfessionistaServlet" method="post">
+									<button class="button" id="del" name="accettato" value="false">
+										<i class='bx bx-x-circle' ></i>
+									</button>
+								</form>
+								<form action="AccertamentoProfessionistaServlet" method="post">
+									<button class="button" id="accept" name="accettato" value="true">
+										<i class='bx bx-check-circle' ></i>
+									</button>
+								</form>
 							</div>
 						</div>
 					</div>
