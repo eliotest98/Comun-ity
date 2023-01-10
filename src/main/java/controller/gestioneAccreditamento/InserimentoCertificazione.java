@@ -1,6 +1,8 @@
-package controller.gestioneUtenza;
+package controller.gestioneAccreditamento;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,9 @@ import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConstants;
 
+import controller.gestioneUtenza.GestioneUtenzaService;
+import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
+import model.Accreditamento;
 import model.Utente;
 
 /**
@@ -26,6 +31,9 @@ public class InserimentoCertificazione extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+    GestioneAccreditamentoService serviceA= new GestioneAccreditamentoServiceImpl();
+    GestioneUtenzaService serviceU= new GestioneUtenzaServiceImpl();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,9 +58,8 @@ public class InserimentoCertificazione extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 	    Utente user = (Utente) session.getAttribute("user");
-		GestioneUtenzaService service= new GestioneUtenzaServiceImpl();
 	    
-		String utente= request.getParameter("utente"); //mail dell'utente che sottomette la richiesta
+		String utente= user.getMail(); //mail dell'utente che sottomette la richiesta
 		String abilitazione= request.getParameter("abilitazione"); //abilitazione che si suppone di avere
 		String allegato= request.getParameter("allegato"); //file della certificazione
 		
@@ -62,15 +69,39 @@ public class InserimentoCertificazione extends HttpServlet {
 				
 				if(allegatoOK(allegato)) {
 					
+					Accreditamento accreditamento= new Accreditamento(utente, abilitazione, allegato);
+					
+					serviceA.saveAccreditamento(accreditamento);
+					
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("");	//jsp inserimento certificazione
+				    request.setAttribute("success", "Richiesta sottomessa con successo, verra' controllata il prima possibile");
+
+				    requestDispatcher.forward(request, response);
+					
 				}else {
+					
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("");	//jsp inserimento certificazione
+				    request.setAttribute("error", "Errore nell'inserimento dell'allegato, deve essere un pdf da massimo 50MB");
+
+				    requestDispatcher.forward(request, response);
 					
 				}
 				
 			}else {
 				
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("");	//jsp inserimento certificazione
+			    request.setAttribute("error", "Formato abilitazione non corretto");
+
+			    requestDispatcher.forward(request, response);
+				
 			}
 			
 		}else {
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Comun-ity/guest/login.jsp");	
+		    request.setAttribute("error", "Solo un cittadino puo' sottomettere una richiesta di accreditamento");
+
+		    requestDispatcher.forward(request, response);
 			
 		}
 	}
