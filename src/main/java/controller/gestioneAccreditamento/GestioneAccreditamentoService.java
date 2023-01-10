@@ -26,8 +26,17 @@ public interface GestioneAccreditamentoService {
   List<Accreditamento> getAllUnexamined();
   
   /**
+   * Find the accreditation request pending for examination
+   * given its applicant email.
+   *
+   * @param richiedente is the applicant email refering to the accreditation request to search for.
+   * @return the accreditation Object if it exists.
+   */
+  Accreditamento getByApplicant(String richiedente);
+  
+  /**
    * Approves the user request of accreditation and elect him to Pro.
-   * 
+   *
    * @param richiedente is the applicant email.
    * @return true if the request is approved correctly and the user role is updated to Pro.
    */
@@ -35,7 +44,7 @@ public interface GestioneAccreditamentoService {
   
   /**
    * Declines the user request of accreditation.
-   * 
+   *
    * @param richiedente is the applicant email.
    * @return true if the request is declined correctly.
    */

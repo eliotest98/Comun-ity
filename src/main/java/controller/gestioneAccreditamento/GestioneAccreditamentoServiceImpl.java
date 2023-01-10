@@ -1,7 +1,6 @@
 package controller.gestioneAccreditamento;
 
 import java.util.List;
-
 import model.Accreditamento;
 import model.AccreditamentoDAO;
 import model.Utente;
@@ -15,8 +14,8 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
   /**
    * exclude.
    **/
-  private AccreditamentoDAO accreditamentoDAO = new AccreditamentoDAO();
-  private UtenteDAO utenteDAO = new UtenteDAO();
+  private AccreditamentoDAO accreditamentoDao = new AccreditamentoDAO();
+  private UtenteDAO utenteDao = new UtenteDAO();
 
   /**
    * Empty Constructor.
@@ -32,7 +31,7 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
    */
   @Override
   public boolean saveAccreditamento(Accreditamento accreditamento) {
-    return accreditamentoDAO.saveAccreditamento(accreditamento);
+    return accreditamentoDao.saveAccreditamento(accreditamento);
   }
   
   /**
@@ -43,42 +42,55 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
    */
   @Override
   public List<Accreditamento> getAllUnexamined() {
-	  return accreditamentoDAO.findAllUnexamined();
+    return accreditamentoDao.findAllUnexamined();
+  }
+  
+  /**
+   * Find the accreditation request pending for examination
+   * given its applicant email.
+   *
+   * @param richiedente is the applicant email refering to the accreditation request to search for.
+   * @return the accreditation Object if it exists.
+   */
+  @Override
+  public Accreditamento getByApplicant(String richiedente) {
+    return accreditamentoDao.findAccreditamentoBySubmitter(richiedente);
   }
   
   /**
    * Approves the user request of accreditation and elect him to Pro.
-   * 
+   *
    * @param richiedente is the applicant email.
    * @return true if the request is approved correctly and the user role is updated to Pro.
    */
   @Override
   public boolean approveRequest(String richiedente) {
-	  
-	  Accreditamento accreditamento = accreditamentoDAO.findAccreditamentoBySubmitter(richiedente);
-	  Utente utente = utenteDAO.findUtenteByMail(richiedente);
-	  
-	  accreditamento.setStato("accettata");
-	  utente.setRuolo("professionista");
-	  utente.setAbilitazione(accreditamento.getAbilitazione());
 
-	  return (accreditamentoDAO.updateAccreditamento(accreditamento) && utenteDAO.updateUtente(utente));
+    Accreditamento accreditamento = accreditamentoDao.findAccreditamentoBySubmitter(richiedente);
+    Utente utente = utenteDao.findUtenteByMail(richiedente);
+
+    accreditamento.setStato("accettata");
+    utente.setRuolo("professionista");
+    utente.setAbilitazione(accreditamento.getAbilitazione());
+
+    return (accreditamentoDao.updateAccreditamento(accreditamento) && utenteDao.updateUtente(
+        utente));
   }
   
   /**
    * Declines the user request of accreditation.
-   * 
+   *
    * @param richiedente is the applicant email.
    * @return true if the request is declined correctly.
    */
   @Override
   public boolean declineRequest(String richiedente) {
-	  
-	  Accreditamento accreditamento = accreditamentoDAO.findAccreditamentoBySubmitter(richiedente);
-	  
-	  accreditamento.setStato("rifiutata");
-	  
-	  return accreditamentoDAO.updateAccreditamento(accreditamento);
+
+    Accreditamento accreditamento = accreditamentoDao.findAccreditamentoBySubmitter(richiedente);
+
+    accreditamento.setStato("rifiutata");
+
+    return accreditamentoDao.updateAccreditamento(accreditamento);
   }
 
 }
