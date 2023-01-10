@@ -1,26 +1,29 @@
 package controller.gestioneAccreditamento;
 
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import controller.gestioneUtenza.GestioneUtenzaService;
+import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
-
+import java.time.LocalDate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import model.Accreditamento;
+import model.AccreditamentoDAO;
+import model.Utente;
+import model.UtenteDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import controller.gestioneUtenza.GestioneUtenzaService;
-import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
-import model.Accreditamento;
-import model.AccreditamentoDAO;
-import model.Utente;
+
+
 
 /**
  * Unit testing class for "InserimentoCertificazioneServlet".
@@ -48,17 +51,32 @@ public class AccertamentoProfessionistaTest {
   public void setUp() {
     servletMock = new AccertamentoProfessionistaServlet();
     when(requestMock.getSession(true)).thenReturn(sessionMock);
-    when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
-    when(requestMock.getRequestDispatcher(" ")).thenReturn(dispatcherMock); //Aggiungere JSP
+    
+    Utente user = new Utente(
+        "cittadino", "nessuna", "Testa", "Testa", 18,
+        "test@test.com", "test", "M", "3340000000", "test", LocalDate.now());
+    UtenteDAO utenteDao = new UtenteDAO();
+    utenteDao.saveUtente(user);
+    
+    Accreditamento test = new Accreditamento(
+        "test@test.com", "idraulico", "aHR0cHM6Ly9naXRodWIuY29tL2VsaW90ZXN0OTgvQ29tdW4taXR5");
+    AccreditamentoDAO accrDao = new AccreditamentoDAO();
+    accrDao.saveAccreditamento(test);
+    when(requestMock.getRequestDispatcher("AccreditamentoServlet"))
+        .thenReturn(dispatcherMock);
   }
 
   /*
-   * After each test, the accreditation request entry is eliminated.
+   * After each test, both the accreditation request
+   * and the user entries are eliminated.
    */
   @AfterEach
   void tearDown() {
+    
     AccreditamentoDAO accrDao = new AccreditamentoDAO();
     accrDao.deleteAccreditamento("test@test.com");
+    UtenteDAO utenteDao = new UtenteDAO();
+    utenteDao.deleteUtente("test@test.com");
   }
 
   //User not logged.
@@ -68,7 +86,7 @@ public class AccertamentoProfessionistaTest {
     servletMock.doGet(requestMock, responseMock);
     verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp");
   }
-  
+
   //User isn't an Admin.
   @Test
   public void notAnAdminTest() throws Exception {
@@ -76,18 +94,43 @@ public class AccertamentoProfessionistaTest {
     user.setRuolo("cittadino");
     when(sessionMock.getAttribute("user")).thenReturn(user);
     servletMock.doGet(requestMock, responseMock);
-    verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp"); //Aggiungere JSP
+    verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp");
   }
-  
+
   //User is an Admin.
   @Test
   public void adminTest() throws Exception {
     Utente user = new Utente();
     user.setRuolo("admin");
     when(sessionMock.getAttribute("user")).thenReturn(user);
+    
     servletMock.doGet(requestMock, responseMock);
-    verify(responseMock).sendRedirect(" "); //Aggiungere JSP
+
+    verify(responseMock).sendRedirect("/WEB-INF/user/accreditamenti.jsp");
+    verify(dispatcherMock).forward(requestMock, responseMock);
+  }
+
+  //Accreditation Request declined
+  @Test
+  public void declinedReqTest() throws Exception {
+    when(requestMock.getParameter("accettato")).thenReturn("false");
+    when(requestMock.getParameter("emailAccreditato")).thenReturn("test@test.com");
+    
+    servletMock.doPost(requestMock, responseMock);
+    verify(requestMock).setAttribute("success", "La richiesta e' stata declinata");
+    verify(dispatcherMock).forward(requestMock, responseMock);
   }
   
-  
+  //Accreditation Request accepted
+  @Test
+  public void acceptedReqTest() throws Exception {
+    when(requestMock.getParameter("accettato")).thenReturn("true");
+    when(requestMock.getParameter("emailAccreditato")).thenReturn("test@test.com");
+    
+    servletMock.doPost(requestMock, responseMock);
+    verify(requestMock).setAttribute("success", "La richiesta e' stata accettata");
+    verify(dispatcherMock).forward(requestMock, responseMock);
+  }
+
+
 }
