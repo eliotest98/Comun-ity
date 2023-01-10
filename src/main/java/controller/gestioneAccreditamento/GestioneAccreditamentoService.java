@@ -1,7 +1,6 @@
 package controller.gestioneAccreditamento;
 
 import java.util.List;
-
 import model.Accreditamento;
 
 /**
