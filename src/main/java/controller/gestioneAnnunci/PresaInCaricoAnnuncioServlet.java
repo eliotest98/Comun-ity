@@ -74,7 +74,7 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
       request.setAttribute("link", "bacheca");
       request.setAttribute("success", "Annuncio accettato con successo");
       
-      MailSender.sendMail(utente, annuncio);
+      MailSender.notifyAdTakeOn(utente, annuncio);
       
       requestDispatcher.forward(request, response);
 
