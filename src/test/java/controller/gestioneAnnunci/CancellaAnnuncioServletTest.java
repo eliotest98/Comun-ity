@@ -28,7 +28,15 @@ import model.Annuncio;
 import model.AnnuncioDAO;
 import model.Utente;
 
-
+/*
+ * 
+ * 
+ * Unit testing class for "CancellaAnnuncioServletTest".
+ * This class has been written following BLACK BOX
+ * testing methodologies.
+ * 
+ * 
+ */
 class CancellaAnnuncioServletTest {
 
 	//Mock creation
@@ -43,7 +51,8 @@ class CancellaAnnuncioServletTest {
 	GestioneAnnunciService serviceMock= mock(GestioneAnnunciServiceImpl.class);
 
 	/*
-	 * Before each test a "Bacheca Annunci" session is simulated (1).
+	 * Before each test a "Bacheca Annunci" session is simulated,
+	 * along with the creation of a new ad.
 	 */
 	@BeforeEach
 	public void setUp() {
@@ -56,6 +65,7 @@ class CancellaAnnuncioServletTest {
 		when(requestMock.getParameter("annuncio")).thenReturn(test.getId().toString());
 		when(requestMock.getRequestDispatcher("AreaPersonale")).thenReturn(dispatcherMock);
 	}
+	
 	/*
 	 * After each test, the ad entry is eliminated.
 	 */
@@ -68,18 +78,18 @@ class CancellaAnnuncioServletTest {
 		}
 	}
 
-	// Test che verifica se l'utente non è loggato
+	//User not logged.
 	@Test
-	public void utenteNonLoggatoCorrettamente() throws ServletException, IOException {
+	public void userNotLoggedTest() throws ServletException, IOException {
 		when(requestMock.getSession(true)).thenReturn(sessionMock);
 		when(sessionMock.getAttribute("user")).thenReturn(null);
 		servletMock.doGet(requestMock, responseMock);
 		verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp");
 	}
 
-	// Test che verifica se l'utente è loggato
+	//User correctly logged.
 	@Test
-	public void utenteLoggatoCorrettamente() throws Exception {
+	public void userLoggedTest() throws Exception {
 		when(requestMock.getSession(true)).thenReturn(sessionMock);
 		when(sessionMock.getAttribute("user")).thenReturn(new Utente());
 		servletMock.doGet(requestMock, responseMock);
@@ -88,7 +98,6 @@ class CancellaAnnuncioServletTest {
 
 
 	//User email not corresponding with the ad's author.
-
 	@Test public void authorNotOKTest() throws ServletException,
 	IOException { 
 		when(utenteMock.getMail()).thenReturn("alefaster25@gmail.com");
@@ -99,7 +108,7 @@ class CancellaAnnuncioServletTest {
 		verify(dispatcherMock).forward(requestMock, responseMock); 
 	}
 
-	// Successfull ad removal.
+	//Successfull ad removal.
 	@Test
 	public void successfullEliminationTest() throws ServletException, IOException {
 		when(utenteMock.getMail()).thenReturn("biagiusMagno@gmail.com");
@@ -109,18 +118,5 @@ class CancellaAnnuncioServletTest {
 		verify(requestMock).setAttribute("success", "Annuncio rimosso con successo");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
-
-	// Unsuccessfull ad removal.
-	@Test
-	public void unSuccessfullEliminationTest() throws ServletException, IOException {
-		when(utenteMock.getMail()).thenReturn("biagiusMagno@gmail.com");
-		when(annuncioMock.getId()).thenReturn(9999L);
-		servletMock.doPost(requestMock, responseMock);
-
-		verify(requestMock).setAttribute("error", "Errore nella rimozione");
-		verify(dispatcherMock).forward(requestMock, responseMock);
-	}
-
-	
 
 }

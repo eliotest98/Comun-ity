@@ -20,11 +20,6 @@ import model.Utente;
 
 public class MailSender {
 
-	/**
-	 * Empty Constructor.
-	 */
-	public MailSender() {}
-
 	public static void sendMail(Utente utente, Annuncio annuncio) {
 
 		String host = "smtp.gmail.com";
@@ -44,14 +39,17 @@ public class MailSender {
 		try {
 			String to = annuncio.getAutore();
 			String subject = "Annuncio "+annuncio.getId()+" preso in carico";
-
+			
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(to));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
 			message.setText(CreaText(utente,annuncio));
 			Transport.send(message);
-		} catch (MessagingException|NullPointerException e) {
+			
+			System.out.println("Email to: " + utente.getMail() + " SENT.");
+		} catch (Exception e) {
+			System.out.println("Email to: " + utente.getMail() + " NOT SENT.");
 			e.printStackTrace();
 		}
 	}

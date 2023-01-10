@@ -64,7 +64,7 @@ public class CancellaAnnuncioServlet extends HttpServlet {
     Annuncio annuncio = service.findAnnuncioById(id);
 
     if (autoreOk(user, annuncio)) {
-      if (service.removeAnnuncio(annuncio.getId())) {
+      if (service.removeAnnuncio(id)) {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("AreaPersonale");
         req.setAttribute("success", "Annuncio rimosso con successo");
         requestDispatcher.forward(req, resp);

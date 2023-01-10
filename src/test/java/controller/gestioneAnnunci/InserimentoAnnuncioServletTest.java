@@ -46,7 +46,7 @@ class InserimentoAnnuncioServletTest {
 	GestioneAnnunciService serviceMock= mock(GestioneAnnunciServiceImpl.class);
 
 	/*
-	 * Before each test a "Bacheca Annunci" session is simulated (1).
+	 * Before each test a "Bacheca Annunci" session is simulated.
 	 */
 	@BeforeEach
 	public void setUp() {
@@ -55,6 +55,7 @@ class InserimentoAnnuncioServletTest {
 		when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
 		when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
 	}
+
 	/*
 	 * After each test, the ad entry is eliminated.
 	 */
@@ -63,33 +64,33 @@ class InserimentoAnnuncioServletTest {
 		GestioneAnnunciServiceImpl service = new GestioneAnnunciServiceImpl();
 		service.removeAllAvailableByUser("testServlet@biagio.com");
 	}
-	
-	// Test che verifica se l'utente non è loggato
-		@Test
-		public void utenteNonLoggatoCorrettamente() throws ServletException, IOException {
-			when(requestMock.getSession(true)).thenReturn(sessionMock);
-			when(sessionMock.getAttribute("user")).thenReturn(null);
-			servletMock.doGet(requestMock, responseMock);
-			verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp");
-		}
 
-		// Test che verifica se l'utente è loggato
-		@Test
-		public void utenteLoggatoCorrettamente() throws Exception {
-			when(requestMock.getSession(true)).thenReturn(sessionMock);
-			when(sessionMock.getAttribute("user")).thenReturn(new Utente());
-			servletMock.doGet(requestMock, responseMock);
-			verify(responseMock).sendRedirect("ListaAnnunci");
-		}
+	//User not logged.
+	@Test
+	public void userNotLoggedTest() throws ServletException, IOException {
+		when(requestMock.getSession(true)).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("user")).thenReturn(null);
+		servletMock.doGet(requestMock, responseMock);
+		verify(responseMock).sendRedirect("/Comun-ity/guest/login.jsp");
+	}
+
+	//User correctly logged.
+	@Test
+	public void userLoggedTest() throws Exception {
+		when(requestMock.getSession(true)).thenReturn(sessionMock);
+		when(sessionMock.getAttribute("user")).thenReturn(new Utente());
+		servletMock.doGet(requestMock, responseMock);
+		verify(responseMock).sendRedirect("ListaAnnunci");
+	}
 
 	// Test case TC_CT_7.1.1: empty field 'abilitazioneRichiesta' for 'tipologia' = "lavoro".
 	@Test
-	void testRequiredQualificationNotSet() throws ServletException, IOException {
+	void requiredQualificationNotSetTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn("1");
 		when(requestMock.getParameter("professione")).thenReturn("nessuna");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("error", "Controllare abilitazione richiesta rispetto alla tipologia");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 
@@ -97,112 +98,112 @@ class InserimentoAnnuncioServletTest {
 
 	// Test case TC_CT_7.1.3: empty field 'titolo'.
 	@Test
-	void testEmptyTitle() throws ServletException, IOException {
+	void emptyTitleTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(requestMock.getParameter("titolo")).thenReturn("");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("error", "Titolo non valido");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
-	
+
 	// Test case TC_CT_7.1.4: field 'titolo' out of bound (30 chars).
 	@Test
-	void testTitleLength() throws ServletException, IOException {
+	void titleLengthTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(requestMock.getParameter("titolo")).thenReturn("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("error", "Titolo non valido");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
-	
+
 	// Test case TC_CT_7.1.5: field 'descrizione' empty.
 	@Test
-	void testDescriptionEmpty() throws ServletException, IOException {
+	void descriptionEmptyTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("error", "Descrizione non valida");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
-	
+
 	// Test case TC_CT_7.1.6: field 'descrizione' out of bound (280 chars).
 	@Test
-	void testDescriptionLength() throws ServletException, IOException {
+	void descriptionLengthTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("wefwf4w4fefqergeqrgqegrqerfeqrvqegrgeqgetgeqvqeveqgeqrgeqtveqtvqegteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("error", "Descrizione non valida");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
-	
+
 	// Test case TC_CT_7.1.7: field 'indirizzo' empty.
 	@Test
-	void testAddressEmpty() throws ServletException, IOException {
+	void addressEmptyTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
 		when(requestMock.getParameter("indirizzo")).thenReturn("");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("error", "Indirizzo non valido");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
-	
+
 	// Test case TC_CT_7.1.8: field 'indirizzo' out of bound (100 chars).
 	@Test
-	void testAddressLength() throws ServletException, IOException {
+	void addressLengthTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
 		when(requestMock.getParameter("indirizzo")).thenReturn("\"wefwf4w4fefqergeqrgqegrqerfeqrvqegrgeqgetgeqvqeveqgeqrgeqtveqtvqegteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\"");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("error", "Indirizzo non valido");
 		verify(dispatcherMock).forward(requestMock, responseMock);
 	}
 
 	// Test case TC_CT_7.1.9: Successful new Errand insert
 	@Test
-	void testErrandInsertSuccess() throws ServletException, IOException {
+	void errandInsertSuccessTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn(null);
 		when(utenteMock.getMail()).thenReturn("testServlet@biagio.com");
 		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
 		when(requestMock.getParameter("indirizzo")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtr");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("success", "Annuncio inserito");
 		verify(dispatcherMock).forward(requestMock, responseMock);
-		 
+
 	}
-	
+
 	// Test case TC_CT_7.1.9: Successful new Job insert
 	@Test
-	void testJobInsertSuccess() throws ServletException, IOException {
+	void jobInsertSuccessTest() throws ServletException, IOException {
 		when(requestMock.getParameter("professionista")).thenReturn("1");
 		when(requestMock.getParameter("professione")).thenReturn("idraulico");
 		when(utenteMock.getMail()).thenReturn("testServlet@biagio.com");
 		when(requestMock.getParameter("titolo")).thenReturn("afbetbeb");
 		when(requestMock.getParameter("descrizione")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtbwr");
 		when(requestMock.getParameter("indirizzo")).thenReturn("afbetbebwetbwrtbwrbthwrhbwrtr");
-		
+
 		servletMock.doPost(requestMock, responseMock);
-		
+
 		verify(requestMock).setAttribute("success", "Annuncio inserito");
 		verify(dispatcherMock).forward(requestMock, responseMock);
-		 
+
 	}
 }
