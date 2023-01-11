@@ -1,31 +1,30 @@
-package controller.utility;
+package controller.gestioneAnnunci;
 
-import controller.gestioneUtenza.GestioneUtenzaService;
-import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Utente;
 
 /**
- * Servlet implementation class IndexServlet.
+ * Servlet implementation class ListaAnnunciServlet.
  */
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/ListaAnnunciServlet")
+public class ListaAnnunciServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
    * Default constructor.
    *
-   * @see HttpServlet#HttpServlet()
+   *@see HttpServlet#HttpServlet()
    */
-  public IndexServlet() {
+  public ListaAnnunciServlet() {
     super();
   }
-
-  GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
 
   /**
    * doGet method implementation.
@@ -34,11 +33,23 @@ public class IndexServlet extends HttpServlet {
    * @throws ServletException //
    *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
-  @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    response.sendRedirect("/Comun-ity/index.jsp");
 
+    HttpSession session = request.getSession(true);
+
+    Utente user = (Utente) session.getAttribute("user");
+
+    if (user != null) {
+
+      RequestDispatcher requestDispatcher =
+          request.getRequestDispatcher("/WEB-INF/user/bachecaAnnunci.jsp");
+
+      request.setAttribute("link", "bacheca");
+      requestDispatcher.forward(request, response);
+    } else {
+      response.sendRedirect("/Comun-ity/guest/login.jsp");
+    }
   }
 
   /**
@@ -48,11 +59,9 @@ public class IndexServlet extends HttpServlet {
    * @throws ServletException //
    *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
-  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doGet(request, response);
-
   }
 
 }
