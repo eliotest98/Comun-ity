@@ -18,14 +18,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/*
- * 
- * 
- * Unit testing class for "CancellaAnnuncioServletTest".
+/**
+ * Unit testing class for "CancellaAnnuncioServlet".
  * This class has been written following BLACK BOX
  * testing methodologies.
- * 
- * 
  */
 public class CancellaAnnuncioServletTest {
 
@@ -40,9 +36,10 @@ public class CancellaAnnuncioServletTest {
   AnnuncioDAO daoMock = mock(AnnuncioDAO.class);
   GestioneAnnunciService serviceMock = mock(GestioneAnnunciServiceImpl.class);
 
-  /*
-   * Before each test a "Bacheca Annunci" session is simulated,
-   * along with the creation of a new ad.
+
+  /**
+   * Before each test, the session is simulated
+   * and an new 'annuncio' entry is created for test purpose.
    */
   @BeforeEach
   public void setUp() {

@@ -172,7 +172,8 @@ public class AnnuncioDAO {
           Collectors.toList());
     }
 
-    String s = availables.isEmpty() ?
+    String s = availables.isEmpty() 
+        ?
         "Nessun lavoro disponibile trovato." :
         "Trovato/i lavoro/i disponibile/i.";
     System.out.println(s);
@@ -196,7 +197,8 @@ public class AnnuncioDAO {
           .collect(Collectors.toList());
     }
 
-    String s = availables.isEmpty() ?
+    String s = availables.isEmpty() 
+        ?
         "Nessuna commissione disponibile trovata." :
         "Trovata/e commissione/i disponibile/i.";
     System.out.println(s);
@@ -239,7 +241,8 @@ public class AnnuncioDAO {
           Collectors.toList());
     }
 
-    String s = availables.isEmpty() ?
+    String s = availables.isEmpty() 
+        ?
         "Nessun annuncio disponibile trovato" :
         "Trovato/i annuncio/i disponibile/i";
     System.out.println(s + "per l'utente: " + autore + ".");

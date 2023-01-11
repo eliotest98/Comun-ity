@@ -15,14 +15,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/*
- * 
- * 
+/**
  * Unit testing class for "InserimentoAnnuncioServlet".
  * This class has been written following BLACK BOX
  * testing methodologies.
- * 
- * 
  */
 public class InserimentoAnnuncioServletTest {
 
@@ -35,8 +31,8 @@ public class InserimentoAnnuncioServletTest {
   RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
   GestioneAnnunciService serviceMock = mock(GestioneAnnunciServiceImpl.class);
 
-  /*
-   * Before each test a "Bacheca Annunci" session is simulated.
+  /**
+   * Before each test, the session is simulated.
    */
   @BeforeEach
   public void setUp() {

@@ -168,8 +168,8 @@ public class AccreditamentoDAO {
 
     return new Accreditamento(doc.getString("richiedente"), doc.getString("abilitazione"), doc
         .getString("allegato"), (LocalDate) doc.getDate("dataSottomissione").toInstant().atZone(
-            ZoneId.systemDefault()).toLocalDate(), doc.getDate("dataVisione") != null ?
-                (LocalDate) doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault())
+            ZoneId.systemDefault()).toLocalDate(), doc.getDate("dataVisione") != null 
+            ? (LocalDate) doc.getDate("dataVisione").toInstant().atZone(ZoneId.systemDefault())
                     .toLocalDate() :
                 null, doc.getString("stato"));
   }
