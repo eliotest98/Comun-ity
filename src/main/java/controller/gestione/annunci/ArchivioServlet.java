@@ -109,7 +109,6 @@ public class ArchivioServlet extends HttpServlet {
             try {
               utente = serviceUtenza.getAccountByEmail(annuncio.getAutore());
             } catch (InterruptedException | ExecutionException | IOException e) {
-              // TODO Auto-generated catch block
               e.printStackTrace();
             }
 
