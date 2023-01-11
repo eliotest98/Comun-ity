@@ -40,7 +40,7 @@
 				
 				var image = $(this).val();
 			
-				$('#file').attr("src","data:image/jpeg;base64,"+image);
+				$('#file').attr("src","data:application/pdf;base64,"+image);
 				
 			})
 			
@@ -149,7 +149,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="container-fluid">
-								<img src="" id="file"/>
+								<iframe src="" id="file"></iframe>
 							</div>
 						</div>
 						<div class="modal-footer">

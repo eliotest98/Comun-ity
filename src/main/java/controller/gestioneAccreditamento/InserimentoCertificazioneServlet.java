@@ -2,14 +2,23 @@ package controller.gestioneAccreditamento;
 
 import controller.gestioneUtenza.GestioneUtenzaService;
 import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
+
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 import model.Accreditamento;
 import model.Utente;
@@ -18,6 +27,8 @@ import model.Utente;
  * Servlet implementation class InserimentoCertificazione.
  */
 @WebServlet("/InserimentoCertificazioneServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 2048 * 2048 * 5,
+    maxRequestSize = 2048 * 2048 * 5 * 5)
 public class InserimentoCertificazioneServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
@@ -67,17 +78,32 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
     String utente = user.getMail();
     String abilitazione = request.getParameter("abilitazione");
-    String allegato = request.getParameter("allegato");
+    Part part = request.getPart("allegato");
+    
+    Accreditamento accreditamento = serviceA.getByApplicant(utente);
+    
+    if(accreditamento == null) {
 
     if (user.getRuolo().equals("cittadino")) {
 
       if (abilitazioneOk(abilitazione)) {
+          
+          String path = getServletContext().getRealPath("/temp");
 
-        if (allegatoOk(allegato)) {
+          File directory = new File(String.valueOf(path));
 
-          Accreditamento accreditamento = new Accreditamento(utente, abilitazione, allegato);
+          if (!directory.exists()) {
+            directory.mkdir();
+          }
 
-          serviceA.saveAccreditamento(accreditamento);
+          String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+          part.write(path + fileName);
+
+          String base = encodeFileToBase64Binary(path + fileName);
+
+          Accreditamento newaccreditamento = new Accreditamento(utente, abilitazione, base);
+
+          serviceA.saveAccreditamento(newaccreditamento);
 
           RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
           request.setAttribute("success",
@@ -85,16 +111,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
           requestDispatcher.forward(request, response);
 
-        } else {
-
-          RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
-          request.setAttribute("error",
-              "Errore nell'inserimento dell'allegato, deve essere un pdf da massimo 50MB");
-
-          requestDispatcher.forward(request, response);
-
-        }
-
+        
       } else {
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
@@ -106,13 +123,20 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
     } else {
 
-      RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-          "/Comun-ity/guest/login.jsp");
+      RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
       request.setAttribute("error",
           "Solo un cittadino puo' sottomettere una richiesta di accreditamento");
 
       requestDispatcher.forward(request, response);
 
+      }
+    }else {
+      
+      RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+      request.setAttribute("error",
+          "Si può sottomettere una sola richiesta di accreditamento alla volta. Aspetta che la precedente venga validata");
+
+      requestDispatcher.forward(request, response);
     }
   }
 
@@ -138,5 +162,11 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
     return data.length >= 1 && data.length <= 26214400;
 
+  }
+  
+  private static String encodeFileToBase64Binary(String path) throws IOException {
+
+    byte[] byteData = Files.readAllBytes(Paths.get(path));
+    return Base64.getEncoder().encodeToString(byteData);
   }
 }

@@ -216,7 +216,7 @@
 	<div class="modal fade" tabindex="-1" id="professionista">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
-				<form action="InserimentoCertificazioneServlet" method="post">
+				<form action="InserimentoCertificazioneServlet" method="post" enctype='multipart/form-data'>
 				<div class="modal-header">
 					<h5 class="modal-title">Iscriviti come professionista</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
