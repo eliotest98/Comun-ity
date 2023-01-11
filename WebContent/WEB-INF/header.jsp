@@ -16,8 +16,6 @@
 				</a> <a href="ListaAnnunciServlet" class="nav_link" id="bacheca"> <i
 					class="bx bx-clipboard nav_icon"></i> <span class="nav_name">Bacheca
 						Annunci</span>
-				</a> <a href="#" class="nav_link" id="impostazioni"> <i
-					class="bx bx-cog nav_icon"></i> <span class="nav_name">Impostazioni</span>
 				</a>
 				<% if((Boolean) session.getAttribute("admin")){ %>
 				<a href="ListaUtenti" class="nav_link" id="utenti"> <i
