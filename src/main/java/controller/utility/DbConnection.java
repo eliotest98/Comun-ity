@@ -17,7 +17,6 @@ public class DbConnection {
    */
   public static MongoDatabase connectToDb() {
 
-
     try {
       String uri = "mongodb+srv://michelerabesco:michelerabesco@gps.om8mqqx.mongodb.net/test";
       MongoClient mongoClient = MongoClients.create(uri);
