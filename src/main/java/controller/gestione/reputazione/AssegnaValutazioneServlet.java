@@ -81,6 +81,7 @@ public class AssegnaValutazioneServlet extends HttpServlet {
     try {
       utente = serviceU.getAccountByEmail(utenteMail);
     } catch (InterruptedException | ExecutionException | IOException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 

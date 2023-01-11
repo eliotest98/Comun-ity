@@ -8,6 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import controller.utility.DbConnection;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,8 @@ public class UtenteDao {
       return null;
     } else {
       System.out.println("Utente trovato!");
-      return docToUtente(doc);
+      Utente user = docToUtente(doc);
+      return user;
     }
   }
 
@@ -260,8 +262,9 @@ public class UtenteDao {
         new Utente(doc.getString("ruolo"), doc.getString("abilitazione"), doc.getString("nome"),
             doc.getString("cognome"), doc.getInteger("eta"), doc.getString("mail"),
             doc.getString("password"), doc.getString("sesso"), doc.getString("numeroTelefono"),
-            doc.getString("indirizzo"), doc.getDate("dataNascita")
-            .toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            doc.getString("indirizzo"),
+            (LocalDate) doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault())
+                .toLocalDate());
 
     utente.setRecensioni((ArrayList<Double>) doc.getList("recensioni", Double.class));
     utente.setBlacklist(doc.getBoolean("blacklist"));
