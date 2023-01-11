@@ -103,6 +103,8 @@ public class AccertamentoProfessionistaTest {
     Utente user = new Utente();
     user.setRuolo("admin");
     when(sessionMock.getAttribute("user")).thenReturn(user);
+    when(requestMock.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp"))
+        .thenReturn(dispatcherMock);
     
     servletMock.doGet(requestMock, responseMock);
 
