@@ -17,55 +17,63 @@ import model.Accreditamento;
 import model.Utente;
 
 /**
- * Servlet implementation class AccreditamentoServlet
+ * Servlet implementation class AccreditamentoServlet.
  */
 @WebServlet("/AccreditamentoServlet")
 public class AccreditamentoServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
-   * @see HttpServlet#HttpServlet()
+   * Default constructor.
+   *
+   *@see HttpServlet#HttpServlet()
    */
   public AccreditamentoServlet() {
     super();
-    // TODO Auto-generated constructor stub
   }
-
-  /**
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-   */
 
   GestioneAccreditamentoService serviceA = new GestioneAccreditamentoServiceImpl();
   GestioneUtenzaService serviceU = new GestioneUtenzaServiceImpl();
 
+  /**
+   * doGet method implementation.
+   *
+   * @throws IOException      //
+   * @throws ServletException //
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
     HttpSession session = request.getSession(true);
     Utente user = (Utente) session.getAttribute("user");
-    
-    if(serviceU.isAdmin(user)) {
-      RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");
+
+    if (serviceU.isAdmin(user)) {
+      RequestDispatcher requestDispatcher = 
+          request.getRequestDispatcher("/WEB-INF/user/accreditamenti.jsp");
 
       List<Accreditamento> lista = serviceA.getAllUnexamined();
 
       request.setAttribute("accreditamenti", lista);
       request.setAttribute("link", "accreditamenti");
       requestDispatcher.forward(request, response);
-    }else {
+    } else {
       response.sendRedirect("/Comun-ity/guest/login.jsp");
     }
-    
-    
+
+
 
   }
 
   /**
+   * doPost method implementation.
+   *
+   * @throws IOException      //
+   * @throws ServletException //
    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    // TODO Auto-generated method stub
     doGet(request, response);
   }
 

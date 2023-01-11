@@ -252,7 +252,7 @@ public class RegistrazioneServlet extends HttpServlet {
    * Encodes file to base64.
    *
    * @param path file path to encode
-   * @return base64 binare string
+   * @return base64 string
    * @throws IOException //
    */
   private static String encodeFileToBase64Binary(String path) throws IOException {

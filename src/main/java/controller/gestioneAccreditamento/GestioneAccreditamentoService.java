@@ -18,9 +18,9 @@ public interface GestioneAccreditamentoService {
   
   /**
    * Retrieves all the submitted and yet to examine accreditation requests.
-   * 
+   *
    * @return a List of Accreditamento that contains all the accreditation requests
-   * pending to be accepted or declined. 
+   pending to be accepted or declined. 
    */
   List<Accreditamento> getAllUnexamined();
   

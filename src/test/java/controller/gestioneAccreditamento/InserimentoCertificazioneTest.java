@@ -46,7 +46,7 @@ public class InserimentoCertificazioneTest {
     servletMock = new InserimentoCertificazioneServlet();
     when(requestMock.getSession(true)).thenReturn(sessionMock);
     when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
-    when(requestMock.getRequestDispatcher(" ")).thenReturn(dispatcherMock); //Aggiungere JSP
+    when(requestMock.getRequestDispatcher("AreaPersonale")).thenReturn(dispatcherMock);
   }
 
   /*
@@ -71,7 +71,7 @@ public class InserimentoCertificazioneTest {
   public void userLoggedTest() throws Exception {
     when(sessionMock.getAttribute("user")).thenReturn(new Utente());
     servletMock.doGet(requestMock, responseMock);
-    verify(responseMock).sendRedirect(" "); //Aggiungere JSP
+    verify(responseMock).sendRedirect("AreaPersonale");
   }
 
   //User doesn't have a "cittadino" role.

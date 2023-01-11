@@ -36,9 +36,9 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
   
   /**
    * Retrieves all the submitted and yet to examine accreditation requests.
-   * 
+   *
    * @return a List of Accreditamento that contains all the accreditation requests
-   * pending to be accepted or declined. 
+   pending to be accepted or declined. 
    */
   @Override
   public List<Accreditamento> getAllUnexamined() {
