@@ -1,0 +1,172 @@
+package controller.gestioneAccreditamento;
+
+import controller.gestioneUtenza.GestioneUtenzaService;
+import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
+import model.Accreditamento;
+import model.Utente;
+
+/**
+ * Servlet implementation class InserimentoCertificazione.
+ */
+@WebServlet("/InserimentoCertificazioneServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 2048 * 2048 * 5,
+    maxRequestSize = 2048 * 2048 * 5 * 5)
+public class InserimentoCertificazioneServlet extends HttpServlet {
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Default constructor.
+   *
+   *@see HttpServlet#HttpServlet()
+   */
+  public InserimentoCertificazioneServlet() {
+    super();
+  }
+
+  GestioneAccreditamentoService serviceA = new GestioneAccreditamentoServiceImpl();
+  GestioneUtenzaService serviceU = new GestioneUtenzaServiceImpl();
+
+  /**
+   * doGet method implementation.
+   *
+   * @throws IOException      //
+   * @throws ServletException //
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    HttpSession session = request.getSession(true);
+    Utente user = (Utente) session.getAttribute("user");
+
+    if (user == null) {
+      response.sendRedirect("/Comun-ity/guest/login.jsp");
+    } else {
+      response.sendRedirect("AreaPersonale");
+    }
+  }
+
+  /**
+   * doPost method implementation.
+   *
+   * @throws IOException      //
+   * @throws ServletException //
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
+    HttpSession session = request.getSession(true);
+    Utente user = (Utente) session.getAttribute("user");
+
+    String utente = user.getMail();
+    String abilitazione = request.getParameter("abilitazione");
+    Part part = request.getPart("allegato");
+    
+    Accreditamento accreditamento = serviceA.getByApplicant(utente);
+    
+    if(accreditamento == null) {
+
+    if (user.getRuolo().equals("cittadino")) {
+
+      if (abilitazioneOk(abilitazione)) {
+          
+          String path = getServletContext().getRealPath("/temp");
+
+          File directory = new File(String.valueOf(path));
+
+          if (!directory.exists()) {
+            directory.mkdir();
+          }
+
+          String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+          part.write(path + fileName);
+
+          String base = encodeFileToBase64Binary(path + fileName);
+
+          Accreditamento newaccreditamento = new Accreditamento(utente, abilitazione, base);
+
+          serviceA.saveAccreditamento(newaccreditamento);
+
+          RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+          request.setAttribute("success",
+              "Richiesta sottomessa con successo, verra' controllata il prima possibile");
+
+          requestDispatcher.forward(request, response);
+
+        
+      } else {
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+        request.setAttribute("error", "Abilitazione non valida");
+
+        requestDispatcher.forward(request, response);
+
+      }
+
+    } else {
+
+      RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+      request.setAttribute("error",
+          "Solo un cittadino puo' sottomettere una richiesta di accreditamento");
+
+      requestDispatcher.forward(request, response);
+
+      }
+    }else {
+      
+      RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+      request.setAttribute("error",
+          "Si può sottomettere una sola richiesta di accreditamento alla volta. Aspetta che la precedente venga validata");
+
+      requestDispatcher.forward(request, response);
+    }
+  }
+
+  /**
+   * Checks if abilitazione is valid.
+   *
+   * @param abilitazione is the qualification to check
+   * @return true if valid
+   */
+  public static boolean abilitazioneOk(String abilitazione) {
+    return abilitazione.length() >= 1 && abilitazione.length() <= 30;
+  }
+
+  /**
+   * Decodes base64 file to binary and checks the size.
+   *
+   * @param allegato is the attached file to decode
+   * @return true if the file's size is correct
+   */
+  public static boolean allegatoOk(String allegato) {
+
+    byte[] data = DatatypeConverter.parseBase64Binary(allegato);
+
+    return data.length >= 1 && data.length <= 26214400;
+
+  }
+  
+  private static String encodeFileToBase64Binary(String path) throws IOException {
+
+    byte[] byteData = Files.readAllBytes(Paths.get(path));
+    return Base64.getEncoder().encodeToString(byteData);
+  }
+}

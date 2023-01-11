@@ -1,31 +1,28 @@
-package controller.utility;
+package controller.gestioneUtenza;
 
-import controller.gestioneUtenza.GestioneUtenzaService;
-import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class IndexServlet.
+ * Servlet implementation class LogoutServlet.
  */
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/LogoutServlet")
+public class LogoutServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
    * Default constructor.
    *
-   * @see HttpServlet#HttpServlet()
+   *@see HttpServlet#HttpServlet()
    */
-  public IndexServlet() {
+  public LogoutServlet() {
     super();
   }
-
-  GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
 
   /**
    * doGet method implementation.
@@ -34,11 +31,12 @@ public class IndexServlet extends HttpServlet {
    * @throws ServletException //
    *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
-  @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    response.sendRedirect("/Comun-ity/index.jsp");
-
+    HttpSession session = request.getSession(true);
+    session.removeAttribute("user");
+    session.invalidate();
+    response.sendRedirect("/Comun-ity/loginServlet");
   }
 
   /**
@@ -48,11 +46,9 @@ public class IndexServlet extends HttpServlet {
    * @throws ServletException //
    *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
-  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doGet(request, response);
-
   }
 
 }
