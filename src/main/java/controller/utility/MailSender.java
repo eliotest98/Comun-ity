@@ -1,7 +1,7 @@
 package controller.utility;
 
-import controller.gestioneUtenza.GestioneUtenzaService;
-import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
+import controller.gestione.utenza.GestioneUtenzaService;
+import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Address;
