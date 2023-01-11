@@ -76,7 +76,7 @@ public class InserimentoAnnuncioServlet extends HttpServlet {
           if (addressOk(indirizzo)) {
 
             if (service.insertAnnuncio(
-                new Annuncio(abilitazioneRichiesta, autore, titolo,descrizione, indirizzo))) {
+                new Annuncio(abilitazioneRichiesta, autore, titolo, descrizione, indirizzo))) {
               
               RequestDispatcher requestDispatcher = req.getRequestDispatcher("ListaAnnunciServlet");
               req.setAttribute("success", "Annuncio inserito");

@@ -51,7 +51,7 @@ public class ListaCommissioniServlet extends HttpServlet {
       resp.sendRedirect("ListaAnnunci");
     } else {
       resp.sendRedirect("/Comun-ity/guest/login.jsp");
-    }        //Aggiungere redirect
+    }
   }
 
   /**

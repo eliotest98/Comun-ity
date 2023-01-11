@@ -66,8 +66,9 @@ public class ListaLavoriServlet extends HttpServlet {
 
     HttpSession session = request.getSession(true);
     
-    int cont = 0, stop=1;
-
+    int cont = 0;
+    int stop = 1;
+    
     Utente utente = (Utente) session.getAttribute("user");
 
     if (serviceUtenza.isPro(utente) || serviceUtenza.isAdmin(utente)) {
@@ -82,9 +83,10 @@ public class ListaLavoriServlet extends HttpServlet {
 
           Annuncio annuncio = (Annuncio) it.next();
           
-          if ((!annuncio.getAutore().equals(utente.getMail())) && utente.getAbilitazione().equals(annuncio.getAbilitazioneRichiesta())) {
+          if ((!annuncio.getAutore().equals(utente.getMail())) 
+              && utente.getAbilitazione().equals(annuncio.getAbilitazioneRichiesta())) {
             
-        	Utente user = null;
+            Utente user = null;
 
             try {
               user = serviceUtenza.getAccountByEmail(annuncio.getAutore());
@@ -135,13 +137,13 @@ public class ListaLavoriServlet extends HttpServlet {
           }
 
         }
-      }else {
-    	  response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
-    	  stop=0;
+      } else {
+        response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
+        stop = 0;
       }
       
-      if(cont == 0 && stop==1) {
-    	  response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
+      if (cont == 0 && stop == 1) {
+        response.getWriter().write("<h3>Non ci sono lavori disponibili<h3>");
       }
 
     } else {

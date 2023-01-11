@@ -1,13 +1,8 @@
 package controller.gestioneAnnunci;
 
-
 import controller.gestioneUtenza.GestioneUtenzaService;
 import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Annuncio;
 import model.Utente;
 
 /**
@@ -28,7 +22,7 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
   /**
    * Default constructor.
    *
-   *@see HttpServlet#HttpServlet()
+   * @see HttpServlet#HttpServlet()
    */
   public RimuoviAnnuncioServlet() {
     super();
@@ -40,9 +34,9 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
   /**
    * doGet method implementation.
    *
-   * @throws IOException //
+   * @throws IOException      //
    * @throws ServletException //
-   *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -50,53 +44,48 @@ public class RimuoviAnnuncioServlet extends HttpServlet {
     HttpSession session = request.getSession(true);
     Utente utente = (Utente) session.getAttribute("user");
 
-    if(utente!= null) {
-    	if (serviceU.isAdmin(utente)) {
-    	      response.sendRedirect("ArchivioServlet"); 
-    	    } else {
-    	      response.sendRedirect("AreaPersonale");
-    	    }
-    }else {
-	      response.sendRedirect("/Comun-ity/guest/login.jsp");
-	    }
+    if (utente != null) {
+      if (serviceU.isAdmin(utente)) {
+        response.sendRedirect("ArchivioServlet");
+      } else {
+        response.sendRedirect("AreaPersonale");
+      }
+    } else {
+      response.sendRedirect("/Comun-ity/guest/login.jsp");
+    }
 
   }
 
   /**
    * doPost method implementation.
    *
-   * @throws IOException //
+   * @throws IOException      //
    * @throws ServletException //
-   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-	  
-	  Long id = (Long.parseLong(request.getParameter("annuncio")));
-	  
-	  HttpSession session = request.getSession(true);
-	  Utente utente = (Utente) session.getAttribute("user");
-	  
-	  if(serviceU.isAdmin(utente)) {
-		  
-		  if(serviceA.removeAnnuncio(id)) {
-			  RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArchivioServlet");
-		      request.setAttribute("success", "Annuncio rimosso con successo");
-		      requestDispatcher.forward(request, response);
-		  }else {
-	
-		      RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArchivioServlet");
-		      request.setAttribute("errore", "Rimozione dell'annuncio fallita");
-		      requestDispatcher.forward(request, response);
-		    }
-		  
-	  }
-	  
-	  
 
-    
+    Long id = (Long.parseLong(request.getParameter("annuncio")));
+
+    HttpSession session = request.getSession(true);
+    Utente utente = (Utente) session.getAttribute("user");
+
+    if (serviceU.isAdmin(utente)) {
+
+      if (serviceA.removeAnnuncio(id)) {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArchivioServlet");
+        request.setAttribute("success", "Annuncio rimosso con successo");
+        requestDispatcher.forward(request, response);
+      } else {
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArchivioServlet");
+        request.setAttribute("errore", "Rimozione dell'annuncio fallita");
+        requestDispatcher.forward(request, response);
+      }
+
+    }
+
   }
-
-
 
 }

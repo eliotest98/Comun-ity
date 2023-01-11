@@ -1,6 +1,5 @@
 package controller.gestioneAnnunci;
 
-
 import java.util.List;
 import model.Annuncio;
 import model.AnnuncioDAO;
@@ -13,7 +12,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
   /**
    * exclude.
    */
-  private final AnnuncioDAO annuncioDAO = new AnnuncioDAO();
+  private final AnnuncioDAO annuncioDao = new AnnuncioDAO();
 
   /**
    * Empty Constructor.
@@ -28,7 +27,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public boolean insertAnnuncio(Annuncio annuncio) {
-    return annuncioDAO.saveAnnuncio(annuncio);
+    return annuncioDao.saveAnnuncio(annuncio);
   }
 
   /**
@@ -39,7 +38,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public boolean removeAnnuncio(Long id) {
-    return annuncioDAO.deleteAnnuncio(id);
+    return annuncioDao.deleteAnnuncio(id);
 
   }
 
@@ -51,7 +50,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public boolean updateAnnuncio(Annuncio annuncio) {
-    return annuncioDAO.updateAnnuncio(annuncio);
+    return annuncioDao.updateAnnuncio(annuncio);
   }
 
   /**
@@ -62,7 +61,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public Annuncio findAnnuncioById(Long id) {
-    return annuncioDAO.findAnnuncioById(id);
+    return annuncioDao.findAnnuncioById(id);
   }
 
   /**
@@ -74,7 +73,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
   @Override
   public boolean removeAllAvailableByUser(String autore) {
 
-    List<Annuncio> availables = annuncioDAO.findAllAvailableByAuthor(autore);
+    List<Annuncio> availables = annuncioDao.findAllAvailableByAuthor(autore);
 
     //Check if the list is not empty
     if (!availables.isEmpty()) {
@@ -98,7 +97,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public List<Annuncio> getErrands() {
-    return annuncioDAO.findErrands();
+    return annuncioDao.findErrands();
   }
 
   /**
@@ -108,7 +107,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public List<Annuncio> getAvailableErrands() {
-    return annuncioDAO.findAvailableErrands();
+    return annuncioDao.findAvailableErrands();
   }
 
   /**
@@ -118,7 +117,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public List<Annuncio> getJobs() {
-    return annuncioDAO.findJobs();
+    return annuncioDao.findJobs();
   }
 
   /**
@@ -128,7 +127,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public List<Annuncio> getAvailableJobs() {
-    return annuncioDAO.findAvailableJobs();
+    return annuncioDao.findAvailableJobs();
   }
 
   /**
@@ -139,7 +138,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public List<Annuncio> getAllByAuthor(String autore) {
-    return annuncioDAO.findAllByAuthor(autore);
+    return annuncioDao.findAllByAuthor(autore);
   }
 
   /**
@@ -150,7 +149,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    */
   @Override
   public List<Annuncio> getAllByAppointee(String incaricato) {
-    return annuncioDAO.findAllByAppointee(incaricato);
+    return annuncioDao.findAllByAppointee(incaricato);
   }
 
   /**
@@ -163,34 +162,35 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
 
   @Override
   public boolean acceptAnnuncio(Long id, String mail) {
-    Annuncio annuncio = annuncioDAO.findAnnuncioById(id);
+    Annuncio annuncio = annuncioDao.findAnnuncioById(id);
     if (mail == null || mail.isEmpty()) {
       return false;
     }
     annuncio.setIncaricato(mail);
-    return annuncioDAO.updateAnnuncio(annuncio);
+    return annuncioDao.updateAnnuncio(annuncio);
   }
   
   /**
    * Mark an ad as done.
    *
-   * @param ad's id.
+   * @param id is the ad's id.
    * @return true if the ad is marked as done.
    */
   @Override
   public boolean markAsDone(Long id) {
-	  return annuncioDAO.markAsDone(id);
+    return annuncioDao.markAsDone(id);
   }
   
   /**
    * Retrieve all the Ads, not marked as done, accepted from the given appointee from the db.
    *
    * @param incaricato is the email of the ad's appointee.
-   * @return a List of Annuncio that contains all the ads, not marked as done, accepted from the given appointee.
+   * @return a List of Annuncio that contains all
+   the ads, not marked as done, accepted from the given appointee.
    */
   @Override
   public List<Annuncio> getAllByAppointeeNotDone(String incaricato) {
-    return annuncioDAO.findAllByAppointeeNotDone(incaricato);
+    return annuncioDao.findAllByAppointeeNotDone(incaricato);
   }
 
 }

@@ -105,7 +105,7 @@ public interface GestioneAnnunciService {
   /**
    * Mark an ad as done.
    *
-   * @param ad's id.
+   * @param id is the ad's id.
    * @return true if the ad is marked as done.
    */
   public boolean markAsDone(Long id);
@@ -114,7 +114,8 @@ public interface GestioneAnnunciService {
    * Retrieve all the Ads, not marked as done, accepted from the given appointee from the db.
    *
    * @param incaricato is the email of the ad's appointee.
-   * @return a List of Annuncio that contains all the ads, not marked as done, accepted from the given appointee.
+   * @return a List of Annuncio that contains all
+   the ads, not marked as done, accepted from the given appointee.
    */
   public List<Annuncio> getAllByAppointeeNotDone(String incaricato);
 

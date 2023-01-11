@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -90,8 +89,8 @@ public class ArchivioServlet extends HttpServlet {
       Iterator<Annuncio> it;
       Annuncio annuncio;
       
-      if(action == null) {
-    	  action = "";
+      if (action == null) {
+        action = "";
       }
 
       switch (action) {
@@ -108,11 +107,11 @@ public class ArchivioServlet extends HttpServlet {
             Utente utente = null;
             
             try {
-				utente = serviceUtenza.getAccountByEmail(annuncio.getAutore());
-			} catch (InterruptedException | ExecutionException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+              utente = serviceUtenza.getAccountByEmail(annuncio.getAutore());
+            } catch (InterruptedException | ExecutionException | IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
 
             response.getWriter().write("<div class=\"col\">\n"
                     + "<div class=\"card center\">\n"
@@ -201,9 +200,10 @@ public class ArchivioServlet extends HttpServlet {
           }
           break;
         default:
-  			  RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/user/archivio.jsp");
-  		      requestDispatcher.forward(request, response);
-  		      break;
+          RequestDispatcher requestDispatcher = 
+              request.getRequestDispatcher("/WEB-INF/user/archivio.jsp");
+          requestDispatcher.forward(request, response);
+          break;
       }
 
     }

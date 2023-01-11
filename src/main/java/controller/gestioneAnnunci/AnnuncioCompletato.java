@@ -15,28 +15,33 @@ import model.Annuncio;
 import model.Utente;
 
 /**
- * Servlet implementation class AnnuncioCompletato
+ * Servlet implementation class AnnuncioCompletato.
  */
 @WebServlet("/AnnuncioCompletato")
 public class AnnuncioCompletato extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
-   * @see HttpServlet#HttpServlet()
+   * Default constructor.
+   *
+   *@see HttpServlet#HttpServlet()
    */
   public AnnuncioCompletato() {
     super();
-    // TODO Auto-generated constructor stub
   }
 
   GestioneAnnunciService serviceA = new GestioneAnnunciServiceImpl();
 
   /**
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * doGet method implementation.
+   *
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    // TODO Auto-generated method stub
+
     HttpSession session = request.getSession(true);
     Utente utente = (Utente) session.getAttribute("user");
 
@@ -48,11 +53,15 @@ public class AnnuncioCompletato extends HttpServlet {
   }
 
   /**
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   * doPost method implementation.
+   *
+   * @throws IOException //
+   * @throws ServletException //
+   *@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    // TODO Auto-generated method stub
+
     Long id = (Long.parseLong(request.getParameter("annuncio")));
 
     if (serviceA.markAsDone(id)) {
