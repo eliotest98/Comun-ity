@@ -161,7 +161,7 @@ public class Accreditamento {
   public String getStato() {
     return stato;
   }
-
+  
   /**
    * State setter.
    *

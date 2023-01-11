@@ -51,30 +51,30 @@ public class Annuncio {
     this.incaricato = "nessuno"; //default unassigned ad
     this.dataFine = dataPubblicazione.plusDays(30); //default expire date
     this.recensione = -1.0; //default not reviewed
-    this.terminato= false; //default not done
+    this.terminato = false; //default not done
   }
-  
-  
 
-/**
- * Terminato getter.
- * 
- * @return the terminato
- */
+
+
+  /**
+   * Terminato getter.
+   *
+   * @return the terminato
+   */
   public boolean isTerminato() {
-	return terminato;
-}
+    return terminato;
+  }
 
-/**
- * Terminato setter.
- * 
- * @param terminato the terminato to set
- */
+  /**
+   * Terminato setter.
+   *
+   * @param terminato the terminato to set
+   */
   public void setTerminato(boolean terminato) {
-	this.terminato = terminato;
-}
+    this.terminato = terminato;
+  }
 
-/**
+  /**
    * Id setter.
    *
    * @param id the annuncioId
@@ -238,28 +238,29 @@ public class Annuncio {
 
   /**
    * Review rating getter.
-   * 
+   *
    * @return the review rating assigned
    */
   public Double getRecensione() {
-	  return recensione;
+    return recensione;
   }
 
   /**
    * Review rating setter.
-   * 
+   *
    * @param recensione is the review rating to set
    */
   public void setRecensione(Double recensione) {
-	  this.recensione = recensione;
+    this.recensione = recensione;
   }
 
-@Override
+  @Override
   public String toString() {
     return "Annuncio [id=" + id + ", abilitazioneRichiesta=" + abilitazioneRichiesta
         + ", autore=" + autore + ", titolo=" + titolo + ", descrizione=" + descrizione
-        + ", indirizzo=" + indirizzo + ", dataPubblicazione=" + dataPubblicazione + ", incaricato="
-        + incaricato + ", dataFine=" + dataFine + ", recensione=" + recensione +"]";
+        + ", indirizzo=" + indirizzo + ", dataPubblicazione=" + dataPubblicazione
+        + ", incaricato=" + incaricato + ", dataFine=" + dataFine
+        + ", recensione=" + recensione + "]";
   }
 
 }

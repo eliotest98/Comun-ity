@@ -7,7 +7,6 @@ import controller.utility.DbConnection;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bson.Document;
@@ -31,10 +30,11 @@ public class AnnuncioDAO {
   public boolean saveAnnuncio(Annuncio annuncio) {
 
     try {
-      if(database.getCollection("annuncio").countDocuments()==0) { //se non ci sono annunci l'id sarà 1
-    	  annuncio.setId((long) 1);
-      }else {
-    	  annuncio.setId(getLastId() + 1);
+      if (database.getCollection("annuncio").countDocuments() == 0) {
+        //se non ci sono annunci l'id sarà 1
+        annuncio.setId((long) 1);
+      } else {
+        annuncio.setId(getLastId() + 1);
       }
       database.getCollection("annuncio").insertOne(docForDb(annuncio));
       System.out.println("Annuncio aggiunto al database con successo");
@@ -74,8 +74,8 @@ public class AnnuncioDAO {
   public boolean updateAnnuncio(Annuncio annuncio) {
 
     try {
-      database.getCollection("annuncio")
-          .replaceOne(Filters.eq("id", annuncio.getId()), docForDb(annuncio));
+      database.getCollection("annuncio").replaceOne(Filters.eq("id", annuncio.getId()), docForDb(
+          annuncio));
       System.out.println("Dati dell'annuncio " + annuncio.getId() + " aggiornati.");
       return true;
     } catch (MongoException e) {
@@ -110,8 +110,8 @@ public class AnnuncioDAO {
    */
   public Long getLastId() {
 
-    Document myDoc =
-        (Document) database.getCollection("annuncio").find().sort(new Document("id", -1)).first();
+    Document myDoc = (Document) database.getCollection("annuncio").find().sort(new Document("id",
+        -1)).first();
 
     assert myDoc != null;
     Annuncio lastAnnuncio = docToAnnuncio(myDoc);
@@ -129,8 +129,8 @@ public class AnnuncioDAO {
     List<Annuncio> jobs = new ArrayList<>();
     List<Document> documents = new ArrayList<>();
 
-    database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna"))
-        .into(documents);
+    database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).into(
+        documents);
     if (!documents.isEmpty()) {
       jobs = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
     }
@@ -148,8 +148,8 @@ public class AnnuncioDAO {
     List<Annuncio> errands = new ArrayList<>();
     List<Document> documents = new ArrayList<>();
 
-    database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna"))
-        .into(documents);
+    database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna")).into(
+        documents);
     if (!documents.isEmpty()) {
       errands = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
     }
@@ -168,13 +168,13 @@ public class AnnuncioDAO {
     List<Annuncio> availables = new ArrayList<Annuncio>();
 
     if (!jobs.isEmpty()) {
-      availables = jobs.stream().filter(job -> job.getIncaricato().equals("nessuno"))
-          .collect(Collectors.toList());
+      availables = jobs.stream().filter(job -> job.getIncaricato().equals("nessuno")).collect(
+          Collectors.toList());
     }
 
-    String s = availables.isEmpty()
-        ? "Nessun lavoro disponibile trovato."
-        : "Trovato/i lavoro/i disponibile/i.";
+    String s = availables.isEmpty() ?
+        "Nessun lavoro disponibile trovato." :
+        "Trovato/i lavoro/i disponibile/i.";
     System.out.println(s);
 
     return availables;
@@ -196,9 +196,9 @@ public class AnnuncioDAO {
           .collect(Collectors.toList());
     }
 
-    String s = availables.isEmpty()
-        ? "Nessuna commissione disponibile trovata."
-        : "Trovata/e commissione/i disponibile/i.";
+    String s = availables.isEmpty() ?
+        "Nessuna commissione disponibile trovata." :
+        "Trovata/e commissione/i disponibile/i.";
     System.out.println(s);
 
     return availables;
@@ -235,13 +235,13 @@ public class AnnuncioDAO {
     List<Annuncio> availables = new ArrayList<Annuncio>();
 
     if (!allByAuthor.isEmpty()) {
-      availables = allByAuthor.stream().filter(ad -> ad.getIncaricato().equals("nessuno"))
-          .collect(Collectors.toList());
+      availables = allByAuthor.stream().filter(ad -> ad.getIncaricato().equals("nessuno")).collect(
+          Collectors.toList());
     }
 
-    String s = availables.isEmpty()
-        ? "Nessun annuncio disponibile trovato"
-        : "Trovato/i annuncio/i disponibile/i";
+    String s = availables.isEmpty() ?
+        "Nessun annuncio disponibile trovato" :
+        "Trovato/i annuncio/i disponibile/i";
     System.out.println(s + "per l'utente: " + autore + ".");
 
     return availables;
@@ -260,58 +260,60 @@ public class AnnuncioDAO {
 
     database.getCollection("annuncio").find(Filters.eq("incaricato", incaricato)).into(documents);
     if (!documents.isEmpty()) {
-      allByAppointee =
-          documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+      allByAppointee = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors
+          .toList());
     }
 
     return allByAppointee;
   }
-  
+
   /**
    * Mark an ad as done.
    *
-   * @param ad's id.
+   * @param id is ad's id.
    * @return true if the ad is marked as done.
    */
   public boolean markAsDone(Long id) {
-	  boolean res= true;
-	  
-	  Annuncio annuncio= findAnnuncioById(id);
-	  
-	  if(annuncio!=null) {
-		  annuncio.setTerminato(true);;
-		  updateAnnuncio(annuncio);
-	  }else {
-		  res=false;
-	  }
-	  
-	  return res;
+    boolean res = true;
+
+    Annuncio annuncio = findAnnuncioById(id);
+
+    if (annuncio != null) {
+      annuncio.setTerminato(true);
+      ;
+      updateAnnuncio(annuncio);
+    } else {
+      res = false;
+    }
+
+    return res;
   }
-  
-  
+
+
   /**
    * Retrieve all the Ads, not marked as done, accepted from the given appointee from the db.
    *
    * @param incaricato is the email of the ad's appointee.
-   * @return a List of Annuncio that contains all the ads, not marked as done, accepted from the given appointee.
+   * @return a List of Annuncio that contains all the ads, not marked as done, accepted from the
+   *         given appointee.
    */
   public List<Annuncio> findAllByAppointeeNotDone(String incaricato) {
 
     List<Annuncio> allByAppointee = findAllByAppointee(incaricato);
     List<Annuncio> allByAppointeeNotDone = new ArrayList<Annuncio>();
-    
-    for(Annuncio a : allByAppointee) {
-    	if(!a.isTerminato()) {
-    		allByAppointeeNotDone.add(a);
-    	}
+
+    for (Annuncio a : allByAppointee) {
+      if (!a.isTerminato()) {
+        allByAppointeeNotDone.add(a);
+      }
     }
-    
-    if(allByAppointeeNotDone.isEmpty()) {
-    	System.out.println("Non ci sono annunci relativi all'utente non svolti");
+
+    if (allByAppointeeNotDone.isEmpty()) {
+      System.out.println("Non ci sono annunci relativi all'utente non svolti");
     }
-    
+
     return allByAppointeeNotDone;
-    
+
   }
 
   /**
@@ -323,21 +325,19 @@ public class AnnuncioDAO {
   private static Document docForDb(Annuncio annuncio) {
 
     //Check if it already exists
-    Document doc =
-        database.getCollection("annuncio").find(Filters.eq("id", annuncio.getId())).first();
+    Document doc = database.getCollection("annuncio").find(Filters.eq("id", annuncio.getId()))
+        .first();
 
     //If it doesn't, create a new document
     if (doc == null) {
-      doc = new Document("_id", new ObjectId()).append("id", annuncio.getId())
-          .append("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta())
-          .append("autore", annuncio.getAutore()).append("titolo", annuncio.getTitolo())
-          .append("descrizione", annuncio.getDescrizione())
-          .append("indirizzo", annuncio.getIndirizzo())
-          .append("dataPubblicazione", annuncio.getDataPubblicazione())
-          .append("incaricato", annuncio.getIncaricato())
-          .append("dataFine", annuncio.getDataFine())
-          .append("recensione", annuncio.getRecensione())
-          .append("terminato", annuncio.isTerminato());
+      doc = new Document("_id", new ObjectId()).append("id", annuncio.getId()).append(
+          "abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta()).append("autore", annuncio
+              .getAutore()).append("titolo", annuncio.getTitolo()).append("descrizione", annuncio
+                  .getDescrizione()).append("indirizzo", annuncio.getIndirizzo()).append(
+                      "dataPubblicazione", annuncio.getDataPubblicazione()).append("incaricato",
+                          annuncio.getIncaricato()).append("dataFine", annuncio.getDataFine())
+          .append("recensione", annuncio.getRecensione()).append("terminato", annuncio
+              .isTerminato());
     } else {
       doc.replace("id", annuncio.getId());
       doc.replace("abilitazioneRichiesta", annuncio.getAbilitazioneRichiesta());
@@ -363,18 +363,16 @@ public class AnnuncioDAO {
    */
   private static Annuncio docToAnnuncio(Document doc) {
 
-    Annuncio annuncio =
-        new Annuncio(doc.getString("abilitazioneRichiesta"), doc.getString("autore"),
-            doc.getString("titolo"), doc.getString("descrizione"), doc.getString("indirizzo"));
+    Annuncio annuncio = new Annuncio(doc.getString("abilitazioneRichiesta"), doc.getString(
+        "autore"), doc.getString("titolo"), doc.getString("descrizione"), doc.getString(
+            "indirizzo"));
 
     annuncio.setId(doc.getLong("id"));
-    annuncio.setDataPubblicazione(
-        (LocalDate) doc.getDate("dataPubblicazione").toInstant().atZone(ZoneId.systemDefault())
-            .toLocalDate());
+    annuncio.setDataPubblicazione((LocalDate) doc.getDate("dataPubblicazione").toInstant().atZone(
+        ZoneId.systemDefault()).toLocalDate());
     annuncio.setIncaricato(doc.getString("incaricato"));
-    annuncio.setDataFine(
-        (LocalDate) doc.getDate("dataFine").toInstant().atZone(ZoneId.systemDefault())
-            .toLocalDate());
+    annuncio.setDataFine((LocalDate) doc.getDate("dataFine").toInstant().atZone(ZoneId
+        .systemDefault()).toLocalDate());
     annuncio.setRecensione(doc.getDouble("recensione"));
     annuncio.setTerminato(doc.getBoolean("terminato"));
 
