@@ -216,6 +216,7 @@
 	<div class="modal fade" tabindex="-1" id="professionista">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
+				<form action="InserimentoCertificazioneServlet" method="post">
 				<div class="modal-header">
 					<h5 class="modal-title">Iscriviti come professionista</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -223,27 +224,26 @@
 				</div>
 				<div class="modal-body">
 					<div class="container-fluid">
-						<form>
 							<div class="row">
 								<div class="col">
-									<input type="text" class="form-control" name="professione"
+									<input type="text" class="form-control" name="abilitazione"
 										id="professione" /> <label class="form-label"
 										for="professione">Professione</label>
 								</div>
 								<div class="col">
 									<input class="form-control" type="file" id="formFileMultiple"
-										name="file">
+										name="allegato">
 								</div>
 							</div>
-						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">Chiudi</button>
-					<button type="button" class="btn btn-primary">Invia la
+					<button type="submit" class="btn btn-primary">Invia la
 						candidatura</button>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
