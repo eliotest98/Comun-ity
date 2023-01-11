@@ -103,7 +103,7 @@ public class MailSender {
       Address[] adminAd = (Address[]) admins.toArray();
       message.addRecipients(Message.RecipientType.TO, adminAd);
       message.setSubject(subject);
-      message.setText(createBody1(accreditamento));
+      message.setText(createBody(accreditamento));
       Transport.send(message);
     
       for (String e : admins) {
@@ -143,7 +143,7 @@ public class MailSender {
    * 
    * @return a String containing the email body text;
    */
-  private static String createBody1(Accreditamento accreditamento) {
+  private static String createBody(Accreditamento accreditamento) {
     String text;
 
     text = "E' stata sottomessa una nuova richiesta di accreditamento.\n" 
