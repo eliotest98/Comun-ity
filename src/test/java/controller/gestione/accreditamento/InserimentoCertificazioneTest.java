@@ -7,16 +7,26 @@ import static org.mockito.Mockito.when;
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
+import java.time.LocalDate;
+
+import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import model.Accreditamento;
 import model.AccreditamentoDao;
 import model.Utente;
+import model.UtenteDao;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 /**
  * Unit testing class for "InserimentoCertificazioneServlet".
@@ -34,26 +44,47 @@ public class InserimentoCertificazioneTest {
   GestioneUtenzaService userServiceMock = mock(GestioneUtenzaServiceImpl.class);
   Utente utenteMock = mock(Utente.class);
   RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
+  Part partMock = mock(Part.class);
+  GenericServlet genericMock = mock(GenericServlet.class);
+  ServletContext ctxMock = mock(ServletContext.class);
 
 
   /**
-   * Before each test a the session is simulated.
+   * Before each test new entries for 'utente' e 'annuncio'
+   * are created for testing purpose and the session is simulated.
+   * 
    */
   @BeforeEach
   public void setUp() {
     servletMock = new InserimentoCertificazioneServlet();
     when(requestMock.getSession(true)).thenReturn(sessionMock);
-    when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
+
+    Utente user = new Utente("cittadino", "nessuna", "Testa", "Testa", 18, "test@test.com", "test",
+        "M", "3340000000", "test", LocalDate.now());
+    UtenteDao utenteDao = new UtenteDao();
+    utenteDao.saveUtente(user);
+
+    Accreditamento test = new Accreditamento("test2@test.com", "idraulico",
+        "aHR0cHM6Ly9naXRodWIuY29tL2VsaW90ZXN0OTgvQ29tdW4taXR5");
+    AccreditamentoDao accrDao = new AccreditamentoDao();
+    accrDao.saveAccreditamento(test);
+    when(sessionMock.getAttribute("user")).thenReturn(user);
     when(requestMock.getRequestDispatcher("AreaPersonale")).thenReturn(dispatcherMock);
   }
 
   /*
-   * After each test, the accreditation request entry is eliminated.
+   * After each test, both the accreditation request
+   * and the user entries are eliminated.
    */
   @AfterEach
   void tearDown() {
+
     AccreditamentoDao accrDao = new AccreditamentoDao();
-    accrDao.deleteAccreditamento("test@test.com");
+    accrDao.deleteAccreditamento("test2@test.com");
+    UtenteDao utenteDao = new UtenteDao();
+    utenteDao.deleteUtente("test@test.com");
+    utenteDao.deleteUtente("test2@test.com");
+    utenteDao.deleteUtente("test3@test.com");
   }
 
   //User not logged.
@@ -72,13 +103,32 @@ public class InserimentoCertificazioneTest {
     verify(responseMock).sendRedirect("AreaPersonale");
   }
 
+  //User has already submitted an accreditation request.
+  @Test
+  public void secondReqTest() throws Exception {
+
+    Utente user = new Utente("cittadino", "nessuna", "Testa", "Testa", 18, "test2@test.com", "test",
+        "M", "3340000000", "test", LocalDate.now());
+    UtenteDao utenteDao = new UtenteDao();
+    utenteDao.saveUtente(user);
+    when(sessionMock.getAttribute("user")).thenReturn(user);
+
+    servletMock.doPost(requestMock, responseMock);
+    verify(requestMock).setAttribute("error",
+        "Si può sottomettere una sola richiesta di accreditamento alla volta. "
+            + "Aspetta che la precedente venga validata");
+    verify(dispatcherMock).forward(requestMock, responseMock);
+  }
+
   //User doesn't have a "cittadino" role.
   @Test
   public void wrongRoleTest() throws Exception {
 
-    when(requestMock.getRequestDispatcher("/Comun-ity/guest/login.jsp")).thenReturn(dispatcherMock);
-
-    when(utenteMock.getRuolo()).thenReturn("professionista");
+    Utente user = new Utente("professionista", "nessuna", "Testa", "Testa", 18, "test3@test.com",
+        "test", "M", "3340000000", "test", LocalDate.now());
+    UtenteDao utenteDao = new UtenteDao();
+    utenteDao.saveUtente(user);
+    when(sessionMock.getAttribute("user")).thenReturn(user);
 
 
     servletMock.doPost(requestMock, responseMock);
@@ -92,7 +142,6 @@ public class InserimentoCertificazioneTest {
   public void emptyQualificationTest() throws Exception {
 
     when(requestMock.getParameter("abilitazione")).thenReturn("");
-    when(utenteMock.getRuolo()).thenReturn("cittadino");
 
     servletMock.doPost(requestMock, responseMock);
     verify(requestMock).setAttribute("error", "Abilitazione non valida");
@@ -103,55 +152,36 @@ public class InserimentoCertificazioneTest {
   @Test
   public void qualificationLengthTest() throws Exception {
 
-    when(requestMock.getParameter("abilitazione"))
-        .thenReturn("Lorem ipsum dolor sit amet, consect");
-    when(utenteMock.getRuolo()).thenReturn("cittadino");
+    when(requestMock.getParameter("abilitazione")).thenReturn(
+        "Lorem ipsum dolor sit amet, consect");
 
     servletMock.doPost(requestMock, responseMock);
     verify(requestMock).setAttribute("error", "Abilitazione non valida");
     verify(dispatcherMock).forward(requestMock, responseMock);
   }
 
-  //Invalid attached file: empty.
+  //Directory doesn't exist.
   @Test
-  public void notAttachedTest() throws Exception {
+  public void dirNotExistTest() throws Exception {
 
     when(requestMock.getParameter("abilitazione")).thenReturn("idraulico");
-    when(requestMock.getParameter("allegato")).thenReturn("");
-    when(utenteMock.getRuolo()).thenReturn("cittadino");
-
+    when(requestMock.getPart("allegato")).thenReturn(partMock);
+    
+    when(genericMock.getServletContext()).thenReturn(ctxMock);
+    when(ctxMock.getRealPath("/temp")).thenReturn(Mockito.anyString());
     servletMock.doPost(requestMock, responseMock);
-    verify(requestMock).setAttribute("error",
-        "Errore nell'inserimento dell'allegato, deve essere un pdf da massimo 50MB");
-    verify(dispatcherMock).forward(requestMock, responseMock);
   }
-  
-  //Invalid attached file: too big.
-  //  @Test
-  //  public void attachedTooBigTest() throws Exception {
-  //
-  //    when(requestMock.getParameter("abilitazione")).thenReturn("idraulico");
-  //    when(requestMock.getParameter("allegato")).thenReturn("--BASE 64 PDF > 50MB--");
-  //    when(utenteMock.getRuolo()).thenReturn("cittadino");
-  //
-  //    servletMock.doPost(requestMock, responseMock);
-  //    verify(requestMock).setAttribute("error",
-  //        "Errore nell'inserimento dell'allegato, deve essere un pdf da massimo 50MB");
-  //    verify(dispatcherMock).forward(requestMock, responseMock);
-  //  }
 
   @Test
   public void accreditationReqOkTest() throws Exception {
-  
+
     when(requestMock.getParameter("abilitazione")).thenReturn("idraulico");
-    when(requestMock.getParameter("allegato"))
-        .thenReturn("aHR0cHM6Ly9naXRodWIuY29tL2VsaW90ZXN0OTgvQ29tdW4taXR5");
-    when(utenteMock.getRuolo()).thenReturn("cittadino");
-  
+    when(requestMock.getPart("allegato")).thenReturn(partMock);
+
     servletMock.doPost(requestMock, responseMock);
     verify(requestMock).setAttribute("success",
         "Richiesta sottomessa con successo, verra' controllata il prima possibile");
     verify(dispatcherMock).forward(requestMock, responseMock);
   }
-  
+
 }
