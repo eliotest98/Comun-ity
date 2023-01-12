@@ -1,22 +1,14 @@
 package controller.gestione.accreditamento;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Base64;
-
-import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -24,16 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-
 import model.Accreditamento;
 import model.AccreditamentoDao;
 import model.Utente;
 import model.UtenteDao;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 
 /**
  * Unit testing class for "InserimentoCertificazioneServlet".
