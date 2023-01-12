@@ -83,7 +83,7 @@ public class ArchivioServlet extends HttpServlet {
 
     if (serviceUtenza.isAdmin(user)) {
 
-      List<Annuncio> lista = null;
+      List<Annuncio> lista;
 
       String action = request.getParameter("action");
       Iterator<Annuncio> it;
@@ -102,7 +102,7 @@ public class ArchivioServlet extends HttpServlet {
 
           while (it.hasNext()) {
 
-            annuncio = (Annuncio) it.next();
+            annuncio = it.next();
             
             Utente utente = null;
             
@@ -113,6 +113,7 @@ public class ArchivioServlet extends HttpServlet {
               e.printStackTrace();
             }
 
+            assert utente != null;
             response.getWriter().write("<div class=\"col\">\n"
                     + "<div class=\"card center\">\n"
                     + "<div class=\"additional\">\n"
@@ -163,7 +164,7 @@ public class ArchivioServlet extends HttpServlet {
 
           while (it.hasNext()) {
 
-            annuncio = (Annuncio) it.next();
+            annuncio = it.next();
 
             response.getWriter().write(
                 "<div class=\"col\">\n"

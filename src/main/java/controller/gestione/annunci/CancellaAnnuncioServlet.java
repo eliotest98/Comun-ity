@@ -59,7 +59,7 @@ public class CancellaAnnuncioServlet extends HttpServlet {
 
     System.out.println(req.getParameter("annuncio"));
 
-    Long id = Long.valueOf((String) req.getParameter("annuncio"));
+    Long id = Long.valueOf(req.getParameter("annuncio"));
 
     Annuncio annuncio = service.findAnnuncioById(id);
 

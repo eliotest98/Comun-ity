@@ -110,7 +110,7 @@ public class AnnuncioDao {
    */
   public Long getLastId() {
 
-    Document myDoc = (Document) database.getCollection("annuncio").find().sort(new Document("id",
+    Document myDoc = database.getCollection("annuncio").find().sort(new Document("id",
         -1)).first();
 
     assert myDoc != null;
@@ -165,7 +165,7 @@ public class AnnuncioDao {
   public List<Annuncio> findAvailableJobs() {
 
     List<Annuncio> jobs = findJobs();
-    List<Annuncio> availables = new ArrayList<Annuncio>();
+    List<Annuncio> availables = new ArrayList<>();
 
     if (!jobs.isEmpty()) {
       availables = jobs.stream().filter(job -> job.getIncaricato().equals("nessuno")).collect(
@@ -190,7 +190,7 @@ public class AnnuncioDao {
   public List<Annuncio> findAvailableErrands() {
 
     List<Annuncio> errands = findErrands();
-    List<Annuncio> availables = new ArrayList<Annuncio>();
+    List<Annuncio> availables = new ArrayList<>();
 
     if (!errands.isEmpty()) {
       availables = errands.stream().filter(errand -> errand.getIncaricato().equals("nessuno"))
@@ -214,7 +214,7 @@ public class AnnuncioDao {
    */
   public List<Annuncio> findAllByAuthor(String autore) {
 
-    List<Annuncio> allByAuthor = new ArrayList<Annuncio>();
+    List<Annuncio> allByAuthor = new ArrayList<>();
     List<Document> documents = new ArrayList<>();
 
     database.getCollection("annuncio").find(Filters.eq("autore", autore)).into(documents);
@@ -234,7 +234,7 @@ public class AnnuncioDao {
   public List<Annuncio> findAllAvailableByAuthor(String autore) {
 
     List<Annuncio> allByAuthor = findAllByAuthor(autore);
-    List<Annuncio> availables = new ArrayList<Annuncio>();
+    List<Annuncio> availables = new ArrayList<>();
 
     if (!allByAuthor.isEmpty()) {
       availables = allByAuthor.stream().filter(ad -> ad.getIncaricato().equals("nessuno")).collect(
@@ -258,7 +258,7 @@ public class AnnuncioDao {
    */
   public List<Annuncio> findAllByAppointee(String incaricato) {
 
-    List<Annuncio> allByAppointee = new ArrayList<Annuncio>();
+    List<Annuncio> allByAppointee = new ArrayList<>();
     List<Document> documents = new ArrayList<>();
 
     database.getCollection("annuncio").find(Filters.eq("incaricato", incaricato)).into(documents);
@@ -283,7 +283,6 @@ public class AnnuncioDao {
 
     if (annuncio != null) {
       annuncio.setTerminato(true);
-      ;
       updateAnnuncio(annuncio);
     } else {
       res = false;
@@ -303,7 +302,7 @@ public class AnnuncioDao {
   public List<Annuncio> findAllByAppointeeNotDone(String incaricato) {
 
     List<Annuncio> allByAppointee = findAllByAppointee(incaricato);
-    List<Annuncio> allByAppointeeNotDone = new ArrayList<Annuncio>();
+    List<Annuncio> allByAppointeeNotDone = new ArrayList<>();
 
     for (Annuncio a : allByAppointee) {
       if (!a.isTerminato()) {
@@ -371,10 +370,10 @@ public class AnnuncioDao {
             "indirizzo"));
 
     annuncio.setId(doc.getLong("id"));
-    annuncio.setDataPubblicazione((LocalDate) doc.getDate("dataPubblicazione").toInstant().atZone(
+    annuncio.setDataPubblicazione(doc.getDate("dataPubblicazione").toInstant().atZone(
         ZoneId.systemDefault()).toLocalDate());
     annuncio.setIncaricato(doc.getString("incaricato"));
-    annuncio.setDataFine((LocalDate) doc.getDate("dataFine").toInstant().atZone(ZoneId
+    annuncio.setDataFine(doc.getDate("dataFine").toInstant().atZone(ZoneId
         .systemDefault()).toLocalDate());
     annuncio.setRecensione(doc.getDouble("recensione"));
     annuncio.setTerminato(doc.getBoolean("terminato"));
