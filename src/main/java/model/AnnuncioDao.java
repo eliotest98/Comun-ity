@@ -15,7 +15,7 @@ import org.bson.types.ObjectId;
 /**
  * Class AnnuncioDAO for database queries.
  */
-public class AnnuncioDAO {
+public class AnnuncioDao {
 
   //Static db connection
   static MongoDatabase database = DbConnection.connectToDb();
@@ -31,7 +31,7 @@ public class AnnuncioDAO {
 
     try {
       if (database.getCollection("annuncio").countDocuments() == 0) {
-        //se non ci sono annunci l'id sarà 1
+        //se non ci sono annunci l'id sarï¿½ 1
         annuncio.setId((long) 1);
       } else {
         annuncio.setId(getLastId() + 1);
@@ -132,7 +132,7 @@ public class AnnuncioDAO {
     database.getCollection("annuncio").find(Filters.ne("abilitazioneRichiesta", "nessuna")).into(
         documents);
     if (!documents.isEmpty()) {
-      jobs = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+      jobs = documents.stream().map(AnnuncioDao::docToAnnuncio).collect(Collectors.toList());
     }
 
     return jobs;
@@ -151,7 +151,7 @@ public class AnnuncioDAO {
     database.getCollection("annuncio").find(Filters.eq("abilitazioneRichiesta", "nessuna")).into(
         documents);
     if (!documents.isEmpty()) {
-      errands = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+      errands = documents.stream().map(AnnuncioDao::docToAnnuncio).collect(Collectors.toList());
     }
 
     return errands;
@@ -219,7 +219,7 @@ public class AnnuncioDAO {
 
     database.getCollection("annuncio").find(Filters.eq("autore", autore)).into(documents);
     if (!documents.isEmpty()) {
-      allByAuthor = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors.toList());
+      allByAuthor = documents.stream().map(AnnuncioDao::docToAnnuncio).collect(Collectors.toList());
     }
 
     return allByAuthor;
@@ -263,7 +263,7 @@ public class AnnuncioDAO {
 
     database.getCollection("annuncio").find(Filters.eq("incaricato", incaricato)).into(documents);
     if (!documents.isEmpty()) {
-      allByAppointee = documents.stream().map(AnnuncioDAO::docToAnnuncio).collect(Collectors
+      allByAppointee = documents.stream().map(AnnuncioDao::docToAnnuncio).collect(Collectors
           .toList());
     }
 

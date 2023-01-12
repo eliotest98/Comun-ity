@@ -19,7 +19,7 @@ import org.bson.types.ObjectId;
 /**
  * Class UtenteDAO for database queries.
  */
-public class UtenteDAO {
+public class UtenteDao {
 
   //static db connection.
   static MongoDatabase database = DbConnection.connectToDb();
@@ -112,7 +112,7 @@ public class UtenteDAO {
 
     database.getCollection("utente").find().into(documents);
     if (!documents.isEmpty()) {
-      users = documents.stream().map(UtenteDAO::docToUtente).collect(Collectors.toList());
+      users = documents.stream().map(UtenteDao::docToUtente).collect(Collectors.toList());
     }
 
     return users;
@@ -130,7 +130,7 @@ public class UtenteDAO {
 
     database.getCollection("utente").find(Filters.eq("ruolo", "admin")).into(documents);
     if (!documents.isEmpty()) {
-      admins = documents.stream().map(UtenteDAO::docToUtente).collect(Collectors.toList());
+      admins = documents.stream().map(UtenteDao::docToUtente).collect(Collectors.toList());
     }
 
     return admins;
@@ -200,7 +200,7 @@ public class UtenteDAO {
     regexQuery.put("mail", new BasicDBObject("$regex", mail).append("$options", "i"));
 
     for (Document document : collection.find(regexQuery)) {
-      lista.add(UtenteDAO.docToUtente(document));
+      lista.add(UtenteDao.docToUtente(document));
     }
     return lista;
   }

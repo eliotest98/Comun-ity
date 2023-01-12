@@ -10,15 +10,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.AccreditamentoDAO;
+import model.AccreditamentoDao;
 import model.Utente;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import controller.gestione.accreditamento.GestioneAccreditamentoService;
-import controller.gestione.accreditamento.GestioneAccreditamentoServiceImpl;
-import controller.gestione.accreditamento.InserimentoCertificazioneServlet;
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 
@@ -58,7 +55,7 @@ public class InserimentoCertificazioneTest {
    */
   @AfterEach
   void tearDown() {
-    AccreditamentoDAO accrDao = new AccreditamentoDAO();
+    AccreditamentoDao accrDao = new AccreditamentoDao();
     accrDao.deleteAccreditamento("test@test.com");
   }
 

@@ -13,16 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Accreditamento;
-import model.AccreditamentoDAO;
+import model.AccreditamentoDao;
 import model.Utente;
-import model.UtenteDAO;
+import model.UtenteDao;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import controller.gestione.accreditamento.AccertamentoProfessionistaServlet;
-import controller.gestione.accreditamento.GestioneAccreditamentoService;
-import controller.gestione.accreditamento.GestioneAccreditamentoServiceImpl;
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 
@@ -59,12 +56,12 @@ public class AccertamentoProfessionistaTest {
     Utente user = new Utente(
         "cittadino", "nessuna", "Testa", "Testa", 18,
         "test@test.com", "test", "M", "3340000000", "test", LocalDate.now());
-    UtenteDAO utenteDao = new UtenteDAO();
+    UtenteDao utenteDao = new UtenteDao();
     utenteDao.saveUtente(user);
     
     Accreditamento test = new Accreditamento(
         "test@test.com", "idraulico", "aHR0cHM6Ly9naXRodWIuY29tL2VsaW90ZXN0OTgvQ29tdW4taXR5");
-    AccreditamentoDAO accrDao = new AccreditamentoDAO();
+    AccreditamentoDao accrDao = new AccreditamentoDao();
     accrDao.saveAccreditamento(test);
     when(requestMock.getRequestDispatcher("AccreditamentoServlet"))
         .thenReturn(dispatcherMock);
@@ -77,9 +74,9 @@ public class AccertamentoProfessionistaTest {
   @AfterEach
   void tearDown() {
     
-    AccreditamentoDAO accrDao = new AccreditamentoDAO();
+    AccreditamentoDao accrDao = new AccreditamentoDao();
     accrDao.deleteAccreditamento("test@test.com");
-    UtenteDAO utenteDao = new UtenteDAO();
+    UtenteDao utenteDao = new UtenteDao();
     utenteDao.deleteUtente("test@test.com");
   }
 

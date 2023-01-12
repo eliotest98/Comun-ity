@@ -1,5 +1,7 @@
 package controller.gestione.utenza;
 
+import controller.gestione.annunci.GestioneAnnunciService;
+import controller.gestione.annunci.GestioneAnnunciServiceImpl;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import javax.servlet.RequestDispatcher;
@@ -8,9 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import controller.gestione.annunci.GestioneAnnunciService;
-import controller.gestione.annunci.GestioneAnnunciServiceImpl;
 
 /**
  * Servlet implementation class ModerazioneServlet.

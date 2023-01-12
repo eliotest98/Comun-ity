@@ -1,9 +1,9 @@
 package controller.gestione.reputazione;
 
 import model.Annuncio;
-import model.AnnuncioDAO;
+import model.AnnuncioDao;
 import model.Utente;
-import model.UtenteDAO;
+import model.UtenteDao;
 
 /**
  * Implementation class of GestioneReputazioneService.
@@ -13,8 +13,8 @@ public class GestioneReputazioneServiceImpl implements GestioneReputazioneServic
   /**
    * exclude.
    */
-  private final UtenteDAO utenteDao = new UtenteDAO();
-  private final AnnuncioDAO annuncioDao = new AnnuncioDAO();
+  private final UtenteDao utenteDao = new UtenteDao();
+  private final AnnuncioDao annuncioDao = new AnnuncioDao();
 
   /**
    * Empty Constructor.

@@ -11,15 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Annuncio;
-import model.AnnuncioDAO;
+import model.AnnuncioDao;
 import model.Utente;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import controller.gestione.annunci.GestioneAnnunciService;
-import controller.gestione.annunci.GestioneAnnunciServiceImpl;
-import controller.gestione.annunci.PresaInCaricoAnnuncioServlet;
 
 /**
  * Unit testing class for "InserimentoAnnuncio".
@@ -49,7 +45,7 @@ public class PresaInCaricoAnnuncioServletTest {
     when(requestMock.getSession(true)).thenReturn(sessionMock);
     Annuncio test = new Annuncio("nessuna", "biagiusMagno@gmail.com", "Test",
         "This is only for test purpose", "Via Vulture 1 Rapolla Potenza 85027");
-    AnnuncioDAO annuncioDao = new AnnuncioDAO();
+    AnnuncioDao annuncioDao = new AnnuncioDao();
     annuncioDao.saveAnnuncio(test);
     when(requestMock.getParameter("annuncio")).thenReturn(test.getId().toString());
 
@@ -60,7 +56,7 @@ public class PresaInCaricoAnnuncioServletTest {
    */
   @AfterEach
   public void tearDown() {
-    AnnuncioDAO annuncioDao = new AnnuncioDAO();
+    AnnuncioDao annuncioDao = new AnnuncioDao();
     annuncioDao.deleteAnnuncio(annuncioDao.getLastId());
   }
 

@@ -2,9 +2,9 @@ package controller.gestione.accreditamento;
 
 import java.util.List;
 import model.Accreditamento;
-import model.AccreditamentoDAO;
+import model.AccreditamentoDao;
 import model.Utente;
-import model.UtenteDAO;
+import model.UtenteDao;
 
 /**
  * Implementation class of GestioneAccreditamentoService.
@@ -14,8 +14,8 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
   /**
    * exclude.
    **/
-  private AccreditamentoDAO accreditamentoDao = new AccreditamentoDAO();
-  private UtenteDAO utenteDao = new UtenteDAO();
+  private AccreditamentoDao accreditamentoDao = new AccreditamentoDao();
+  private UtenteDao utenteDao = new UtenteDao();
 
   /**
    * Empty Constructor.

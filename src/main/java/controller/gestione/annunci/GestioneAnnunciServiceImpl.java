@@ -2,7 +2,7 @@ package controller.gestione.annunci;
 
 import java.util.List;
 import model.Annuncio;
-import model.AnnuncioDAO;
+import model.AnnuncioDao;
 
 /**
  * Implementation class of GestioneAnnunciService.
@@ -12,7 +12,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
   /**
    * exclude.
    */
-  private final AnnuncioDAO annuncioDao = new AnnuncioDAO();
+  private final AnnuncioDao annuncioDao = new AnnuncioDao();
 
   /**
    * Empty Constructor.

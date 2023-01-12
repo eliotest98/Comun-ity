@@ -15,7 +15,7 @@ import org.bson.types.ObjectId;
 /**
  * Class AccreditamentoDAO for database queries.
  */
-public class AccreditamentoDAO {
+public class AccreditamentoDao {
 
   //static db connection.
   static MongoDatabase database = DbConnection.connectToDb();
@@ -116,7 +116,7 @@ public class AccreditamentoDAO {
     database.getCollection("accreditamento").find(Filters.eq("stato", "sottomessa")).into(
         documents);
     if (!documents.isEmpty()) {
-      submitted = documents.stream().map(AccreditamentoDAO::docToAccreditamento).collect(Collectors
+      submitted = documents.stream().map(AccreditamentoDao::docToAccreditamento).collect(Collectors
           .toList());
     }
 
