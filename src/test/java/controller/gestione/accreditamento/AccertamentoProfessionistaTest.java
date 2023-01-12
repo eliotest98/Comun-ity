@@ -47,7 +47,9 @@ public class AccertamentoProfessionistaTest {
 
 
   /**
-   * Before each test a the session is simulated.
+   * Before each test new entries for 'utente' e 'annuncio'
+   * are created for testing purpose and the session is simulated.
+   * 
    */
   @BeforeEach
   public void setUp() {

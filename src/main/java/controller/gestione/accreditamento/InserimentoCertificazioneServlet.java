@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import javax.xml.bind.DatatypeConverter;
 import model.Accreditamento;
 import model.Utente;
 
@@ -78,7 +77,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
     Part part = request.getPart("allegato");
 
     Accreditamento accreditamento = serviceA.getByApplicant(utente);
-
+    
     if (accreditamento == null) {
 
       if (user.getRuolo().equals("cittadino")) {
@@ -146,20 +145,6 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
    */
   public static boolean abilitazioneOk(String abilitazione) {
     return abilitazione.length() >= 1 && abilitazione.length() <= 30;
-  }
-
-  /**
-   * Decodes base64 file to binary and checks the size.
-   *
-   * @param allegato is the attached file to decode
-   * @return true if the file's size is correct
-   */
-  public static boolean allegatoOk(String allegato) {
-
-    byte[] data = DatatypeConverter.parseBase64Binary(allegato);
-
-    return data.length >= 1 && data.length <= 26214400;
-
   }
 
   private static String encodeFileToBase64Binary(String path) throws IOException {
