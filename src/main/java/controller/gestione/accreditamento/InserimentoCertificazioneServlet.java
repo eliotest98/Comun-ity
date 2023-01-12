@@ -138,7 +138,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
   }
 
   /**
-   * Checks if abilitazione is valid.
+   * Checks if the qualification is valid.
    *
    * @param abilitazione is the qualification to check
    * @return true if valid
@@ -147,6 +147,13 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
     return abilitazione.length() >= 1 && abilitazione.length() <= 30;
   }
 
+  /**
+   * Encode a Binary file, generated from the file
+   * at the given path, to a Base64 String.
+   *
+   * @param path is the path of the file to encode
+   * @return A base64 String of the file
+   */
   private static String encodeFileToBase64Binary(String path) throws IOException {
 
     byte[] byteData = Files.readAllBytes(Paths.get(path));

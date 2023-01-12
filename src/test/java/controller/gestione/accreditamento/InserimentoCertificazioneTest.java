@@ -1,13 +1,20 @@
 package controller.gestione.accreditamento;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
+
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Base64;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
@@ -43,9 +50,9 @@ public class InserimentoCertificazioneTest {
   GestioneAccreditamentoService accrServiceMock = mock(GestioneAccreditamentoServiceImpl.class);
   GestioneUtenzaService userServiceMock = mock(GestioneUtenzaServiceImpl.class);
   Utente utenteMock = mock(Utente.class);
+  Accreditamento accrMock = mock(Accreditamento.class);
   RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
   Part partMock = mock(Part.class);
-  GenericServlet genericMock = mock(GenericServlet.class);
   ServletContext ctxMock = mock(ServletContext.class);
 
 
@@ -56,7 +63,15 @@ public class InserimentoCertificazioneTest {
    */
   @BeforeEach
   public void setUp() {
-    servletMock = new InserimentoCertificazioneServlet();
+    servletMock = new InserimentoCertificazioneServlet() {
+
+      private static final long serialVersionUID = 1L;
+
+      public ServletContext getServletContext() {
+        return ctxMock; // return the mock
+      }
+      
+    };
     when(requestMock.getSession(true)).thenReturn(sessionMock);
 
     Utente user = new Utente("cittadino", "nessuna", "Testa", "Testa", 18, "test@test.com", "test",
@@ -68,6 +83,7 @@ public class InserimentoCertificazioneTest {
         "aHR0cHM6Ly9naXRodWIuY29tL2VsaW90ZXN0OTgvQ29tdW4taXR5");
     AccreditamentoDao accrDao = new AccreditamentoDao();
     accrDao.saveAccreditamento(test);
+    
     when(sessionMock.getAttribute("user")).thenReturn(user);
     when(requestMock.getRequestDispatcher("AreaPersonale")).thenReturn(dispatcherMock);
   }
@@ -80,11 +96,16 @@ public class InserimentoCertificazioneTest {
   void tearDown() {
 
     AccreditamentoDao accrDao = new AccreditamentoDao();
+    accrDao.deleteAccreditamento("test@test.com");
     accrDao.deleteAccreditamento("test2@test.com");
     UtenteDao utenteDao = new UtenteDao();
     utenteDao.deleteUtente("test@test.com");
     utenteDao.deleteUtente("test2@test.com");
     utenteDao.deleteUtente("test3@test.com");
+    
+    String path = servletMock.getServletContext().getRealPath("/temp");
+    File directory = new File(String.valueOf(path));
+    directory.delete();
   }
 
   //User not logged.
@@ -159,25 +180,15 @@ public class InserimentoCertificazioneTest {
     verify(requestMock).setAttribute("error", "Abilitazione non valida");
     verify(dispatcherMock).forward(requestMock, responseMock);
   }
-
-  //Directory doesn't exist.
-  @Test
-  public void dirNotExistTest() throws Exception {
-
-    when(requestMock.getParameter("abilitazione")).thenReturn("idraulico");
-    when(requestMock.getPart("allegato")).thenReturn(partMock);
-    
-    when(genericMock.getServletContext()).thenReturn(ctxMock);
-    when(ctxMock.getRealPath("/temp")).thenReturn(Mockito.anyString());
-    servletMock.doPost(requestMock, responseMock);
-  }
-
+  
+  //Accreditation request successfully submitted.
   @Test
   public void accreditationReqOkTest() throws Exception {
 
     when(requestMock.getParameter("abilitazione")).thenReturn("idraulico");
     when(requestMock.getPart("allegato")).thenReturn(partMock);
-
+    when(partMock.getSubmittedFileName()).thenReturn("certificationReq.pdf");
+    
     servletMock.doPost(requestMock, responseMock);
     verify(requestMock).setAttribute("success",
         "Richiesta sottomessa con successo, verra' controllata il prima possibile");
