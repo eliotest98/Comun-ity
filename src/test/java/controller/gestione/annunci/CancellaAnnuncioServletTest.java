@@ -12,15 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Annuncio;
-import model.AnnuncioDAO;
+import model.AnnuncioDao;
 import model.Utente;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import controller.gestione.annunci.CancellaAnnuncioServlet;
-import controller.gestione.annunci.GestioneAnnunciService;
-import controller.gestione.annunci.GestioneAnnunciServiceImpl;
 
 /**
  * Unit testing class for "CancellaAnnuncioServlet".
@@ -37,7 +33,7 @@ public class CancellaAnnuncioServletTest {
   Annuncio annuncioMock = mock(Annuncio.class);
   CancellaAnnuncioServlet servletMock = mock(CancellaAnnuncioServlet.class);
   RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
-  AnnuncioDAO daoMock = mock(AnnuncioDAO.class);
+  AnnuncioDao daoMock = mock(AnnuncioDao.class);
   GestioneAnnunciService serviceMock = mock(GestioneAnnunciServiceImpl.class);
 
 
@@ -52,7 +48,7 @@ public class CancellaAnnuncioServletTest {
     when(sessionMock.getAttribute("user")).thenReturn(utenteMock);
     Annuncio test = new Annuncio("nessuna", "biagiusMagno@gmail.com", "Test",
         "This is only for test purpose", "Via Vulture 1 Rapolla Potenza 85027");
-    AnnuncioDAO annuncioDao = new AnnuncioDAO();
+    AnnuncioDao annuncioDao = new AnnuncioDao();
     annuncioDao.saveAnnuncio(test);
     when(requestMock.getParameter("annuncio")).thenReturn(test.getId().toString());
     when(requestMock.getRequestDispatcher("AreaPersonale")).thenReturn(dispatcherMock);
@@ -63,7 +59,7 @@ public class CancellaAnnuncioServletTest {
    */
   @AfterEach
   void tearDown() {
-    AnnuncioDAO annuncioDao = new AnnuncioDAO();
+    AnnuncioDao annuncioDao = new AnnuncioDao();
     List<Annuncio> list = annuncioDao.findAllAvailableByAuthor("biagiusMagno@gmail.com");
     if (!list.isEmpty()) {
       annuncioDao.deleteAnnuncio(list.get(0).getId());

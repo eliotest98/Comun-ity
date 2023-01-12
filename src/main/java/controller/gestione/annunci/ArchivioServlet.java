@@ -1,5 +1,7 @@
 package controller.gestione.annunci;
 
+import controller.gestione.utenza.GestioneUtenzaService;
+import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -11,9 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import controller.gestione.utenza.GestioneUtenzaService;
-import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import model.Annuncio;
 import model.Utente;
 
@@ -176,7 +175,8 @@ public class ArchivioServlet extends HttpServlet {
                     + "<div class=\"more-info\">\n"
                     + "<h3 class=\"text-center\">" + annuncio.getTitolo() + "</h3>\n"
                     + "<div class=\"row justify-content-center\">\n"
-                    + "<form action=\"RimuoviAnnuncioServlet\" method=\"post\" style=\"width:auto;\">"
+                    + "<form action=\"RimuoviAnnuncioServlet\" "
+                    + "method=\"post\" style=\"width:auto;\">"
                     + "<input type=\"hidden\"  name=\"annuncio\" id=\"annuncio\" value="
                     + annuncio.getId() + ">"
                     + "<button type=\"submit\"class=\"btn btn-danger\" "

@@ -1,14 +1,13 @@
 package controller.utility;
 
+import controller.gestione.utenza.GestioneUtenzaService;
+import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import controller.gestione.utenza.GestioneUtenzaService;
-import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 
 /**
  * Servlet implementation class IndexServlet.

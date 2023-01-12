@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import model.Utente;
-import model.UtenteDAO;
+import model.UtenteDao;
 
 /**
  * Implementation class of GestioneUtenzaService.
@@ -18,7 +18,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService {
   /**
    * exclude.
    **/
-  private final UtenteDAO utenteDao = new UtenteDAO();
+  private final UtenteDao utenteDao = new UtenteDao();
 
   /**
    * Empty Constructor.

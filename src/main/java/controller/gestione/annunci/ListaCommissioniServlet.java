@@ -1,5 +1,7 @@
 package controller.gestione.annunci;
 
+import controller.gestione.utenza.GestioneUtenzaService;
+import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -9,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import controller.gestione.utenza.GestioneUtenzaService;
-import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import model.Annuncio;
 import model.Utente;
 
