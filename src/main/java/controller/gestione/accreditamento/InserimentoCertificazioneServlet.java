@@ -11,7 +11,11 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 import model.Accreditamento;
 import model.Utente;
@@ -28,7 +32,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
   /**
    * Default constructor.
    *
-   *@see HttpServlet#HttpServlet()
+   * @see HttpServlet#HttpServlet()
    */
   public InserimentoCertificazioneServlet() {
     super();
@@ -72,15 +76,15 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
     String utente = user.getMail();
     String abilitazione = request.getParameter("abilitazione");
     Part part = request.getPart("allegato");
-    
+
     Accreditamento accreditamento = serviceA.getByApplicant(utente);
-    
-    if(accreditamento == null) {
 
-    if (user.getRuolo().equals("cittadino")) {
+    if (accreditamento == null) {
 
-      if (abilitazioneOk(abilitazione)) {
-          
+      if (user.getRuolo().equals("cittadino")) {
+
+        if (abilitazioneOk(abilitazione)) {
+
           String path = getServletContext().getRealPath("/temp");
 
           File directory = new File(String.valueOf(path));
@@ -104,30 +108,31 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
           requestDispatcher.forward(request, response);
 
-        
+
+        } else {
+
+          RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+          request.setAttribute("error", "Abilitazione non valida");
+
+          requestDispatcher.forward(request, response);
+
+        }
+
       } else {
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
-        request.setAttribute("error", "Abilitazione non valida");
+        request.setAttribute("error",
+            "Solo un cittadino puo' sottomettere una richiesta di accreditamento");
 
         requestDispatcher.forward(request, response);
 
       }
-
     } else {
 
       RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
       request.setAttribute("error",
-          "Solo un cittadino puo' sottomettere una richiesta di accreditamento");
-
-      requestDispatcher.forward(request, response);
-
-      }
-    }else {
-      
-      RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
-      request.setAttribute("error",
-          "Si può sottomettere una sola richiesta di accreditamento alla volta. Aspetta che la precedente venga validata");
+          "Si può sottomettere una sola richiesta di accreditamento alla volta. "
+              + "Aspetta che la precedente venga validata");
 
       requestDispatcher.forward(request, response);
     }
@@ -156,7 +161,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
     return data.length >= 1 && data.length <= 26214400;
 
   }
-  
+
   private static String encodeFileToBase64Binary(String path) throws IOException {
 
     byte[] byteData = Files.readAllBytes(Paths.get(path));
