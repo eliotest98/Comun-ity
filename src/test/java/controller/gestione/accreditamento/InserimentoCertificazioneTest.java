@@ -4,6 +4,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import controller.gestione.utenza.GestioneUtenzaService;
+import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,11 +17,6 @@ import model.Utente;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import controller.gestione.utenza.GestioneUtenzaService;
-import controller.gestione.utenza.GestioneUtenzaServiceImpl;
-
-
 
 /**
  * Unit testing class for "InserimentoCertificazioneServlet".
