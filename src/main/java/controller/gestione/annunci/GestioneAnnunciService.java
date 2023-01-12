@@ -39,7 +39,7 @@ public interface GestioneAnnunciService {
    * @param id is the Ad id that you want to get.
    * @return The Ad if it exists.
    */
-  public Annuncio findAnnuncioById(Long id);
+  Annuncio findAnnuncioById(Long id);
 
   /**
    * Removes all the available ads published by a User from the database.
@@ -97,7 +97,7 @@ public interface GestioneAnnunciService {
    * Establish that the ad identified by the given id has been taken on by the specified user.
    *
    * @param id         is the ad identifier.
-   * @param incaricato is the the email of the user that accepts the ad.
+   * @param incaricato is the email of the user that accepts the ad.
    * @return true if the ad has been accepted correctly.
    */
   boolean acceptAnnuncio(Long id, String incaricato);
@@ -108,7 +108,7 @@ public interface GestioneAnnunciService {
    * @param id is the ad's id.
    * @return true if the ad is marked as done.
    */
-  public boolean markAsDone(Long id);
+  boolean markAsDone(Long id);
   
   /**
    * Retrieve all the Ads, not marked as done, accepted from the given appointee from the db.
@@ -117,7 +117,7 @@ public interface GestioneAnnunciService {
    * @return a List of Annuncio that contains all
    the ads, not marked as done, accepted from the given appointee.
    */
-  public List<Annuncio> getAllByAppointeeNotDone(String incaricato);
+  List<Annuncio> getAllByAppointeeNotDone(String incaricato);
 
 
 }

@@ -156,7 +156,7 @@ public class GestioneAnnunciServiceImpl implements GestioneAnnunciService {
    * Establish that the ad identified by the given id has been taken on by the specified user.
    *
    * @param id   is the ad identifier.
-   * @param mail is the the email of the user that accepts the ad.
+   * @param mail is the email of the user that accepts the ad.
    * @return true if the ad has been accepted correctly.
    */
 

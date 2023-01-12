@@ -73,7 +73,7 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
 
     boolean accettato = Boolean.parseBoolean(request.getParameter("accettato"));
 
-    String richiedente = (String) request.getParameter("emailAccreditato");
+    String richiedente = request.getParameter("emailAccreditato");
 
     if (accettato) {
 

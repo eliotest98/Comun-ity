@@ -75,44 +75,45 @@
 					<%	
 					List<Annuncio> annunci = (List<Annuncio>) request.getAttribute("annunci");
 					if(!annunci.isEmpty()){
-						Iterator<Annuncio> it = annunci.iterator();
-						
-						while(it.hasNext()){
-							Annuncio annuncio = it.next();%>
-							<div class="col">
-								<div class="card center">
-									<div class="additional">
-										<div class="user-card">
-											<img class='center' src="/Comun-ity/images/to-do-list.png"
-												width="100%">
-										</div>
-										<div class="more-info">
-											<h3 class="text-center"><%=annuncio.getTitolo()%></h3>
-											<div class="row justify-content-center">
-												<form action="AnnuncioCompletato" method="post"
-													style="width: auto;">
-													<input type="hidden" name="annuncio" id="annuncio"
-														value="<%=annuncio.getId() %>">
-													<button type="submit" class="btn btn-success" id="bottone">Termina</button>
-												</form>
-											</div>
-										</div>
-									</div>
-									<div class="general">
-										<h3 class="text-center"><%=annuncio.getTitolo()%></h3>
-										<hr>
-										<p>
-											Autore:
-											<%=annuncio.getAutore()%><br> Descrizione:
-											<%=annuncio.getDescrizione()%><br> Indirizzo:
-											<%=annuncio.getIndirizzo()%><br> Data Fine:
-											<%=annuncio.getDataFine()%><br>
-										</p>
-										<span class="more">Muovi il mouse per rimuovere</span>
-									</div>
-								</div>
-							</div>
-							<%}%>
+
+                        for (Annuncio annuncio : annunci) {
+                    %>
+                    <div class="col">
+                        <div class="card center">
+                            <div class="additional">
+                                <div class="user-card">
+                                    <img class='center' src="/Comun-ity/images/to-do-list.png"
+                                         width="100%">
+                                </div>
+                                <div class="more-info">
+                                    <h3 class="text-center"><%=annuncio.getTitolo()%>
+                                    </h3>
+                                    <div class="row justify-content-center">
+                                        <form action="AnnuncioCompletato" method="post"
+                                              style="width: auto;">
+                                            <input type="hidden" name="annuncio" id="annuncio"
+                                                   value="<%=annuncio.getId() %>">
+                                            <button type="submit" class="btn btn-success" id="bottone">Termina</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="general">
+                                <h3 class="text-center"><%=annuncio.getTitolo()%>
+                                </h3>
+                                <hr>
+                                <p>
+                                    Autore:
+                                    <%=annuncio.getAutore()%><br> Descrizione:
+                                    <%=annuncio.getDescrizione()%><br> Indirizzo:
+                                    <%=annuncio.getIndirizzo()%><br> Data Fine:
+                                    <%=annuncio.getDataFine()%><br>
+                                </p>
+                                <span class="more">Muovi il mouse per rimuovere</span>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
 						</div>
 					</div>
 				</div>

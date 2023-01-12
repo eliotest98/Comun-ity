@@ -95,8 +95,7 @@ public class UtenteDao {
       return null;
     } else {
       System.out.println("Utente trovato!");
-      Utente user = docToUtente(doc);
-      return user;
+      return docToUtente(doc);
     }
   }
 
@@ -262,8 +261,7 @@ public class UtenteDao {
         new Utente(doc.getString("ruolo"), doc.getString("abilitazione"), doc.getString("nome"),
             doc.getString("cognome"), doc.getInteger("eta"), doc.getString("mail"),
             doc.getString("password"), doc.getString("sesso"), doc.getString("numeroTelefono"),
-            doc.getString("indirizzo"),
-            (LocalDate) doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault())
+            doc.getString("indirizzo"), doc.getDate("dataNascita").toInstant().atZone(ZoneId.systemDefault())
                 .toLocalDate());
 
     utente.setRecensioni((ArrayList<Double>) doc.getList("recensioni", Double.class));

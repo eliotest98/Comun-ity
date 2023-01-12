@@ -73,7 +73,7 @@ public class MailSender {
    * @param accreditamento is the ad object to extract ad datas from.
    */
   public static void notifyAccreditationReq(Accreditamento accreditamento) 
-      throws AddressException, MessagingException {
+      throws MessagingException {
     
     String host = "smtp.gmail.com";
 
@@ -107,7 +107,7 @@ public class MailSender {
       Transport.send(message);
     
       for (String e : admins) {
-        System.out.println("Email to: " + e + " SENT.");;
+        System.out.println("Email to: " + e + " SENT.");
       }
     
     } catch (Exception e) {

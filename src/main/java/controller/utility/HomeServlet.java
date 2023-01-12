@@ -33,8 +33,6 @@ public class HomeServlet extends HttpServlet {
   /**
    * doGet method implementation.
    *
-   * @throws IOException      //
-   * @throws ServletException //
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
 
