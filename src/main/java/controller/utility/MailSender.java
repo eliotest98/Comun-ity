@@ -1,7 +1,5 @@
 package controller.utility;
 
-import controller.gestioneUtenza.GestioneUtenzaService;
-import controller.gestioneUtenza.GestioneUtenzaServiceImpl;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Address;
@@ -12,6 +10,9 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import controller.gestione.utenza.GestioneUtenzaService;
+import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import model.Accreditamento;
 import model.Annuncio;
 import model.Utente;
