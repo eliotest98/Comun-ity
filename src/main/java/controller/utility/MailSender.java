@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import model.Accreditamento;
@@ -72,8 +70,7 @@ public class MailSender {
    *
    * @param accreditamento is the ad object to extract ad datas from.
    */
-  public static void notifyAccreditationReq(Accreditamento accreditamento) 
-      throws AddressException, MessagingException {
+  public static void notifyAccreditationReq(Accreditamento accreditamento) {
     
     String host = "smtp.gmail.com";
 
@@ -115,8 +112,6 @@ public class MailSender {
       e.printStackTrace();
     }
     
-    
-  
   }
 
   /**

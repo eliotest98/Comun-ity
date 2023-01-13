@@ -2,11 +2,10 @@ package controller.gestione.accreditamento;
 
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
+import controller.utility.MailSender;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import javax.servlet.RequestDispatcher;
@@ -102,7 +101,8 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
           Accreditamento newaccreditamento = new Accreditamento(utente, abilitazione, base);
 
           serviceA.saveAccreditamento(newaccreditamento);
-
+          MailSender.notifyAccreditationReq(newaccreditamento);
+          
           RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
           request.setAttribute("success",
               "Richiesta sottomessa con successo, verra' controllata il prima possibile");
