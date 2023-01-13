@@ -174,19 +174,24 @@
 								<div class="more-info">
 									<h3 class="text-center"><%=annuncio.getTitolo()%></h3>
 									<div class="row justify-content-center">
-										<%
-										if(!date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))) {%>
+									<%
+									if(annuncio.getRecensione() == -1 && annuncio.isTerminato()){%>
+										<div style="width: auto;">
+											<button class="btn btn-success valutazione" data-bs-toggle="modal"
+											data-bs-target="#valutazione" data-annuncioId="<%=annuncio.getId() %>">Assegna valutazione</button>
+										</div>
+									<%}else if(annuncio.getIncaricato().equals("nessuno") && !date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))) {%>
 										<form action="CancellaAnnuncioServlet" method="post"
 											style="width: auto;">
 											<input type="hidden" name="annuncio" id="annuncio"
 												value="<%=annuncio.getId() %>">
 											<button type="submit" class="btn btn-danger" id="bottone">Rimuovi</button>
 										</form>
-										<% }else if(annuncio.getRecensione() == -1){%>
-										<div style="width: auto;">
-											<button class="btn btn-success valutazione" data-bs-toggle="modal"
-											data-bs-target="#valutazione" data-annuncioId="<%=annuncio.getId() %>">Assegna valutazione</button>
-										</div><%} %>
+									<%} else if(date.after(Date.from(annuncio.getDataFine().atStartOfDay(defaultZoneId).toInstant()))){%>
+									  	<div style="width: auto;">
+									  		<h5>Annuncio scaduto</h5>	
+									  	</div>
+									<%}%>
 									</div>
 								</div>
 							</div>
@@ -200,7 +205,7 @@
 									<%=annuncio.getIndirizzo()%><br> Data Fine:
 									<%=annuncio.getDataFine()%><br>
 								</p>
-								<span class="more">Muovi il mouse per rimuovere</span>
+								<span class="more">Muovi il mouse per scoprire le azioni</span>
 							</div>
 						</div>
 					</div>
