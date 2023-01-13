@@ -89,7 +89,7 @@
 		
 		if(!lista.isEmpty()){
 		
-			Iterator it = lista.iterator();
+			Iterator<Accreditamento> it = lista.iterator();
 			
 			List<String> files = new ArrayList<>();
 			
