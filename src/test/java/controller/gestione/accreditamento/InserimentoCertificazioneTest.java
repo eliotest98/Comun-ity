@@ -44,6 +44,7 @@ public class InserimentoCertificazioneTest {
   RequestDispatcher dispatcherMock = mock(RequestDispatcher.class);
   Part partMock = mock(Part.class);
   ServletContext ctxMock = mock(ServletContext.class);
+  File fileMock = mock(File.class);
 
 
   /**
@@ -183,6 +184,13 @@ public class InserimentoCertificazioneTest {
     verify(requestMock).setAttribute("success",
         "Richiesta sottomessa con successo, verra' controllata il prima possibile");
     verify(dispatcherMock).forward(requestMock, responseMock);
+    
+    File f = new File("nullcertificationReq.pdf");
+    if (f.delete()) {
+      System.out.println(f.getName() + " deleted");  
+    } else {  
+      System.out.println("failed");  
+    }  
   }
-
+  
 }
