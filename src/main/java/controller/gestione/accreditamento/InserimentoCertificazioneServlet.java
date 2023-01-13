@@ -3,8 +3,10 @@ package controller.gestione.accreditamento;
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import javax.servlet.RequestDispatcher;
@@ -156,7 +158,16 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
    */
   private static String encodeFileToBase64Binary(String path) throws IOException {
 
-    byte[] byteData = Files.readAllBytes(Paths.get(path));
+    File allegato = new File(path);
+    if (!allegato.exists()) {
+      allegato.createNewFile();
+    }
+    FileInputStream fis = new FileInputStream(allegato);
+    byte[] byteData = new byte[(int) allegato.length()];
+    
+    fis.read(byteData);
+    fis.close();
+    
     return Base64.getEncoder().encodeToString(byteData);
   }
 }
