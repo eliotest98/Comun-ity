@@ -139,7 +139,7 @@
 	
 		<!-- Valutazione -->
 		<div class="modal fade" tabindex="-1" id="infoModal">
-			<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
 				<div class="modal-content">
 					<form action="AssegnaValutazioneServlet" method="post" id="valutazioneForm">
 						<div class="modal-header">
@@ -149,7 +149,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="container-fluid">
-								<iframe src="" id="file"></iframe>
+								<iframe src="" id="file" style="width:100%; height:500px;"></iframe>
 							</div>
 						</div>
 						<div class="modal-footer">

@@ -44,8 +44,8 @@ public class HomeServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    HttpSession session = request.getSession(true);
-
+    HttpSession session = request.getSession(true);  
+    
     if (session.getAttribute("user") != null) {
 
       Utente user = (Utente) session.getAttribute("user");

@@ -37,7 +37,7 @@ public class IndexServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    response.sendRedirect("/Comun-ity/index.jsp");
+        response.sendRedirect("/Comun-ity/index.jsp");
 
   }
 
