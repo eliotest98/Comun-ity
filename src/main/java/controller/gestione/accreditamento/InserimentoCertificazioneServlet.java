@@ -2,7 +2,6 @@ package controller.gestione.accreditamento;
 
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;
-import controller.utility.MailSender;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Accreditamento;
 import model.Utente;
+import utils.MailSender;
 
 /**
  * Servlet implementation class InserimentoCertificazione.

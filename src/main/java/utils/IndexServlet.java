@@ -1,4 +1,4 @@
-package controller.utility;
+package utils;
 
 import controller.gestione.utenza.GestioneUtenzaService;
 import controller.gestione.utenza.GestioneUtenzaServiceImpl;

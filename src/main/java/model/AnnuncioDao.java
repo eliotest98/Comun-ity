@@ -3,13 +3,13 @@ package model;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import controller.utility.DbConnection;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import utils.DbConnection;
 
 /**
  * Class AnnuncioDAO for database queries.

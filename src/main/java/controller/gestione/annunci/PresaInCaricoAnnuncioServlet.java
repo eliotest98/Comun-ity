@@ -1,6 +1,5 @@
 package controller.gestione.annunci;
 
-import controller.utility.MailSender;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Annuncio;
 import model.Utente;
+import utils.MailSender;
 
 /**
  * Servlet implementation class PresaInCaricoAnnuncioServlet.

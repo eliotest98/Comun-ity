@@ -1,4 +1,4 @@
-package controller.utility;
+package utils;
 
 import controller.gestione.annunci.GestioneAnnunciService;
 import controller.gestione.annunci.GestioneAnnunciServiceImpl;
