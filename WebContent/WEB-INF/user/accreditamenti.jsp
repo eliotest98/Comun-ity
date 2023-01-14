@@ -141,7 +141,6 @@
 		<div class="modal fade" tabindex="-1" id="infoModal">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 				<div class="modal-content">
-					<form action="AssegnaValutazioneServlet" method="post" id="valutazioneForm">
 						<div class="modal-header">
 							<h5 class="modal-title">Visualizza certificazione</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -156,7 +155,6 @@
 							<button type="button" class="btn btn-primary"
 								data-bs-dismiss="modal">Chiudi</button>
 						</div>
-					</form>
 				</div>
 			</div>
 		</div>
