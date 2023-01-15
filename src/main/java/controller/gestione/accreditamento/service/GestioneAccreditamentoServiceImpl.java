@@ -1,4 +1,4 @@
-package controller.gestione.accreditamento;
+package controller.gestione.accreditamento.service;
 
 import java.util.List;
 import model.Accreditamento;

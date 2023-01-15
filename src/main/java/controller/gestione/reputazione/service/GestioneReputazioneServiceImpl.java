@@ -1,4 +1,4 @@
-package controller.gestione.reputazione;
+package controller.gestione.reputazione.service;
 
 import model.Annuncio;
 import model.AnnuncioDao;

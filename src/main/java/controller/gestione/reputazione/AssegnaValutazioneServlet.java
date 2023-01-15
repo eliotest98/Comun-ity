@@ -1,9 +1,12 @@
 package controller.gestione.reputazione;
 
-import controller.gestione.annunci.GestioneAnnunciService;
-import controller.gestione.annunci.GestioneAnnunciServiceImpl;
-import controller.gestione.utenza.GestioneUtenzaService;
-import controller.gestione.utenza.GestioneUtenzaServiceImpl;
+import controller.gestione.annunci.service.GestioneAnnunciService;
+import controller.gestione.annunci.service.GestioneAnnunciServiceImpl;
+import controller.gestione.reputazione.service.GestioneReputazioneService;
+import controller.gestione.reputazione.service.GestioneReputazioneServiceImpl;
+import controller.gestione.utenza.service.GestioneUtenzaService;
+import controller.gestione.utenza.service.GestioneUtenzaServiceImpl;
+
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.RequestDispatcher;

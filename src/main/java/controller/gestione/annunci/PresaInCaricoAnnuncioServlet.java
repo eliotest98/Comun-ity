@@ -1,5 +1,7 @@
 package controller.gestione.annunci;
 
+import controller.gestione.annunci.service.GestioneAnnunciService;
+import controller.gestione.annunci.service.GestioneAnnunciServiceImpl;
 import controller.utils.MailSender;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;

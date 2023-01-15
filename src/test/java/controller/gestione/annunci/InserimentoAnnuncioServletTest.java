@@ -15,6 +15,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import controller.gestione.annunci.service.GestioneAnnunciService;
+import controller.gestione.annunci.service.GestioneAnnunciServiceImpl;
+
 /**
  * Unit testing class for "InserimentoAnnuncioServlet".
  * This class has been written following BLACK BOX
