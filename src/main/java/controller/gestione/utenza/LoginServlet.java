@@ -1,5 +1,7 @@
 package controller.gestione.utenza;
 
+import controller.gestione.utenza.service.GestioneUtenzaService;
+import controller.gestione.utenza.service.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.RequestDispatcher;
@@ -9,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import controller.gestione.utenza.service.GestioneUtenzaService;
-import controller.gestione.utenza.service.GestioneUtenzaServiceImpl;
 import model.Utente;
 
 /**
