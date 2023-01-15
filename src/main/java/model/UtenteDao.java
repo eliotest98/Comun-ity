@@ -7,13 +7,13 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import controller.utils.DbConnection;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import utils.DbConnection;
 
 /**
  * Class UtenteDAO for database queries.
