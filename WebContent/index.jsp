@@ -142,12 +142,12 @@
 					Managers</h3>
 				<div class="row">
 					<div class="col-lg-6 text-center">
-						<img src="./images/semplicita.png" data-aos="fade-right">
+						<img src="./images/michele.jpeg" data-aos="fade-right">
 						<h4 class="card-title text-center" data-aos="fade-top">Michele
 							Iannucci</h4>
 					</div>
 					<div class="col-lg-6 text-center" data-aos="fade-down">
-						<img src="./images/semplicita.png" data-aos="fade-left">
+						<img src="./images/elio.jpeg" data-aos="fade-left">
 						<h4 class="card-title text-center" data-aos="fade-top">Elio
 							Testa</h4>
 					</div>
@@ -162,12 +162,12 @@
 							Aceto</h4>
 					</div>
 					<div class="col-lg-4 text-center">
-						<img src="./images/semplicita.png" data-aos="fade-top">
+						<img src="./images/biagioseriea.jpeg" data-aos="fade-top">
 						<h4 class="card-title text-center" data-aos="fade-top">Biagio
 							Andreucci</h4>
 					</div>
 					<div class="col-lg-4 text-center">
-						<img src="./images/semplicita.png" data-aos="fade-left">
+						<img src="./images/alessandro.jpeg" data-aos="fade-left">
 						<h4 class="card-title text-center" data-aos="fade-top">Alessandro
 							Falcone</h4>
 					</div>
