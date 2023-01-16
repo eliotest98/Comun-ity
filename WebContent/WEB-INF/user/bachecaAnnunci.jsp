@@ -111,6 +111,17 @@
 						$('#commissioni').show();
 					}
 				});
+				
+				$('#lavoroCheck').change(function(){
+				
+					if(this.checked){
+						$('#professioneText').prop('required',true);
+					}else{
+						$('#professioneText').prop('required',false);
+					}
+				
+				})
+				
 
 			})
 </script>
@@ -219,7 +230,7 @@
 									for="flexSwitchCheckDefault">Annuncio di lavoro</label>
 							</div>
 							<div class="mb-3" id="professioneDiv">
-								<input type="text" class="form-control" name="professione">
+								<input type="text" class="form-control" name="professione" id="professioneText">
 								<label for="professione" class="form-label" id="professione">Professione
 									richiesta</label>
 							</div>
