@@ -71,12 +71,11 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
 
     if (service.acceptAnnuncio(id, utente.getMail())) {
 
+      MailSender.notifyAdTakeOn(utente, annuncio);
       RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
       request.setAttribute("link", "bacheca");
       request.setAttribute("success", "Annuncio accettato con successo");
       requestDispatcher.forward(request, response);
-      
-      MailSender.notifyAdTakeOn(utente, annuncio);
 
     } else {
 

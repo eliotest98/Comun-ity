@@ -28,6 +28,10 @@ public class MailSender {
    * @param utente is the user object to extract user datas from.
    * @param annuncio is the ad object to extract ad datas from.
    */
+  
+  private static final String mail = "comunity.unisa@gmail.com";
+  private static final String password = "axtrqkxjxfwnarth";
+  
   public static void notifyAdTakeOn(Utente utente, Annuncio annuncio) {
 
     String host = "smtp.gmail.com";
@@ -40,25 +44,27 @@ public class MailSender {
 
     Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
       protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-        return new javax.mail.PasswordAuthentication("comunity.unisa@gmail.com",
-            "uslzhowdfvoknjum");
+        return new javax.mail.PasswordAuthentication(mail,
+            password);
       }
     });
+    
+    System.out.println(session);
 
     try {
       String to = annuncio.getAutore();
       String subject = "Annuncio " + annuncio.getId() + " preso in carico";
 
       MimeMessage message = new MimeMessage(session);
-      message.setFrom(new InternetAddress(to));
+      message.setFrom(new InternetAddress(mail));
       message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
       message.setSubject(subject);
       message.setText(createBody(utente, annuncio));
       Transport.send(message);
 
-      System.out.println("Email to: " + utente.getMail() + " SENT.");
+      System.out.println("Email to: " + annuncio.getAutore() + " SENT.");
     } catch (Exception e) {
-      System.out.println("Email to: " + utente.getMail() + " NOT SENT.");
+      System.out.println("Email to: " + annuncio.getAutore() + " NOT SENT.");
       e.printStackTrace();
     }
   }
@@ -82,8 +88,8 @@ public class MailSender {
 
     Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
       protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-        return new javax.mail.PasswordAuthentication("comunity.unisa@gmail.com",
-            "uslzhowdfvoknjum");
+        return new javax.mail.PasswordAuthentication(mail,
+            password);
       }
     });
     
@@ -91,14 +97,14 @@ public class MailSender {
       GestioneUtenzaService service = new GestioneUtenzaServiceImpl();
       List<String> admins = service.getAllAdminsEmails();
     
-      String subject = "Nuova richiesta di accreditamento sottomoessa!";
+      String subject = "Nuova richiesta di accreditamento sottomessa!";
     
       MimeMessage message = new MimeMessage(session);
-      for (String e : admins) {
-        message.setFrom(new InternetAddress(e));
+
+      message.setFrom(new InternetAddress(mail));
+      for(String e : admins) {
+        message.addRecipients(Message.RecipientType.CC, InternetAddress.parse(e));
       }
-      Address[] adminAd = (Address[]) admins.toArray();
-      message.addRecipients(Message.RecipientType.TO, adminAd);
       message.setSubject(subject);
       message.setText(createBody(accreditamento));
       Transport.send(message);
