@@ -1,7 +1,7 @@
-package controller.utility;
+package controller.utils;
 
-import controller.gestione.utenza.GestioneUtenzaService;
-import controller.gestione.utenza.GestioneUtenzaServiceImpl;
+import controller.gestione.utenza.service.GestioneUtenzaService;
+import controller.gestione.utenza.service.GestioneUtenzaServiceImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +37,7 @@ public class IndexServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-        response.sendRedirect("/Comun-ity/index.jsp");
+    response.sendRedirect("/Comun-ity/index.jsp");
 
   }
 

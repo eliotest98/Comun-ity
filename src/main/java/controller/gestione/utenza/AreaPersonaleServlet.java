@@ -1,8 +1,8 @@
 package controller.gestione.utenza;
 
 
-import controller.gestione.annunci.GestioneAnnunciService;
-import controller.gestione.annunci.GestioneAnnunciServiceImpl;
+import controller.gestione.annunci.service.GestioneAnnunciService;
+import controller.gestione.annunci.service.GestioneAnnunciServiceImpl;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;

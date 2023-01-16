@@ -4,6 +4,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import controller.gestione.annunci.service.GestioneAnnunciService;
+import controller.gestione.annunci.service.GestioneAnnunciServiceImpl;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,7 +22,7 @@ import org.junit.jupiter.api.Test;
  * This class has been written following BLACK BOX
  * testing methodologies.
  */
-public class InserimentoAnnuncioServletTest {
+public class InserimentoAnnuncioTest {
 
   //Mock creation
   HttpServletRequest requestMock = mock(HttpServletRequest.class);

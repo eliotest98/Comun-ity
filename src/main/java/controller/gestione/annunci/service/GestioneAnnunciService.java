@@ -1,4 +1,4 @@
-package controller.gestione.annunci;
+package controller.gestione.annunci.service;
 
 import java.util.List;
 import model.Annuncio;
