@@ -26,8 +26,8 @@ import model.Utente;
  * Servlet implementation class InserimentoCertificazione.
  */
 @WebServlet("/InserimentoCertificazioneServlet")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 2048 * 2048 * 5,
-    maxRequestSize = 2048 * 2048 * 5 * 5)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 16,
+    maxRequestSize = 1024 * 1024 * 20)
 public class InserimentoCertificazioneServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
@@ -77,7 +77,11 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
     String utente = user.getMail();
     String abilitazione = request.getParameter("abilitazione");
-    Part part = request.getPart("allegato");
+    
+    Part part = null;
+    
+    try {
+      part = request.getPart("allegato");
 
     Accreditamento accreditamento = serviceA.getByApplicant(utente);
     
@@ -139,6 +143,17 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
       requestDispatcher.forward(request, response);
     }
+    
+    }catch(Exception e) {
+                
+          RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
+          request.setAttribute("error",
+              e.toString());
+    
+          requestDispatcher.forward(request, response);
+          
+          return;
+        }
   }
 
   /**

@@ -192,7 +192,7 @@ function initAutocomplete() {
 						</div>
 						<div class="col">
 							<input class="form-control" type="file" id="formFileMultiple"
-								name="file">
+								name="file" accept="application/pdf">
 						</div>
 					</div>
 

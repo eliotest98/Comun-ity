@@ -236,8 +236,8 @@
 										for="professione">Professione</label>
 								</div>
 								<div class="col">
-									<input class="form-control" type="file" id="formFileMultiple"
-										name="allegato">
+									<input class="form-control" type="file" accept="application/pdf" id="formFileMultiple"
+										name="allegato" required>
 								</div>
 							</div>
 					</div>
