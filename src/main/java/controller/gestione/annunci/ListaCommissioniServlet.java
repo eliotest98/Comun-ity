@@ -118,7 +118,9 @@ public class ListaCommissioniServlet extends HttpServlet {
                   + "<div class=\"general\">\n"
                   + "<h3 class=\"text-center\">" + annuncio.getTitolo() + "</h3>\n"
                   + "<hr>\n"
-                  + "<p>Autore: " + annuncio.getAutore() + "<br>\n"
+                  + "<p>Autore: "
+                  + user.getNome() + " " + user.getCognome()
+                  + "<br>\n"
                   + "Descrizione: " + annuncio.getDescrizione() + "<br>\n"
                   + "Indirizzo: " + annuncio.getIndirizzo() + "<br>\n"
                   + "Data Fine: " + annuncio.getDataFine() + "<br>\n"

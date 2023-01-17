@@ -102,7 +102,7 @@ public class ListaLavoriServlet extends HttpServlet {
                     + "<img class='center' src=\"/Comun-ity/images/hammer.png\" width=\"80%\">\n"
                     + "</div>\n" + "<div class=\"more-info\">\n"
                     + "<h3 class=\"text-center\">"
-                    + annuncio.getTitolo() 
+                    + user.getNome() + " " + user.getCognome() 
                     + "</h3>\n"
                     + "<div class=\"row justify-content-center\">\n"
                     + "<form action=\"PresaInCaricoAnnuncioServlet\" "

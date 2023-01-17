@@ -128,8 +128,15 @@ public class MailSender {
   private static String createBody(Utente utente, Annuncio annuncio) {
     String text;
 
-    text = "L'annuncio" + annuncio.getTitolo() + "\n" + "è stato preso in carico da" + utente
-        .getNome() + " " + utente.getCognome();
+    text = "Il tuo annuncio: " + annuncio.getTitolo() + ", è stato preso in carico da " 
+        + utente.getNome() + " " + utente.getCognome() 
+        + "[Reputazione: " + utente.getReputazione() + "]."
+        + "\n\n"
+        + "Ecco i suoi recapiti: "
+        + "\nNumero telefonico: " + utente.getNumeroTelefono()
+        + "\nEmail: " + utente.getMail()
+        + "\nContattalo subito!"
+        ;
     return text;
   }
   
@@ -144,8 +151,8 @@ public class MailSender {
   private static String createBody(Accreditamento accreditamento) {
     String text;
 
-    text = "E' stata sottomessa una nuova richiesta di accreditamento.\n" 
-        + "L'utente " + accreditamento.getRichiedente() + ", \n" 
+    text =
+        "L'utente " + accreditamento.getRichiedente() + ", \n" 
         + " ha sottomoesso una richiesta di" 
         + "accreditamento al fine di essere riconosciuto dal sistema come " 
         + accreditamento.getAbilitazione() + ".";
