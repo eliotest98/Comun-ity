@@ -4,7 +4,6 @@ import controller.gestione.utenza.service.GestioneUtenzaService;
 import controller.gestione.utenza.service.GestioneUtenzaServiceImpl;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -15,12 +14,14 @@ import model.Annuncio;
 import model.Utente;
 
 
-
 /**
  * Java class that defines static methods for email notification.
  */
 public class MailSender {
-
+  
+  private static final String mail = "comunity.unisa@gmail.com";
+  private static final String password = "axtrqkxjxfwnarth";
+  
   /**
    * Sends a notification email to the given ad author to let him know
    * that the given user has taken on his ad.
@@ -28,10 +29,6 @@ public class MailSender {
    * @param utente is the user object to extract user datas from.
    * @param annuncio is the ad object to extract ad datas from.
    */
-  
-  private static final String mail = "comunity.unisa@gmail.com";
-  private static final String password = "axtrqkxjxfwnarth";
-  
   public static void notifyAdTakeOn(Utente utente, Annuncio annuncio) {
 
     String host = "smtp.gmail.com";
@@ -102,7 +99,7 @@ public class MailSender {
       MimeMessage message = new MimeMessage(session);
 
       message.setFrom(new InternetAddress(mail));
-      for(String e : admins) {
+      for (String e : admins) {
         message.addRecipients(Message.RecipientType.CC, InternetAddress.parse(e));
       }
       message.setSubject(subject);

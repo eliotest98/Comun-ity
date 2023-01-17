@@ -86,7 +86,8 @@ public class PresaInCaricoAnnuncioTest {
     when(requestMock.getRequestDispatcher("ListaAnnunciServlet")).thenReturn(dispatcherMock);
     presaInCaricoMock.doPost(requestMock, responseMock);
     verify(dispatcherMock).forward(requestMock, responseMock);
-    verify(requestMock).setAttribute("success", "Annuncio accettato con successo");
+    verify(requestMock).setAttribute("success",
+        "Annuncio accettato con successo e mail inviata al proprietario dell'annuncio!");
   }
 
   //Ad not accepted correctly.
