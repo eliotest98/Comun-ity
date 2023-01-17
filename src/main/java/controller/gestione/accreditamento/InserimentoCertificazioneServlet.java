@@ -77,14 +77,11 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
     String utente = user.getMail();
     String abilitazione = request.getParameter("abilitazione");
-    
-    Part part = null;
-    
-    try {
-      part = request.getPart("allegato");
+
+    Part part = request.getPart("allegato");
 
     Accreditamento accreditamento = serviceA.getByApplicant(utente);
-    
+
     if (accreditamento == null) {
 
       if (user.getRuolo().equals("cittadino")) {
@@ -108,7 +105,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
           serviceA.saveAccreditamento(newaccreditamento);
           MailSender.notifyAccreditationReq(newaccreditamento);
-          
+
           RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
           request.setAttribute("success",
               "Richiesta sottomessa con successo, verra' controllata il prima possibile");
@@ -143,17 +140,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
       requestDispatcher.forward(request, response);
     }
-    
-    }catch(Exception e) {
-                
-          RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
-          request.setAttribute("error",
-              e.toString());
-    
-          requestDispatcher.forward(request, response);
-          
-          return;
-        }
+
   }
 
   /**
@@ -181,10 +168,10 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
     }
     FileInputStream fis = new FileInputStream(allegato);
     byte[] byteData = new byte[(int) allegato.length()];
-    
+
     fis.read(byteData);
     fis.close();
-    
+
     return Base64.getEncoder().encodeToString(byteData);
   }
 }
