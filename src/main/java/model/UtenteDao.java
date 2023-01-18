@@ -160,6 +160,7 @@ public class UtenteDao {
    *
    * @param utente     is the user to assign the rating to.
    * @param recensione is the rating to assign.
+   * @return true if value is assigned.
    */
   public boolean assignRating(Utente utente, Double recensione) {
 

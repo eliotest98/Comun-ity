@@ -18,6 +18,8 @@ public interface GestioneUtenzaService {
    * @return true if account can be added, false if not or the email is just registered.
    * @throws IOException //
    * @throws IllegalArgumentException //
+   * @throws ExecutionException //
+   * @throws InterruptedException //
    */
   boolean registerAccount(Utente utente)
       throws IOException, IllegalArgumentException, ExecutionException, InterruptedException;
@@ -43,6 +45,10 @@ public interface GestioneUtenzaService {
    *
    * @param email referring to the account to search for
    * @return true if the account exists, false if not
+   * @throws IOException //
+   * @throws IllegalArgumentException //
+   * @throws ExecutionException //
+   * @throws InterruptedException //
    */
   boolean doesUserExist(String email) throws InterruptedException, ExecutionException, IOException;
 
@@ -51,6 +57,10 @@ public interface GestioneUtenzaService {
    *
    * @param email referring to the account to search for
    * @return the Account if it exists, null if not
+   * @throws IOException //
+   * @throws IllegalArgumentException //
+   * @throws ExecutionException //
+   * @throws InterruptedException //
    */
   Utente getAccountByEmail(String email)
       throws InterruptedException, ExecutionException, IOException;
