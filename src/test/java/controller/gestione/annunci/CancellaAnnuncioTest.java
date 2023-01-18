@@ -41,7 +41,7 @@ public class CancellaAnnuncioTest {
 
   /**
    * Before each test, the session is simulated
-   * and an new 'annuncio' entry is created for test purpose.
+   * and a new 'annuncio' entry is created for test purpose.
    */
   @BeforeEach
   public void setUp() {

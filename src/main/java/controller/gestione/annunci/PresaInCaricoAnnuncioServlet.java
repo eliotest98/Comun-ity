@@ -75,7 +75,8 @@ public class PresaInCaricoAnnuncioServlet extends HttpServlet {
       RequestDispatcher requestDispatcher = request.getRequestDispatcher("ListaAnnunciServlet");
       request.setAttribute("link", "bacheca");
       request.setAttribute("success",
-          "Annuncio accettato con successo e mail inviata al proprietario dell'annuncio!");
+          "Annuncio accettato con successo. Una mail con i tuoi "
+              + "dati è stata inviata al proprietario dell'annuncio!");
       requestDispatcher.forward(request, response);
 
     } else {

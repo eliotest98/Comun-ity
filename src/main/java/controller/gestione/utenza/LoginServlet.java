@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
       } else {
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/guest/login.jsp");
-        request.setAttribute("message", "Credenziali non esistenti o errate, Riprova");
+        request.setAttribute("message", "Credenziali non esistenti o errate, riprova");
 
         requestDispatcher.forward(request, response);
       }

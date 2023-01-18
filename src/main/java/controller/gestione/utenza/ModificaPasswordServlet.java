@@ -84,7 +84,7 @@ public class ModificaPasswordServlet extends HttpServlet {
               requestDispatcher.forward(request, response);
             } else {
               RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
-              request.setAttribute("error", "Errore nell'aggiornamento password");
+              request.setAttribute("error", "Errore nell'aggiornamento della password");
               requestDispatcher.forward(request, response);
             }
           } else {

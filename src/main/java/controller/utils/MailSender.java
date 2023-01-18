@@ -153,7 +153,7 @@ public class MailSender {
 
     text =
         "L'utente " + accreditamento.getRichiedente() + ", \n" 
-        + " ha sottomoesso una richiesta di" 
+        + " ha sottomesso una richiesta di"
         + "accreditamento al fine di essere riconosciuto dal sistema come " 
         + accreditamento.getAbilitazione() + ".";
         

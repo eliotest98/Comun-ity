@@ -108,7 +108,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
           RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
           request.setAttribute("success",
-              "Richiesta sottomessa con successo, verra' controllata il prima possibile");
+              "Richiesta sottomessa con successo, verrà controllata il prima possibile");
 
           requestDispatcher.forward(request, response);
 
@@ -126,7 +126,7 @@ public class InserimentoCertificazioneServlet extends HttpServlet {
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("AreaPersonale");
         request.setAttribute("error",
-            "Solo un cittadino puo' sottomettere una richiesta di accreditamento");
+            "Solo un cittadino può sottomettere una richiesta di accreditamento");
 
         requestDispatcher.forward(request, response);
 

@@ -82,7 +82,7 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
       serviceA.approveRequest(richiedente);
 
       RequestDispatcher requestDispatcher = request.getRequestDispatcher("AccreditamentoServlet");
-      request.setAttribute("success", "La richiesta e' stata accettata");
+      request.setAttribute("success", "La richiesta è stata accettata");
       
       requestDispatcher.forward(request, response);
       
@@ -91,7 +91,7 @@ public class AccertamentoProfessionistaServlet extends HttpServlet {
       serviceA.declineRequest(richiedente);
 
       RequestDispatcher requestDispatcher = request.getRequestDispatcher("AccreditamentoServlet");
-      request.setAttribute("success", "La richiesta e' stata declinata");
+      request.setAttribute("success", "La richiesta è stata declinata");
 
       requestDispatcher.forward(request, response);
     }
