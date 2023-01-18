@@ -21,10 +21,10 @@ public class DbConnection {
       String uri = "mongodb+srv://michelerabesco:michelerabesco@gps.om8mqqx.mongodb.net/test";
       MongoClient mongoClient = MongoClients.create(uri);
       MongoDatabase database = mongoClient.getDatabase("Comunity");
-      System.out.println("connessione riuscita");
+      System.out.println("Connessione riuscita");
       return database;
     } catch (Exception e) {
-      System.out.println("connessione non riuscita");
+      System.out.println("Connessione fallita");
       e.printStackTrace();
     }
 

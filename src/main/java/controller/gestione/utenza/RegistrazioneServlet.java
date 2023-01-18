@@ -233,7 +233,7 @@ public class RegistrazioneServlet extends HttpServlet {
             "La password non è valida. "
                 + "Deve essere lunga da 8 a 20 caratteri, "
                 + "avere almeno un carattere speciale, un numero, "
-                + "una lettera maiuscola e minuscola");
+                + "una lettera maiuscola e una minuscola");
 
         requestDispatcher.forward(request, response);
       }

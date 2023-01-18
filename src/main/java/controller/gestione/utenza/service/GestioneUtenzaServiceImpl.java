@@ -42,7 +42,7 @@ public class GestioneUtenzaServiceImpl implements GestioneUtenzaService {
         return true;
       } else {
         throw new IllegalArgumentException(
-            "email già presente" + " nel DB, utilizza una nuova email");
+            "Email già presente" + " nel DB, utilizza una nuova email");
       }
     } catch (InterruptedException | ExecutionException | IOException e) {
       e.printStackTrace();

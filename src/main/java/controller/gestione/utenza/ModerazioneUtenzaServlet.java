@@ -63,7 +63,7 @@ public class ModerazioneUtenzaServlet extends HttpServlet {
 
       if (serviceUtenza.banUser(email) && serviceAnnunci.removeAllAvailableByUser(email)) {
         request.setAttribute("message",
-            "L'utente: " + email + ", è stato bannato correttamente dal sistema.");
+            "L'utente: " + email + ", è stato rimosso correttamente dal sistema.");
 
       } else {
         request.setAttribute("message",
