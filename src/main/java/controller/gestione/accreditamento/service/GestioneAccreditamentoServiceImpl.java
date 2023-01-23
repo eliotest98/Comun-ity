@@ -1,5 +1,6 @@
 package controller.gestione.accreditamento.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import model.Accreditamento;
 import model.AccreditamentoDao;
@@ -69,6 +70,7 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
     Accreditamento accreditamento = accreditamentoDao.findAccreditamentoBySubmitter(richiedente);
     Utente utente = utenteDao.findUtenteByMail(richiedente);
     
+    accreditamento.setDataVisione(LocalDate.now());
     accreditamento.setStato("accettata");
     utente.setRuolo("professionista");
     utente.setAbilitazione(accreditamento.getAbilitazione());
@@ -88,6 +90,7 @@ public class GestioneAccreditamentoServiceImpl implements GestioneAccreditamento
 
     Accreditamento accreditamento = accreditamentoDao.findAccreditamentoBySubmitter(richiedente);
 
+    accreditamento.setDataVisione(LocalDate.now());
     accreditamento.setStato("rifiutata");
 
     return accreditamentoDao.updateAccreditamento(accreditamento);
