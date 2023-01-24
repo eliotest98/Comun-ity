@@ -26,7 +26,7 @@ hs_err_pid*
 *.classpath
 *.project
 *.settings
-src/main/java/controller/utility/DbConnection.java
+src/main/java/controller/utils/DbConnection.java
 src/main/java/mio/Main.java
 src/main/java/mio
 /target/
