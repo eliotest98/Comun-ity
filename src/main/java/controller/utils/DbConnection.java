@@ -18,7 +18,7 @@ public class DbConnection {
   public static MongoDatabase connectToDb() {
 
     try {
-      String uri = "mongodb+srv://michelerabesco:michelerabesco@gps.om8mqqx.mongodb.net/test";
+      String uri = "mongodb+srv://andreaaceto:andreaaceto@gps.om8mqqx.mongodb.net/test";
       MongoClient mongoClient = MongoClients.create(uri);
       MongoDatabase database = mongoClient.getDatabase("Comunity");
       System.out.println("Connessione riuscita");
@@ -32,3 +32,4 @@ public class DbConnection {
   }
 
 }
+
