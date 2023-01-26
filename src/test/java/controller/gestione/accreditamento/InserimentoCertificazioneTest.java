@@ -147,7 +147,7 @@ public class InserimentoCertificazioneTest {
 
     servletMock.doPost(requestMock, responseMock);
     verify(requestMock).setAttribute("error",
-        "Solo un cittadino puo' sottomettere una richiesta di accreditamento");
+        "Solo un cittadino può sottomettere una richiesta di accreditamento");
     verify(dispatcherMock).forward(requestMock, responseMock);
   }
 
@@ -184,7 +184,7 @@ public class InserimentoCertificazioneTest {
     
     servletMock.doPost(requestMock, responseMock);
     verify(requestMock).setAttribute("success",
-        "Richiesta sottomessa con successo, verra' controllata il prima possibile");
+        "Richiesta sottomessa con successo, verrà controllata il prima possibile");
     verify(dispatcherMock).forward(requestMock, responseMock);
     
     File f = new File("nullcertificationReq.pdf");

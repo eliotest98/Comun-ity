@@ -125,7 +125,7 @@ public class AccertamentoProfessionistaTest {
     when(requestMock.getParameter("emailAccreditato")).thenReturn("test@test.com");
     
     servletMock.doPost(requestMock, responseMock);
-    verify(requestMock).setAttribute("success", "La richiesta e' stata declinata");
+    verify(requestMock).setAttribute("success", "La richiesta è stata declinata");
     verify(dispatcherMock).forward(requestMock, responseMock);
   }
   
@@ -136,7 +136,7 @@ public class AccertamentoProfessionistaTest {
     when(requestMock.getParameter("emailAccreditato")).thenReturn("test@test.com");
     
     servletMock.doPost(requestMock, responseMock);
-    verify(requestMock).setAttribute("success", "La richiesta e' stata accettata");
+    verify(requestMock).setAttribute("success", "La richiesta è stata accettata");
     verify(dispatcherMock).forward(requestMock, responseMock);
   }
 
